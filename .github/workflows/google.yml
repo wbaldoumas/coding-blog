@@ -31,6 +31,7 @@ jobs:
     # helper for authentication
     - run: |-
         gcloud --quiet auth configure-docker
+
     # Get the GKE credentials so we can deploy to the cluster
     - uses: google-github-actions/get-gke-credentials@v0.2.1
       with:
@@ -44,10 +45,12 @@ jobs:
         docker build -f "src/Coding.Blog/Server/Dockerfile" \
           --tag "gcr.io/$PROJECT_ID/$IMAGE" \
           "src"
+
     # Push the Docker image to Google Container Registry
     - name: Publish
       run: |-
         docker push "gcr.io/$PROJECT_ID/$IMAGE"
+
     # Deploy the Docker image to the GKE cluster
     - name: Deploy
       run: |-

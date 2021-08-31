@@ -10,6 +10,11 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Coding.Blog.Shared", "Coding.Blog\Shared\Coding.Blog.Shared.csproj", "{EFE789CD-3A47-4798-A844-09D2DF6CCFF0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "K8s", "K8s", "{A960C4AA-3780-4B14-82DA-4CF23809EBE1}"
+	ProjectSection(SolutionItems) = preProject
+		K8s\deployment.yaml = K8s\deployment.yaml
+		K8s\ingress.yaml = K8s\ingress.yaml
+		K8s\service.yaml = K8s\service.yaml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
