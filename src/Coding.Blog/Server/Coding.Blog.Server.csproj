@@ -19,5 +19,4 @@
     <ProjectReference Include="..\Shared\Coding.Blog.Shared.csproj" />
   </ItemGroup>
 
-
 </Project>
