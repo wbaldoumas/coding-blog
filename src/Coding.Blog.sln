@@ -3,11 +3,18 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31624.102
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coding.Blog.Server", "Coding.Blog\Server\Coding.Blog.Server.csproj", "{65E14D3D-CA1D-4DAB-B80F-FCE27749C4F0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Coding.Blog.Server", "Coding.Blog\Server\Coding.Blog.Server.csproj", "{65E14D3D-CA1D-4DAB-B80F-FCE27749C4F0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coding.Blog.Client", "Coding.Blog\Client\Coding.Blog.Client.csproj", "{0C2AE49F-D35D-4558-89DF-1B9F6BA205DA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Coding.Blog.Client", "Coding.Blog\Client\Coding.Blog.Client.csproj", "{0C2AE49F-D35D-4558-89DF-1B9F6BA205DA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coding.Blog.Shared", "Coding.Blog\Shared\Coding.Blog.Shared.csproj", "{EFE789CD-3A47-4798-A844-09D2DF6CCFF0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Coding.Blog.Shared", "Coding.Blog\Shared\Coding.Blog.Shared.csproj", "{EFE789CD-3A47-4798-A844-09D2DF6CCFF0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "K8s", "K8s", "{A960C4AA-3780-4B14-82DA-4CF23809EBE1}"
+	ProjectSection(SolutionItems) = preProject
+		K8s\Deployment.yaml = K8s\Deployment.yaml
+		K8s\Ingress.yaml = K8s\Ingress.yaml
+		K8s\Service.yaml = K8s\Service.yaml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

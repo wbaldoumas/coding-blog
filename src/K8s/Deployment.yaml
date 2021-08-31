@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: coding-blog-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      # attaches this deployment to the pods below
+      component: coding-blog
+  template:
+    metadata:
+      labels:
+        component: coding-blog
+    spec:
+      containers:
+        - name: coding-blog
+          image: gcr.io/kubernetes-in-action-299920/coding-blog
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 80
+            initialDelaySeconds: 3
+            periodSeconds: 30
+            successThreshold: 1
+            failureThreshold: 3
+            timeoutSeconds: 1
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 80
+            initialDelaySeconds: 3
+            periodSeconds: 30
+            successThreshold: 1
+            failureThreshold: 3
+            timeoutSeconds: 1
+      terminationGracePeriodSeconds: 60
