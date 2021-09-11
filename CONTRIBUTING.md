@@ -1,6 +1,6 @@
 # Contributing
 
-When contributing to this repository, please first discuss the change you wish to make via an issue.
+When contributing to this repository, please first discuss the change you wish to make via an [issue](https://github.com/wbaldoumas/coding-blog/issues).
 
 Please note we have a [code of conduct](CODE_OF_CONDUCT.md), please follow it in all your interactions with the project.
 
