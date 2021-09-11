@@ -1,3 +1,5 @@
+using Autofac;
+using Coding.Blog.Server.CompositionRoot;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -50,5 +52,7 @@ namespace Coding.Blog.Server
                 endpoints.MapFallbackToFile("index.html");
             });
         }
+
+        public void ConfigureContainer(ContainerBuilder builder) => ContainerConfigurator.Configure(builder);
     }
 }
