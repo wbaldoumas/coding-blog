@@ -4,8 +4,7 @@ metadata:
   name: coding-blog-ingress
   annotations:
     kubernetes.io/ingress.global-static-ip-name: "coding-blog"
-    # TODO: setup HTTPS in a later set of changes
-    # ingress.gcp.kubernetes.io/pre-shared-cert: "coding-blog"
+    ingress.gcp.kubernetes.io/pre-shared-cert: "coding-blog"
 spec:
   defaultBackend:
     service:
