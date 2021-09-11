@@ -1,8 +1,9 @@
-name: Build and Deploy to GKE
+name: Build Image & Deploy
 
 on:
-  release:
-    types: [created, published, released]
+  push:
+    tags:
+      - "v*.*.*"
 
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
