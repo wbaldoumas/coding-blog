@@ -9,7 +9,7 @@ A coding blog.
 
 ## Support
 
-This project is maintained by [@wbaldoumas](https://github.com/wbaldoumas). Please understand that we won't be able to provide individual support via email. We also believe that help is much more valuable if it's shared publicly, so that more people can benefit from it.
+This project is maintained by [@wbaldoumas](https://github.com/wbaldoumas). Please understand that individual support via email will not be provided. Assistance is much more valuable if it is shared publicly, so that more people can benefit from it.
 
 | Type                                  | Platforms                                                            |
 | ------------------------------------- | -------------------------------------------------------------------- |
@@ -19,11 +19,11 @@ This project is maintained by [@wbaldoumas](https://github.com/wbaldoumas). Plea
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on the code of conduct, and the process for submitting pull requests.
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/wbaldoumas/coding-blog/tags).
+Use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/wbaldoumas/coding-blog/tags).
 
 ## Authors and acknowledgment
 
