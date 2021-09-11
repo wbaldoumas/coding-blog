@@ -5,10 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="WeatherForecast.cs~RF1aa76ed.TMP" />
+    <PackageReference Include="Autofac" Version="6.2.0" />
   </ItemGroup>
 
   <ItemGroup>
     <SupportedPlatform Include="browser" />
   </ItemGroup>
+
 </Project>

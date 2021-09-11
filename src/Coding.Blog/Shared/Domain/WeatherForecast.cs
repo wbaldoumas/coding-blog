@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Coding.Blog.Shared
+namespace Coding.Blog.Shared.Domain
 {
     public class WeatherForecast
     {
