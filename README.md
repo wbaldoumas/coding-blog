@@ -2,6 +2,7 @@
 
 A coding blog.
 
+[![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fwbaldoumas%2Fcoding-blog%2Fbadge%3Fref%3Dmain&style=flat)](https://actions-badge.atrox.dev/wbaldoumas/coding-blog/goto?ref=main)
 [![GitHub issues](https://img.shields.io/github/issues/wbaldoumas/coding-blog.svg)](https://github.com/wbaldoumas/coding-blog/issues)
 [![GitHub forks](https://img.shields.io/github/forks/wbaldoumas/coding-blog.svg)](https://github.com/wbaldoumas/coding-blog/network)
 [![GitHub stars](https://img.shields.io/github/stars/wbaldoumas/coding-blog.svg)](https://github.com/wbaldoumas/coding-blog/stargazers)
