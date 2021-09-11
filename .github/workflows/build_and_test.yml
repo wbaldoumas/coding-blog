@@ -21,5 +21,13 @@ jobs:
       run: cd src && dotnet restore
     - name: Build
       run: cd src && dotnet build --configuration Release --no-restore
-    - name: Test
-      run: cd src && dotnet test --no-build --verbosity normal
+    - name: Unit Test With Coverage Report
+      run: |
+        printenv
+        cd ./Tests/Coding.Blog.UnitTests/
+        dotnet test --no-restore /p:CollectCoverage=true /p:CoverletOutput=TestResults/ /p:CoverletOutputFormat=lcov
+    - name: Publish Coverage Report
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        path-to-lcov: ./Tests/Coding.Blog.UnitTests/TestResults/coverage.info
