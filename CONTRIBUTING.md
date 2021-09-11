@@ -12,4 +12,4 @@ Please note we have a [code of conduct](CODE_OF_CONDUCT.md), please follow it in
 
 ## Deploying Your Changes
 
-1. After merging your pull request, create and push a new tag to trigger a deployment. Be sure to increase the version numbers in any examples files and the README.md to the new version that these changes would represent. The versioning scheme we use is [SemVer](http://semver.org/).
+After merging your pull request, create and push a new tag to trigger a deployment. Be sure to increase the version numbers in any examples files and the README.md to the new version that these changes would represent. The versioning scheme used is [SemVer](http://semver.org/).
