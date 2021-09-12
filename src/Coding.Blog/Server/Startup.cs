@@ -1,6 +1,8 @@
 using System;
 using Autofac;
 using Coding.Blog.Server.CompositionRoot;
+using Coding.Blog.Server.Configurations;
+using Coding.Blog.Server.HostedServices;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -14,7 +16,7 @@ namespace Coding.Blog.Server
     {
         public Startup(IConfiguration configuration) => Configuration = configuration;
 
-        public IConfiguration Configuration { get; }
+        private IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
@@ -27,6 +29,18 @@ namespace Coding.Blog.Server
             });
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            var applicationLifeTimeConfiguration = new ApplicationLifetimeConfiguration();
+
+            Configuration.GetSection(ApplicationLifetimeConfiguration.Key).Bind(applicationLifeTimeConfiguration);
+            services.AddSingleton(applicationLifeTimeConfiguration);
+            services.AddHostedService<ApplicationLifetimeService>();
+
+            services.Configure<HostOptions>(opts =>
+                opts.ShutdownTimeout = TimeSpan.FromSeconds(
+                    applicationLifeTimeConfiguration.ApplicationShutdownTimeoutSeconds
+                )
+            );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
