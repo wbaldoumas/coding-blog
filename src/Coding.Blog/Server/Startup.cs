@@ -1,6 +1,8 @@
 using System;
 using Autofac;
 using Coding.Blog.Server.CompositionRoot;
+using Coding.Blog.Server.Configurations;
+using Coding.Blog.Server.HostedServices;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -27,6 +29,18 @@ namespace Coding.Blog.Server
             });
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            var applicationLifeTimeConfiguration = new ApplicationLifetimeConfiguration();
+
+            Configuration.GetSection("ApplicationLifetime").Bind(applicationLifeTimeConfiguration);
+            services.AddSingleton(applicationLifeTimeConfiguration);
+            services.AddHostedService<ApplicationLifetimeService>();
+
+            services.Configure<HostOptions>(opts =>
+                opts.ShutdownTimeout = TimeSpan.FromSeconds(
+                    applicationLifeTimeConfiguration.ApplicationShutdownTimeoutSeconds
+                )
+            );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
