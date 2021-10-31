@@ -1,5 +1,4 @@
 ﻿using Autofac;
-using Coding.Blog.Shared.Services;
 
 namespace Coding.Blog.Shared.Modules
 {
@@ -7,7 +6,6 @@ namespace Coding.Blog.Shared.Modules
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<WeatherService>().As<IWeatherService>().SingleInstance();
         }
     }
 }

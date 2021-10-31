@@ -3,6 +3,7 @@ using Autofac;
 using Coding.Blog.Server.CompositionRoot;
 using Coding.Blog.Server.Configurations;
 using Coding.Blog.Server.HostedServices;
+using Coding.Blog.Server.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -27,6 +28,7 @@ namespace Coding.Blog.Server
             {
                 options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
             });
+            services.AddGrpc();
             services.AddControllersWithViews();
             services.AddRazorPages();
 
@@ -81,8 +83,11 @@ namespace Coding.Blog.Server
             app.UseStaticFiles();
             app.UseRouting();
 
+            app.UseGrpcWeb();
+
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapGrpcService<WeatherService>().EnableGrpcWeb();
                 endpoints.MapRazorPages();
                 endpoints.MapControllers();
                 endpoints.MapFallbackToFile("index.html");
