@@ -5,7 +5,7 @@
 <h1>Weather forecast</h1> 
 <p>This component demonstrates fetching data from the server using GRPC.</p> 
 
-@if (_forecasts == null) 
+@if (!_forecasts.Any()) 
 { 
     <p><em>Loading...</em></p> 
 } 
@@ -33,8 +33,8 @@ else
 } 
 
 @code 
-{ 
-    private IList<WeatherForecast> _forecasts; 
+{
+    private IList<WeatherForecast> _forecasts = new List<WeatherForecast>();
     protected override async Task OnInitializedAsync() 
     { 
         _forecasts = (await _weatherForecastsClient.GetWeatherAsync(new WeatherForecast())).Forecasts; 
