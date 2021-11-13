@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.HttpOverrides;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Configuration.AddJsonFile("Secrets/appsettings.secrets.json", true);
+builder.Configuration.AddJsonFile("secrets/appsettings.secrets.json", true);
 
 // Add services to the container.
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
