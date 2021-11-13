@@ -11,10 +11,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <None Remove="secrets\appsettings.secrets.json~RF7ba7a3.TMP" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.2.0" />
 		<PackageReference Include="Grpc.AspNetCore" Version="2.40.0" />
 		<PackageReference Include="Grpc.AspNetCore.Web" Version="2.40.0" />
