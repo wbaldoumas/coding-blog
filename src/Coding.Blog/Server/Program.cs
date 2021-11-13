@@ -1,11 +1,14 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using Coding.Blog.Engine.Configurations;
 using Coding.Blog.Server.Configurations;
 using Coding.Blog.Server.HostedServices;
 using Coding.Blog.Server.Services;
 using Microsoft.AspNetCore.HttpOverrides;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Configuration.AddJsonFile("Secrets/appsettings.secrets.json", true);
 
 // Add services to the container.
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
@@ -19,6 +22,11 @@ builder.Services.Configure<ForwardedHeadersOptions>(options =>
 var applicationLifetimeConfiguration = new ApplicationLifetimeConfiguration();
 builder.Configuration.GetSection(ApplicationLifetimeConfiguration.Key).Bind(applicationLifetimeConfiguration);
 builder.Services.AddSingleton(applicationLifetimeConfiguration);
+
+var cosmicConfiguration = new CosmicConfiguration();
+builder.Configuration.GetSection(CosmicConfiguration.Key).Bind(cosmicConfiguration);
+builder.Services.AddSingleton(cosmicConfiguration);
+
 builder.Services.AddHostedService<ApplicationLifetimeService>();
 builder.Services.Configure<HostOptions>(options =>
 {

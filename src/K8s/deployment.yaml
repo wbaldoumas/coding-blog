@@ -14,28 +14,36 @@ spec:
         component: coding-blog
     spec:
       containers:
-        - name: coding-blog
-          image: gcr.io/kubernetes-in-action-299920/coding-blog
-          imagePullPolicy: Always
-          ports:
-            - containerPort: 80
-              protocol: TCP
-          readinessProbe:
-            httpGet:
-              path: /healthz
-              port: 80
-            initialDelaySeconds: 3
-            periodSeconds: 30
-            successThreshold: 1
-            failureThreshold: 3
-            timeoutSeconds: 1
-          livenessProbe:
-            httpGet:
-              path: /healthz
-              port: 80
-            initialDelaySeconds: 3
-            periodSeconds: 30
-            successThreshold: 1
-            failureThreshold: 3
-            timeoutSeconds: 1
+      - name: coding-blog
+        image: gcr.io/kubernetes-in-action-299920/coding-blog
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 80
+            protocol: TCP
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 80
+          initialDelaySeconds: 3
+          periodSeconds: 30
+          successThreshold: 1
+          failureThreshold: 3
+          timeoutSeconds: 1
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 80
+          initialDelaySeconds: 3
+          periodSeconds: 30
+          successThreshold: 1
+          failureThreshold: 3
+          timeoutSeconds: 1
+        volumeMounts:
+        - name: secrets
+          mountPath: /app/Secrets
+          readOnly: true
       terminationGracePeriodSeconds: 60
+      volumes:
+      - name: secrets
+        secret:
+          secretName: coding-blog-secrets

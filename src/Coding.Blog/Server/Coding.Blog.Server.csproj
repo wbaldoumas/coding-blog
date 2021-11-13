@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
 	<PropertyGroup>
 		<TargetFramework>net6.0</TargetFramework>
@@ -20,6 +20,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\Client\Coding.Blog.Client.csproj" />
+		<ProjectReference Include="..\Engine\Coding.Blog.Engine.csproj" />
 		<ProjectReference Include="..\Shared\Coding.Blog.Shared.csproj" />
 	</ItemGroup>
 
