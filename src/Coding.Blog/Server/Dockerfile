@@ -10,6 +10,7 @@ WORKDIR /src
 COPY ["Coding.Blog/Server/Coding.Blog.Server.csproj", "Coding.Blog/Server/"]
 COPY ["Coding.Blog/Shared/Coding.Blog.Shared.csproj", "Coding.Blog/Shared/"]
 COPY ["Coding.Blog/Client/Coding.Blog.Client.csproj", "Coding.Blog/Client/"]
+COPY ["Coding.Blog/Client/Coding.Blog.Client.csproj", "Coding.Blog/Engine/"]
 RUN dotnet restore "Coding.Blog/Server/Coding.Blog.Server.csproj"
 COPY . .
 WORKDIR "/src/Coding.Blog/Server"
