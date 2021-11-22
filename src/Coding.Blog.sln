@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Coding.Blog.Server", "Codin
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Coding.Blog.Client", "Coding.Blog\Client\Coding.Blog.Client.csproj", "{3D3FC2D0-F282-4A02-80EB-7C5066AAA325}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Coding.Blog.Shared", "Coding.Blog\Shared\Coding.Blog.Shared.csproj", "{5A8CC437-310E-4019-9E04-8426784A4F8D}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "K8s", "K8s", "{0CCED397-0615-4427-82AB-AB03AEDAE072}"
 	ProjectSection(SolutionItems) = preProject
 		K8s\deployment.yaml = K8s\deployment.yaml
@@ -34,10 +32,6 @@ Global
 		{3D3FC2D0-F282-4A02-80EB-7C5066AAA325}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D3FC2D0-F282-4A02-80EB-7C5066AAA325}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D3FC2D0-F282-4A02-80EB-7C5066AAA325}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5A8CC437-310E-4019-9E04-8426784A4F8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5A8CC437-310E-4019-9E04-8426784A4F8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5A8CC437-310E-4019-9E04-8426784A4F8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5A8CC437-310E-4019-9E04-8426784A4F8D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{907CD422-BBA8-4F1B-8DEC-94A417613FF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{907CD422-BBA8-4F1B-8DEC-94A417613FF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{907CD422-BBA8-4F1B-8DEC-94A417613FF5}.Release|Any CPU.ActiveCfg = Release|Any CPU

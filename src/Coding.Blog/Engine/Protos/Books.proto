@@ -1,0 +1,24 @@
+﻿syntax = "proto3"; 
+
+option csharp_namespace = "Coding.Blog.Engine"; 
+
+import "google/protobuf/timestamp.proto"; 
+
+
+service Books { 
+	rpc GetBooks (BooksRequest) returns (BooksReply); 
+} 
+
+message BooksRequest {}
+
+message BooksReply { 
+	repeated Book books = 1; 
+} 
+
+message Book {
+	string title = 1;
+	string content = 2;
+	string purchaseUrl = 3;
+	string coverImageUrl = 4;
+	google.protobuf.Timestamp datePublished = 5; 
+}
