@@ -1,9 +1,10 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Coding.Blog.Engine.Configurations;
+using Coding.Blog.Engine.Modules;
+using Coding.Blog.Engine.Services;
 using Coding.Blog.Server.Configurations;
 using Coding.Blog.Server.HostedServices;
-using Coding.Blog.Server.Services;
 using Microsoft.AspNetCore.HttpOverrides;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,15 +20,22 @@ builder.Services.Configure<ForwardedHeadersOptions>(options =>
     options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
 });
 
-var applicationLifetimeConfiguration = new ApplicationLifetimeConfiguration();
-builder.Configuration.GetSection(ApplicationLifetimeConfiguration.Key).Bind(applicationLifetimeConfiguration);
-builder.Services.AddSingleton(applicationLifetimeConfiguration);
+static T RegisterKeyedConfiguration<T>(WebApplicationBuilder webApplicationBuilder) where T : class, IKeyedConfiguration, new()
+{
+    var configuration = new T();
+    webApplicationBuilder.Configuration.GetSection(configuration.Key).Bind(configuration);
+    webApplicationBuilder.Services.AddSingleton(configuration);
+    
+    return configuration;
+}
 
-var cosmicConfiguration = new CosmicConfiguration();
-builder.Configuration.GetSection(CosmicConfiguration.Key).Bind(cosmicConfiguration);
-builder.Services.AddSingleton(cosmicConfiguration);
+RegisterKeyedConfiguration<CosmicConfiguration>(builder);
+RegisterKeyedConfiguration<ResilienceConfiguration>(builder);
+
+var applicationLifetimeConfiguration = RegisterKeyedConfiguration<ApplicationLifetimeConfiguration>(builder);
 
 builder.Services.AddHostedService<ApplicationLifetimeService>();
+
 builder.Services.Configure<HostOptions>(options =>
 {
     options.ShutdownTimeout = TimeSpan.FromSeconds(
@@ -39,9 +47,9 @@ builder.Services.AddGrpc();
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
-builder.Host.ConfigureContainer<ContainerBuilder>(_ =>
+builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
 {
-    // register AutoFac modules here
+    containerBuilder.RegisterModule<CodingBlogModule>();
 });
 
 var app = builder.Build();
@@ -82,7 +90,7 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseGrpcWeb();
 
-app.MapGrpcService<WeatherService>().EnableGrpcWeb();
+app.MapGrpcService<BooksService>().EnableGrpcWeb();
 app.MapRazorPages();
 app.MapControllers();
 app.MapFallbackToFile("index.html");

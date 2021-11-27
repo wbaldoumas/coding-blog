@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Shared\Coding.Blog.Shared.csproj" />
+    <ProjectReference Include="..\Engine\Coding.Blog.Engine.csproj" />
   </ItemGroup>
 
 </Project>

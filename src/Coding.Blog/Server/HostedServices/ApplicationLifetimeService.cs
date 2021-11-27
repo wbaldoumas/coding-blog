@@ -1,7 +1,9 @@
-﻿using Coding.Blog.Server.Configurations;
+﻿using System.Diagnostics.CodeAnalysis;
+using Coding.Blog.Server.Configurations;
 
 namespace Coding.Blog.Server.HostedServices;
 
+[ExcludeFromCodeCoverage]
 internal class ApplicationLifetimeService : IHostedService
 {
     private readonly IHostApplicationLifetime _hostApplicationLifetime;

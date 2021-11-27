@@ -1,8 +1,13 @@
-﻿namespace Coding.Blog.Engine.Configurations;
+﻿using System.Diagnostics.CodeAnalysis;
 
-public class CosmicConfiguration
+namespace Coding.Blog.Engine.Configurations;
+
+[ExcludeFromCodeCoverage]
+public class CosmicConfiguration : IKeyedConfiguration
 {
-    public static string Key => "Cosmic";
+    public string Key => "Cosmic";
+
+    public string Endpoint { get; set; } = string.Empty;
 
     public string BucketSlug { get; set; } = string.Empty;
 

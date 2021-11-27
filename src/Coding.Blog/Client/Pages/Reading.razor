@@ -1,9 +1,50 @@
 ﻿@page "/reading"
+@using Coding.Blog.Engine.Clients
+@using Coding.Blog.Engine
+@inject IResilientBooksClient _booksClient;
 
-<h3>Book Recommendations</h3>
+<h1>Reading Recommendations</h1>
 
-<p>Under construction</p>
+<div>
+    <p>
+        Below are some reading recommendations based on books that I've read and enjoyed. Most are programming-language and technology agnostic and instead focus on building up the fundamentals needed for a successful career as a developer.
+    </p>
+    <p>
+        <em>Last updated: @(_books.Any() ? _books.Max(book => book.DatePublished)!.ToDateTime().ToShortDateString() : "Loading...")</em>
+    </p>
+</div>
+
+@if (!_books.Any())
+{
+    <p>
+        <em>Loading...</em>
+    </p>
+}
+else
+{
+    <div class="container">
+        @foreach (var book in _books)
+        {
+            <hr/>
+            <a href="@book.PurchaseUrl" target="_blank">
+                <h3 style="text-align: center">@book.Title</h3>
+            </a>
+            <div class="row gy-3">
+                <a href="@book.PurchaseUrl" target="_blank">
+                    <img src="@book.CoverImageUrl" alt="@book.Title" class="rounded mx-auto d-block img-fluid"/>
+                </a>
+                <div>
+                    @(new MarkupString(book.Content))
+                </div>
+            </div>
+        }
+    </div>
+}
 
 @code {
+    private IEnumerable<Book> _books = new List<Book>();
+
+    protected override async Task OnInitializedAsync() => _books = await _booksClient.GetAsync();
 
 }
+
