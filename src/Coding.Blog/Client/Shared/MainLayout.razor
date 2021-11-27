@@ -1,13 +1,23 @@
-﻿@inherits LayoutComponentBase
+﻿@using Coding.Blog.Engine
+@using Coding.Blog.Engine.Clients
+@inject IResilientBooksClient _booksClient;
+@inherits LayoutComponentBase
 
 <div class="page">
     <div class="sidebar">
-        <NavMenu />
+        <NavMenu/>
     </div>
-
     <main>
-        <article class="content px-4">
-            @Body
-        </article>
+        <CascadingValue Name="Books" Value="@_books">
+            <article class="content px-4">
+                @Body
+            </article>
+        </CascadingValue>
     </main>
 </div>
+
+@code {
+    private IEnumerable<Book> _books = new List<Book>();
+
+    protected override async Task OnInitializedAsync() => _books = await _booksClient.GetAsync();
+}
