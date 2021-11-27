@@ -52,6 +52,4 @@ else
     [CascadingParameter(Name="Books")]
     private IEnumerable<Book> Books {get; set;} = new List<Book>();
 
-    protected override async Task OnInitializedAsync() => Books = await _booksClient.GetAsync();
-
 }
