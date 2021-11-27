@@ -10,11 +10,11 @@
         Below are some reading recommendations based on books that I've read and enjoyed. Most are programming-language and technology agnostic and instead focus on building up the fundamentals needed for a successful career as a developer.
     </p>
     <p>
-        <em>Last updated: @(_books.Any() ? _books.Max(book => book.DatePublished)!.ToDateTime().ToShortDateString() : "Loading...")</em>
+        <em>Last updated: @(Books.Any() ? Books.Max(book => book.DatePublished)!.ToDateTime().ToShortDateString() : "Loading...")</em>
     </p>
 </div>
 
-@if (!_books.Any())
+@if (!Books.Any())
 {
     <p>
         <em>Loading...</em>
@@ -23,7 +23,7 @@
 else
 {
     <div class="container">
-        @foreach (var book in _books)
+        @foreach (var book in Books)
         {
             <hr/>
             <div class="row justify-content-md-center">
@@ -48,8 +48,10 @@ else
 }
 
 @code {
-    private IEnumerable<Book> _books = new List<Book>();
 
-    protected override async Task OnInitializedAsync() => _books = await _booksClient.GetAsync();
+    [CascadingParameter(Name="Books")]
+    private IEnumerable<Book> Books {get; set;} = new List<Book>();
+
+    protected override async Task OnInitializedAsync() => Books = await _booksClient.GetAsync();
 
 }
