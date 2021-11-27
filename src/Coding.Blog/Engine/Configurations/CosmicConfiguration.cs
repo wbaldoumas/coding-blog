@@ -3,7 +3,7 @@
 namespace Coding.Blog.Engine.Configurations;
 
 [ExcludeFromCodeCoverage]
-public class CosmicConfiguration : IKeyedConfiguration
+public record CosmicConfiguration : IKeyedConfiguration
 {
     public string Key => "Cosmic";
 
