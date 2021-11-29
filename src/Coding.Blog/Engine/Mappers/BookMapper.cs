@@ -13,6 +13,6 @@ internal class BookMapper : BaseMapper<CosmicBook, Book>
         Content = source.Content,
         PurchaseUrl = source.Metadata.PurchaseUrl,
         CoverImageUrl = source.Metadata.Cover.Url,
-        DatePublished = Timestamp.FromDateTime(source.PublishedAt)
+        DatePublished = Timestamp.FromDateTime(source.DatePublished)
     };
 }

@@ -1,5 +1,6 @@
 ﻿@page "/reading"
 @using Coding.Blog.Engine
+@using Coding.Blog.Engine.Extensions
 
 <h1>Reading Recommendations</h1>
 
@@ -8,19 +9,19 @@
         Below are some reading recommendations based on books that I've read and enjoyed. Most are programming-language and technology agnostic and instead focus on building up the fundamentals needed for a successful career as a developer.
     </p>
     <p>
-        <em>Last updated: @(Books.Any() ? Books.Max(book => book.DatePublished)!.ToDateTime().ToShortDateString() : "Loading...")</em>
+        <em>Last updated: @(Books.Any() ? Books.Max(book => book.DatePublished)!.ToShortDateString() : "Loading...")</em>
     </p>
 </div>
 
-@if (!Books.Any())
-{
-    <p>
-        <em>Loading...</em>
-    </p>
-}
-else
-{
-    <div class="container">
+<div class="container">
+    @if (!Books.Any())
+    {
+        <p>
+            <strong>Loading...</strong>
+        </p>
+    }
+    else
+    {
         @foreach (var book in Books)
         {
             <hr/>
@@ -42,12 +43,12 @@ else
                 </div>
             </div>
         }
-    </div>
-}
+    }
+</div>
 
 @code {
 
-    [CascadingParameter(Name="Books")]
-    private IEnumerable<Book> Books {get; set;} = new List<Book>();
+    [CascadingParameter(Name = "Books")]
+    private IEnumerable<Book> Books { get; set; } = new List<Book>();
 
 }

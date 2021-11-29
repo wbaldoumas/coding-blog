@@ -27,6 +27,30 @@ static void RegisterKeyedConfiguration<T>(WebAssemblyHostBuilder webAssemblyHost
 RegisterKeyedConfiguration<GrpcResilienceConfiguration>(builder);
 RegisterKeyedConfiguration<ResilienceConfiguration>(builder);
 
+builder.Services.AddSingleton(serviceProvider =>
+{
+    var grpcResilienceConfiguration = serviceProvider.GetRequiredService<GrpcResilienceConfiguration>();
+
+    return new ServiceConfig
+    {
+        MethodConfigs =
+        {
+            new MethodConfig
+            {
+                Names = { MethodName.Default },
+                RetryPolicy = new RetryPolicy
+                {
+                    MaxAttempts = grpcResilienceConfiguration.MaxAttempts,
+                    InitialBackoff = TimeSpan.FromMilliseconds(grpcResilienceConfiguration.InitialBackoffMilliseconds),
+                    MaxBackoff = TimeSpan.FromMilliseconds(grpcResilienceConfiguration.MaxBackoffMilliseconds),
+                    BackoffMultiplier = grpcResilienceConfiguration.BackoffMultiplier,
+                    RetryableStatusCodes = { StatusCode.Unavailable }
+                }
+            }
+        }
+    };
+});
+
 builder.Services
     .AddGrpcClient<Books.BooksClient>((serviceProvider, grpcClientFactoryOptions) =>
     {
@@ -35,29 +59,21 @@ builder.Services
     .ConfigurePrimaryHttpMessageHandler(() => new GrpcWebHandler(GrpcWebMode.GrpcWeb, new HttpClientHandler()))
     .ConfigureChannel((serviceProvider, grpcChannelOptions) =>
     {
-        var grpcResilienceConfiguration = serviceProvider.GetRequiredService<GrpcResilienceConfiguration>();
-
-        grpcChannelOptions.ServiceConfig = new ServiceConfig
-        {
-            MethodConfigs =
-            {
-                new MethodConfig
-                {
-                    Names = { MethodName.Default },
-                    RetryPolicy = new RetryPolicy
-                    {
-                        MaxAttempts = grpcResilienceConfiguration.MaxAttempts,
-                        InitialBackoff = TimeSpan.FromMilliseconds(grpcResilienceConfiguration.InitialBackoffMilliseconds),
-                        MaxBackoff = TimeSpan.FromMilliseconds(grpcResilienceConfiguration.MaxBackoffMilliseconds),
-                        BackoffMultiplier = grpcResilienceConfiguration.BackoffMultiplier,
-                        RetryableStatusCodes = { StatusCode.Unavailable }
-                    }
-                }
-            }
-        };
+        grpcChannelOptions.ServiceConfig = serviceProvider.GetRequiredService<ServiceConfig>();
     });
 
-builder.Services.AddSingleton<IResilientBooksClient, ResilientBooksClient>(serviceProvider =>
+builder.Services
+    .AddGrpcClient<Posts.PostsClient>((serviceProvider, grpcClientFactoryOptions) =>
+    {
+        grpcClientFactoryOptions.Address = new Uri(serviceProvider.GetRequiredService<NavigationManager>().BaseUri);
+    })
+    .ConfigurePrimaryHttpMessageHandler(() => new GrpcWebHandler(GrpcWebMode.GrpcWeb, new HttpClientHandler()))
+    .ConfigureChannel((serviceProvider, grpcChannelOptions) =>
+    {
+        grpcChannelOptions.ServiceConfig = serviceProvider.GetRequiredService<ServiceConfig>();
+    });
+
+builder.Services.AddSingleton<IResilientClient<Book>, ResilientBooksClient>(serviceProvider =>
 {
     var configuration = serviceProvider.GetRequiredService<ResilienceConfiguration>();
     var booksClient = serviceProvider.GetRequiredService<Books.BooksClient>();
@@ -69,6 +85,20 @@ builder.Services.AddSingleton<IResilientBooksClient, ResilientBooksClient>(servi
     );
 
     return new ResilientBooksClient(booksClient, logger, resiliencePolicy);
+});
+
+builder.Services.AddSingleton<IResilientClient<Post>, ResilientPostsClient>(serviceProvider =>
+{
+    var configuration = serviceProvider.GetRequiredService<ResilienceConfiguration>();
+    var booksClient = serviceProvider.GetRequiredService<Posts.PostsClient>();
+    var logger = serviceProvider.GetRequiredService<ILogger<Post>>();
+    var resiliencePolicy = ResiliencePolicyBuilder.Build<IEnumerable<Post>>(
+        TimeSpan.FromMilliseconds(configuration.MedianFirstRetryDelayMilliseconds),
+        configuration.RetryCount,
+        TimeSpan.FromMilliseconds(configuration.TimeToLiveMilliseconds)
+    );
+
+    return new ResilientPostsClient(booksClient, logger, resiliencePolicy);
 });
 
 await builder.Build().RunAsync();

@@ -14,25 +14,39 @@ public class CodingBlogModule : Module
 {
     protected override void Load(ContainerBuilder builder)
     {
+        RegisterCosmicClient<CosmicBooks>(builder);
+        RegisterCosmicClient<CosmicPosts>(builder);
+
+        builder.RegisterType<BookMapper>()
+            .As<IMapper<CosmicBook, Book>>()
+            .SingleInstance();
+
+        builder.RegisterType<PostMapper>()
+            .As<IMapper<CosmicPost, Post>>()
+            .SingleInstance();
+
+        builder.RegisterType<PostLinker>()
+            .As<IPostLinker>()
+            .SingleInstance();
+    }
+
+    private static void RegisterCosmicClient<T>(ContainerBuilder builder)
+    {
         builder.Register(componentContext =>
             {
                 var configuration = componentContext.Resolve<ResilienceConfiguration>();
 
-                return ResiliencePolicyBuilder.Build<CosmicBooks>(
+                return ResiliencePolicyBuilder.Build<T>(
                     TimeSpan.FromMilliseconds(configuration.MedianFirstRetryDelayMilliseconds),
                     configuration.RetryCount,
                     TimeSpan.FromMilliseconds(configuration.TimeToLiveMilliseconds)
                 );
             })
-            .As<IAsyncPolicy<CosmicBooks>>()
+            .As<IAsyncPolicy<T>>()
             .SingleInstance();
 
-        builder.RegisterType<CosmicClient<CosmicBooks>>()
-            .As<ICosmicClient<CosmicBooks>>()
-            .SingleInstance();
-
-        builder.RegisterType<BookMapper>()
-            .As<IMapper<CosmicBook, Book>>()
+        builder.RegisterType<CosmicClient<T>>()
+            .As<ICosmicClient<T>>()
             .SingleInstance();
     }
 }

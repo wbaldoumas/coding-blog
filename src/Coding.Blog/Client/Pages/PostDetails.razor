@@ -1,0 +1,97 @@
+﻿@page "/post/{Slug}"
+@inject NavigationManager _navigationManager
+@inject IResilientClient<Post> _postsClient;
+@inject IJSRuntime _js;
+@using Coding.Blog.Engine
+@using Coding.Blog.Engine.Clients
+@using Coding.Blog.Engine.Extensions
+
+@if (_selectedPost is null)
+{
+    <p>
+        <strong>Loading...</strong>
+    </p>
+}
+else
+{
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col col-auto">
+                <h1>@_selectedPost!.Title</h1>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col col-auto">
+                <p class="text-muted">@_selectedPost!.DatePublished.ToShortDateString()</p>
+            </div>
+        </div>
+    </div>
+    <div class="container overflow-hidden mb-3">
+        <div class="row justify-content-center">
+            <div class="col col-auto">
+                <img class="rounded mx-auto d-block img-fluid" src="@_selectedPost!.Hero.ImgixUrl" alt="hero">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div>@(new MarkupString(_selectedPost!.Content))</div>
+            </div>
+        </div>
+        <div class="row justify-content-between">
+            <div class="col col-auto">
+                @if (_selectedPost.Next is not null)
+                {
+                    <h6 class="text-muted">Next</h6>
+                    <a href="@($"post/{_selectedPost.Next.Slug}")">
+                        <h5>@_selectedPost.Next.Title</h5>
+                    </a>
+                }
+            </div >
+            <div class="col col-auto">
+                @if (_selectedPost.Previous is not null)
+                {
+                    <h6 class="text-muted">Previous</h6>
+                    <a href="@($"post/{_selectedPost.Previous.Slug}")">
+                        <h5>@_selectedPost.Previous.Title</h5>
+                    </a>
+                }
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col col-auto">
+                <button class="btn btn-secondary btn-lg" @onclick="NavigateToMain">Back</button>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+
+    [Parameter]
+    public string Slug { get; set; } = string.Empty;
+
+    [CascadingParameter(Name = "Posts")]
+    private IDictionary<string, Post> Posts { get; set; } = new Dictionary<string, Post>();
+
+    private Post? _selectedPost;
+
+    protected override async Task OnInitializedAsync() => await Refresh();
+
+    protected override async Task OnParametersSetAsync() => await Refresh();
+
+    private async Task Refresh()
+    {
+        await _js.InvokeVoidAsync("resetScrollPosition");
+
+        if (!Posts.Any())
+        {
+            var posts = await _postsClient.GetAsync();
+
+            Posts = posts.ToDictionary(post => post.Slug, post => post);
+        }
+
+        Posts.TryGetValue(Slug, out _selectedPost);
+    }
+
+    private void NavigateToMain() => _navigationManager.NavigateTo("blog");
+}

@@ -21,6 +21,7 @@
 
 	<ItemGroup>
 	  <Protobuf Include="Protos\Books.proto" />
+	  <Protobuf Include="Protos\Posts.proto" />
 	</ItemGroup>
 
 </Project>
