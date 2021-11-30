@@ -91,6 +91,7 @@ app.UseRouting();
 app.UseGrpcWeb();
 
 app.MapGrpcService<BooksService>().EnableGrpcWeb();
+app.MapGrpcService<PostsService>().EnableGrpcWeb();
 app.MapRazorPages();
 app.MapControllers();
 app.MapFallbackToFile("index.html");

@@ -18,7 +18,7 @@ public class BookMapperTests
         // arrange
         var mockDatePublished = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc);
 
-        var bookDto = new CosmicBook(
+        var cosmicBook = new CosmicBook(
             "Test Book",
             "This is some content talking about Test Book",
             mockDatePublished,
@@ -39,7 +39,7 @@ public class BookMapperTests
         var mapper = new BookMapper();
 
         // act
-        var book = mapper.Map(bookDto);
+        var book = mapper.Map(cosmicBook);
 
         // assert
         book.Should().BeEquivalentTo(expectedBook);
@@ -51,7 +51,7 @@ public class BookMapperTests
         // arrange
         var mockDatePublished = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc);
 
-        var bookDtoA = new CosmicBook(
+        var cosmicBookA = new CosmicBook(
             "Test Book A",
             "This is some content talking about Test Book A",
             mockDatePublished,
@@ -60,7 +60,7 @@ public class BookMapperTests
             )
         );
 
-        var bookDtoB = new CosmicBook(
+        var cosmicBookB = new CosmicBook(
             "Test Book B",
             "This is some content talking about Test Book B",
             mockDatePublished,
@@ -69,10 +69,10 @@ public class BookMapperTests
             )
         );
 
-        var bookDtos = new List<CosmicBook>
+        var cosmicBooks = new List<CosmicBook>
         {
-            bookDtoA,
-            bookDtoB
+            cosmicBookA,
+            cosmicBookB
         };
 
         var expectedBookA = new Book
@@ -102,7 +102,7 @@ public class BookMapperTests
         var mapper = new BookMapper();
 
         // act
-        var books = mapper.Map(bookDtos);
+        var books = mapper.Map(cosmicBooks);
 
         // assert
         books.Should().BeEquivalentTo(expectedBooks);

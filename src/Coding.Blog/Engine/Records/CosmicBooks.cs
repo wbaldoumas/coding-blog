@@ -7,7 +7,7 @@ public record CosmicBooks([property: JsonProperty("objects")] IEnumerable<Cosmic
 public record CosmicBook(
     [property: JsonProperty("title")] string Title,
     [property: JsonProperty("content")] string Content,
-    [property: JsonProperty("published_at")] DateTime PublishedAt,
+    [property: JsonProperty("created_at")] DateTime DatePublished,
     [property: JsonProperty("metadata")] CosmicBookMetadata Metadata
 );
 

@@ -4,7 +4,6 @@ option csharp_namespace = "Coding.Blog.Engine";
 
 import "google/protobuf/timestamp.proto"; 
 
-
 service Books { 
 	rpc GetBooks (BooksRequest) returns (BooksReply); 
 } 

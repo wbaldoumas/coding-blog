@@ -1,9 +1,39 @@
 ﻿@page "/blog"
+@using Coding.Blog.Engine
+@using Coding.Blog.Engine.Extensions
 
-<h3>Blog</h3>
-
-<p>Under construction</p>
+<div class="container mb-3">
+    @if (!Posts.Any())
+    {
+        <p>
+            <strong>Loading...</strong>
+        </p>
+    }
+    else
+    {
+        <div class="row row-cols-sm-1 row-cols-md-2 row-cols-lg-3 g-3">
+            @foreach (var (slug, post) in Posts)
+            {
+                <div class="col">
+                    <div class="card">
+                        <a href="@($"post/{slug}")">
+                            <img src=@post.Hero.ImgixUrl class="card-img-top" alt="hero"/>
+                        </a>
+                        <div class="card-body">
+                            <h5 class="card-title">@post.Title</h5>
+                            <h6 class="card-subtitle text-muted">@post.DatePublished.ToShortDateString()</h6>
+                            <a href="@($"post/{slug}")" class="card-link">Read More</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
 
 @code {
+
+    [CascadingParameter(Name = "Posts")]
+    private IDictionary<string, Post> Posts { get; set; } = new Dictionary<string, Post>();
 
 }
