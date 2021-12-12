@@ -5,16 +5,17 @@
 <div class="container mb-3">
     @if (!Posts.Any())
     {
-        <p>
-            <strong>Loading...</strong>
-        </p>
+        <div class="d-flex align-items-center">
+            <strong class="ms-2">Loading...</strong>
+            <div class="spinner-border ms-auto me-2 mt-2" role="status" aria-hidden="true"></div>
+        </div>
     }
     else
     {
-        <div class="row row-cols-sm-1 row-cols-md-2 row-cols-lg-3 g-3">
+        <div class="row g-3">
             @foreach (var (slug, post) in Posts)
             {
-                <div class="col">
+                <div class="col-12 col-lg-4">
                     <div class="card">
                         <a href="@($"post/{slug}")">
                             <img src=@post.Hero.ImgixUrl class="card-img-top" alt="hero"/>
