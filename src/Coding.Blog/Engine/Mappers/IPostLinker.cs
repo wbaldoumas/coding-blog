@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Coding.Blog.Engine.Mappers;
+﻿namespace Coding.Blog.Engine.Mappers;
 
 /// <summary>
 ///     Sorts posts by creation date, then links posts to their "previous" and "next" posts.

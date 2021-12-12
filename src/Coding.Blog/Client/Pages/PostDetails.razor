@@ -6,64 +6,67 @@
 @using Coding.Blog.Engine.Clients
 @using Coding.Blog.Engine.Extensions
 
-@if (_selectedPost is null)
-{
-    <p>
-        <strong>Loading...</strong>
-    </p>
-}
-else
-{
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col col-auto">
-                <h1>@_selectedPost!.Title</h1>
+<div class="container mb-3">
+    @if (_selectedPost is null)
+    {
+        <div class="d-flex align-items-center">
+            <strong class="ms-2">Loading...</strong>
+            <div class="spinner-border ms-auto me-2 mt-2" role="status" aria-hidden="true"></div>
+        </div>
+    }
+    else
+    {
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col col-auto">
+                    <h1>@_selectedPost!.Title</h1>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col col-auto">
+                    <p class="text-muted">@_selectedPost!.DatePublished.ToShortDateString()</p>
+                </div>
             </div>
         </div>
-        <div class="row justify-content-center">
-            <div class="col col-auto">
-                <p class="text-muted">@_selectedPost!.DatePublished.ToShortDateString()</p>
+        <div class="container overflow-hidden">
+            <div class="row justify-content-center">
+                <div class="col col-auto">
+                    <img class="rounded mx-auto d-block img-fluid" src="@_selectedPost!.Hero.ImgixUrl" alt="hero">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div>@(new MarkupString(_selectedPost!.Content))</div>
+                </div>
+            </div>
+            <div class="row justify-content-between">
+                <div class="col col-auto">
+                    @if (_selectedPost.Next is not null)
+                    {
+                        <h6 class="text-muted">Next</h6>
+                        <a href="@($"post/{_selectedPost.Next.Slug}")">
+                            <h5>@_selectedPost.Next.Title</h5>
+                        </a>
+                    }
+                </div >
+                <div class="col col-auto">
+                    @if (_selectedPost.Previous is not null)
+                    {
+                        <h6 class="text-muted">Previous</h6>
+                        <a href="@($"post/{_selectedPost.Previous.Slug}")">
+                            <h5>@_selectedPost.Previous.Title</h5>
+                        </a>
+                    }
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col col-auto">
+                    <button class="btn btn-secondary btn-lg" @onclick="NavigateToMain">Back</button>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="container overflow-hidden mb-3">
-        <div class="row justify-content-center">
-            <div class="col col-auto">
-                <img class="rounded mx-auto d-block img-fluid" src="@_selectedPost!.Hero.ImgixUrl" alt="hero">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <div>@(new MarkupString(_selectedPost!.Content))</div>
-            </div>
-        </div>
-        <div class="row justify-content-between">
-            <div class="col col-auto">
-                @if (_selectedPost.Next is not null)
-                {
-                    <h6 class="text-muted">Next</h6>
-                    <a href="@($"post/{_selectedPost.Next.Slug}")">
-                        <h5>@_selectedPost.Next.Title</h5>
-                    </a>
-                }
-            </div >
-            <div class="col col-auto">
-                @if (_selectedPost.Previous is not null)
-                {
-                    <h6 class="text-muted">Previous</h6>
-                    <a href="@($"post/{_selectedPost.Previous.Slug}")">
-                        <h5>@_selectedPost.Previous.Title</h5>
-                    </a>
-                }
-            </div>
-        </div>
-        <div class="row justify-content-center">
-            <div class="col col-auto">
-                <button class="btn btn-secondary btn-lg" @onclick="NavigateToMain">Back</button>
-            </div>
-        </div>
-    </div>
-}
+    }
+</div>
 
 @code {
 
