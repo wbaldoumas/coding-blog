@@ -22,9 +22,12 @@ public class PostMapperTests
             "12345",
             "test-post",
             "Test Post",
-            "This is some content talking about Test Post",
             mockDatePublished,
-            new CosmicPostMetadata(new CosmicPostHero("https://google.com/a", "https://google.com/b"), "tag1, tag2, tag3")
+            new CosmicPostMetadata(
+                new CosmicPostHero("https://google.com/a", "https://google.com/b"),
+                "tag1, tag2, tag3",
+                "This is some markdown for Test Post"
+            )
         );
 
         var expectedPost = new Post
@@ -32,7 +35,7 @@ public class PostMapperTests
             Id = "12345",
             Slug = "test-post",
             Title = "Test Post",
-            Content = "This is some content talking about Test Post",
+            Content = "This is some markdown for Test Post",
             DatePublished = Timestamp.FromDateTime(mockDatePublished),
             Tags = { new List<string> { "tag1", "tag2", "tag3" } },
             Hero = new Hero
@@ -61,18 +64,24 @@ public class PostMapperTests
             "12345",
             "test-post-a",
             "Test Post A",
-            "This is some content talking about Test Post A",
             mockDatePublished,
-            new CosmicPostMetadata(new CosmicPostHero("https://google.com/a", "https://google.com/b"), string.Empty)
+            new CosmicPostMetadata(
+                new CosmicPostHero("https://google.com/a", "https://google.com/b"),
+                string.Empty,
+                "This is some markdown talking about Test Post A"
+            )
         );
 
         var cosmicPostB = new CosmicPost(
             "123456",
             "test-post-b",
             "Test Post B",
-            "This is some content talking about Test Post B",
             mockDatePublished,
-            new CosmicPostMetadata(new CosmicPostHero("https://google.com/b", "https://google.com/c"), "tag1, tag2, tag3")
+            new CosmicPostMetadata(
+                new CosmicPostHero("https://google.com/b", "https://google.com/c"),
+                "tag1, tag2, tag3",
+                "This is some markdown talking about Test Post B"
+            )
         );
 
         var cosmicPosts = new List<CosmicPost>
@@ -86,7 +95,7 @@ public class PostMapperTests
             Id = "12345",
             Slug = "test-post-a",
             Title = "Test Post A",
-            Content = "This is some content talking about Test Post A",
+            Content = "This is some markdown talking about Test Post A",
             DatePublished = Timestamp.FromDateTime(mockDatePublished),
             Tags = { new List<string>() },
             Hero = new Hero
@@ -101,7 +110,7 @@ public class PostMapperTests
             Id = "123456",
             Slug = "test-post-b",
             Title = "Test Post B",
-            Content = "This is some content talking about Test Post B",
+            Content = "This is some markdown talking about Test Post B",
             DatePublished = Timestamp.FromDateTime(mockDatePublished),
             Tags = { new List<string> { "tag1", "tag2", "tag3" } },
             Hero = new Hero

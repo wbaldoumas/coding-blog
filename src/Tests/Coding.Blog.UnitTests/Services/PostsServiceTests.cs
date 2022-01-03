@@ -45,17 +45,23 @@ public class PostsServiceTests
                     "12345",
                     "test-post-a",
                     "Test Post A",
-                    "This is some content talking about Test Post A",
                     mockDatePublished,
-                    new CosmicPostMetadata(new CosmicPostHero("https://google.com/a", "https://google.com/b"), string.Empty)
+                    new CosmicPostMetadata(
+                        new CosmicPostHero("https://google.com/a", "https://google.com/b"), 
+                        string.Empty,
+                        "This is some markdown talking about Test Post A"
+                        )
                 ),
                 new(
                     "123456",
                     "test-post-b",
                     "Test Post B",
-                    "This is some content talking about Test Post B",
                     mockDatePublished,
-                    new CosmicPostMetadata(new CosmicPostHero("https://google.com/b", "https://google.com/c"), string.Empty)
+                    new CosmicPostMetadata(
+                        new CosmicPostHero("https://google.com/b", "https://google.com/c"), 
+                        string.Empty,
+                        "This is some markdown talking about Test Post B"
+                        )
                 )
             }
         );
@@ -69,7 +75,7 @@ public class PostsServiceTests
             Id = source.Id,
             Slug = source.Slug,
             Title = source.Title,
-            Content = source.Content,
+            Content = source.Metadata.Markdown,
             DatePublished = Timestamp.FromDateTime(source.DatePublished),
             Hero = new Hero
             {
@@ -138,6 +144,7 @@ public class PostsServiceTests
             .GetAsync()
             .Returns(mockCosmicPostsClientResponse);
 
+        // ReSharper disable once CollectionNeverUpdated.Local
         var mockPostMapperResponse = new List<Post>();
 
         _mockPostMapper
