@@ -10,7 +10,7 @@ internal class PostMapper : BaseMapper<CosmicPost, Post>
         Id = source.Id,
         Slug = source.Slug,
         Title = source.Title,
-        Content = source.Content,
+        Content = source.Metadata.Markdown,
         DatePublished = Timestamp.FromDateTime(source.DatePublished),
         Tags =
         {

@@ -5,6 +5,7 @@
 @using Coding.Blog.Engine
 @using Coding.Blog.Engine.Clients
 @using Coding.Blog.Engine.Extensions
+@using Markdig
 
 <div class="container mb-3">
     @if (_selectedPost is null)
@@ -36,7 +37,7 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <div>@(new MarkupString(_selectedPost!.Content))</div>
+                    <div>@GeneratePostMarkup(_selectedPost.Content)</div>
                 </div>
             </div>
             <div class="row justify-content-between">
@@ -97,4 +98,15 @@
     }
 
     private void NavigateToMain() => _navigationManager.NavigateTo("blog");
+
+    private static MarkupString GeneratePostMarkup(string markdown)
+    {
+        var pipeline = new MarkdownPipelineBuilder()
+            .UseAdvancedExtensions()
+            .Build();
+
+        var result = Markdown.ToHtml(markdown, pipeline);
+
+        return new MarkupString(result);
+    }
 }
