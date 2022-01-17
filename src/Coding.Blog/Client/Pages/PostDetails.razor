@@ -6,6 +6,7 @@
 @using Coding.Blog.Engine.Clients
 @using Coding.Blog.Engine.Extensions
 @using Markdig
+@using Markdown.ColorCode
 
 <div class="container mb-3">
     @if (_selectedPost is null)
@@ -103,6 +104,7 @@
     {
         var pipeline = new MarkdownPipelineBuilder()
             .UseAdvancedExtensions()
+            .UseColorCode()
             .Build();
 
         var result = Markdown.ToHtml(markdown, pipeline);
