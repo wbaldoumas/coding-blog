@@ -2,8 +2,7 @@ name: Build Image & Deploy
 
 on:
   push:
-    tags:
-      - "v*.*.*"
+    branches: [ main ]
 
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
