@@ -1,4 +1,5 @@
 ﻿@page "/post/{Slug}"
+@inject MarkdownPipeline _markdownPipeline;
 @inject NavigationManager _navigationManager
 @inject IResilientClient<Post> _postsClient;
 @inject IJSRuntime _js;
@@ -6,7 +7,6 @@
 @using Coding.Blog.Engine.Clients
 @using Coding.Blog.Engine.Extensions
 @using Markdig
-@using Markdown.ColorCode
 
 <div class="container mb-3">
     @if (_selectedPost is null)
@@ -33,9 +33,22 @@
         <div class="container overflow-hidden">
             <div class="row justify-content-center">
                 <div class="col col-auto">
-                    <img class="rounded mx-auto d-block img-fluid" src="@_selectedPost!.Hero.ImgixUrl" alt="hero">
+                    <img class="rounded mx-auto d-block img-fluid post-hero" src="@_selectedPost!.Hero.ImgixUrl" alt="hero">
                 </div>
             </div>
+            <div class="row justify-content-center">
+                <div class="col col-auto mt-2">
+                    @foreach (var tag in _selectedPost.Tags)
+                    {
+                        <a href="@($"blog/{tag}")">
+                            <span class="badge bg-secondary mx-1">
+                                @tag
+                            </span>
+                        </a>
+                    }
+                </div>
+            </div>
+            <hr/>
             <div class="row">
                 <div class="col">
                     <div>@GeneratePostMarkup(_selectedPost.Content)</div>
@@ -100,15 +113,5 @@
 
     private void NavigateToMain() => _navigationManager.NavigateTo("blog");
 
-    private static MarkupString GeneratePostMarkup(string markdown)
-    {
-        var pipeline = new MarkdownPipelineBuilder()
-            .UseAdvancedExtensions()
-            .UseColorCode()
-            .Build();
-
-        var result = Markdown.ToHtml(markdown, pipeline);
-
-        return new MarkupString(result);
-    }
+    private MarkupString GeneratePostMarkup(string markdown) => new(Markdown.ToHtml(markdown, _markdownPipeline));
 }
