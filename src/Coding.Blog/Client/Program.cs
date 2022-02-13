@@ -6,6 +6,8 @@ using Coding.Blog.Engine.Resilience;
 using Grpc.Core;
 using Grpc.Net.Client.Configuration;
 using Grpc.Net.Client.Web;
+using Markdig;
+using Markdown.ColorCode;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -100,5 +102,10 @@ builder.Services.AddSingleton<IResilientClient<Post>, ResilientPostsClient>(serv
 
     return new ResilientPostsClient(booksClient, logger, resiliencePolicy);
 });
+
+builder.Services.AddSingleton(_ => new MarkdownPipelineBuilder()
+    .UseAdvancedExtensions()
+    .UseColorCode()
+    .Build());
 
 await builder.Build().RunAsync();

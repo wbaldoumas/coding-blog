@@ -1,4 +1,5 @@
 ﻿@page "/blog"
+@page "/blog/{Tag}"
 @using Coding.Blog.Engine
 @using Coding.Blog.Engine.Extensions
 
@@ -13,7 +14,7 @@
     else
     {
         <div class="row g-3">
-            @foreach (var (slug, post) in Posts)
+            @foreach (var (slug, post) in GetFilteredPosts())
             {
                 <div class="col-12 col-lg-4">
                     <div class="card">
@@ -34,7 +35,12 @@
 
 @code {
 
+    [Parameter]
+    public string? Tag { get; set; }
+
     [CascadingParameter(Name = "Posts")]
     private IDictionary<string, Post> Posts { get; set; } = new Dictionary<string, Post>();
+
+    private IDictionary<string, Post> GetFilteredPosts() => Tag is null ? Posts : Posts.Where(post => post.Value.Tags.Any(tag => tag.Equals(Tag, StringComparison.OrdinalIgnoreCase))).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
 
 }
