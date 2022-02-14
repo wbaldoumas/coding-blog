@@ -1,16 +1,22 @@
 ﻿using Coding.Blog.Engine.Records;
+using Coding.Blog.Engine.Utilities;
 using Google.Protobuf.WellKnownTypes;
 
 namespace Coding.Blog.Engine.Mappers;
 
 internal class PostMapper : BaseMapper<CosmicPost, Post>
 {
+    private readonly IReadTimeEstimator _readTimeEstimator;
+
+    public PostMapper(IReadTimeEstimator readTimeEstimator) => _readTimeEstimator = readTimeEstimator;
+
     public override Post Map(CosmicPost source) => new()
     {
         Id = source.Id,
         Slug = source.Slug,
         Title = source.Title,
         Content = source.Metadata.Markdown,
+        ReadingTime = Duration.FromTimeSpan(_readTimeEstimator.Estimate(source.Metadata.Markdown)),
         DatePublished = Timestamp.FromDateTime(source.DatePublished),
         Tags =
         {

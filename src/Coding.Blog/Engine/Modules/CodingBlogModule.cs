@@ -5,6 +5,8 @@ using Coding.Blog.Engine.Configurations;
 using Coding.Blog.Engine.Mappers;
 using Coding.Blog.Engine.Records;
 using Coding.Blog.Engine.Resilience;
+using Coding.Blog.Engine.Utilities;
+using Markdig;
 using Polly;
 
 namespace Coding.Blog.Engine.Modules;
@@ -21,12 +23,24 @@ public class CodingBlogModule : Module
             .As<IMapper<CosmicBook, Book>>()
             .SingleInstance();
 
+        builder.RegisterType<StringSanitizer>()
+            .As<IStringSanitizer>()
+            .SingleInstance();
+
+        builder.RegisterType<ReadTimeEstimator>()
+            .As<IReadTimeEstimator>()
+            .SingleInstance();
+
         builder.RegisterType<PostMapper>()
             .As<IMapper<CosmicPost, Post>>()
             .SingleInstance();
 
         builder.RegisterType<PostLinker>()
             .As<IPostLinker>()
+            .SingleInstance();
+
+        builder.Register(_ => new MarkdownPipelineBuilder().UseAdvancedExtensions().Build())
+            .AsSelf()
             .SingleInstance();
     }
 

@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using Coding.Blog.Engine;
 using Coding.Blog.Engine.Mappers;
 using Coding.Blog.Engine.Records;
+using Coding.Blog.Engine.Utilities;
 using FluentAssertions;
 using Google.Protobuf.WellKnownTypes;
+using NSubstitute;
 using NUnit.Framework;
 
 namespace Coding.Blog.UnitTests.Mappers;
@@ -12,10 +14,19 @@ namespace Coding.Blog.UnitTests.Mappers;
 [TestFixture]
 public class PostMapperTests
 {
+    private IReadTimeEstimator _mockReadTimeEstimator;
+
+    [SetUp]
+    public void SetUp() => _mockReadTimeEstimator = Substitute.For<IReadTimeEstimator>();
+
     [Test]
     public void Map_generates_expected_post()
     {
         // arrange
+        _mockReadTimeEstimator
+            .Estimate(Arg.Any<string>())
+            .Returns(TimeSpan.MaxValue);
+
         var mockDatePublished = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc);
 
         var cosmicPost = new CosmicPost(
@@ -38,6 +49,7 @@ public class PostMapperTests
             Content = "This is some markdown for Test Post",
             DatePublished = Timestamp.FromDateTime(mockDatePublished),
             Tags = { new List<string> { "tag1", "tag2", "tag3" } },
+            ReadingTime = Duration.FromTimeSpan(TimeSpan.MaxValue),
             Hero = new Hero
             {
                 Url = "https://google.com/a",
@@ -45,7 +57,7 @@ public class PostMapperTests
             }
         };
 
-        var mapper = new PostMapper();
+        var mapper = new PostMapper(_mockReadTimeEstimator);
 
         // act
         var post = mapper.Map(cosmicPost);
@@ -58,6 +70,10 @@ public class PostMapperTests
     public void Map_generates_expected_posts()
     {
         // arrange
+        _mockReadTimeEstimator
+            .Estimate(Arg.Any<string>())
+            .Returns(TimeSpan.MaxValue);
+
         var mockDatePublished = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc);
 
         var cosmicPostA = new CosmicPost(
@@ -98,6 +114,7 @@ public class PostMapperTests
             Content = "This is some markdown talking about Test Post A",
             DatePublished = Timestamp.FromDateTime(mockDatePublished),
             Tags = { new List<string>() },
+            ReadingTime = Duration.FromTimeSpan(TimeSpan.MaxValue),
             Hero = new Hero
             {
                 Url = "https://google.com/a",
@@ -113,6 +130,7 @@ public class PostMapperTests
             Content = "This is some markdown talking about Test Post B",
             DatePublished = Timestamp.FromDateTime(mockDatePublished),
             Tags = { new List<string> { "tag1", "tag2", "tag3" } },
+            ReadingTime = Duration.FromTimeSpan(TimeSpan.MaxValue),
             Hero = new Hero
             {
                 Url = "https://google.com/b",
@@ -126,7 +144,7 @@ public class PostMapperTests
             expectedPostB
         };
 
-        var mapper = new PostMapper();
+        var mapper = new PostMapper(_mockReadTimeEstimator);
 
         // act
         var posts = mapper.Map(cosmicPosts);

@@ -23,7 +23,7 @@
                         </a>
                         <div class="card-body">
                             <h5 class="card-title">@post.Title</h5>
-                            <h6 class="card-subtitle text-muted">@post.DatePublished.ToShortDateString()</h6>
+                            <h6 class="card-subtitle text-muted">@post.DatePublished.ToShortDateString() · @post.ReadingTime.ToTimeSpan().Minutes minute read</h6>
                             <a href="@($"post/{slug}")" class="card-link">Read More</a>
                         </div>
                     </div>
