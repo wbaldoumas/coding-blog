@@ -41,4 +41,5 @@ Code example sub-header
 var foo = new Bar();
 var bar = foo.Bar();
 ";
+
 }
