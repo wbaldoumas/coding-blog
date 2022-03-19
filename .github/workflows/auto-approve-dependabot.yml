@@ -25,8 +25,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       # Auto-merge the PR for patch and minor updates if all checks pass.
       - name: Enable auto-merge for Dependabot PRs
+        uses: fastify/github-action-merge-dependabot@v1
         if: ${{ steps.dependabot-metadata.outputs.update-type != 'version-update:semver-major' }}
-        run: gh pr merge --auto --squash "$PR_URL"
-        env:
-          PR_URL: ${{ github.event.pull_request.html_url }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          github-token: ${{secrets.github_token}}
