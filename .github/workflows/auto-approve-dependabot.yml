@@ -2,6 +2,8 @@ name: Auto-Approve Dependabot
 on:
   pull_request:
     branches: [ main ] 
+permissions:
+  pull-requests: write
 jobs:
   dependabot:
     runs-on: ubuntu-latest
