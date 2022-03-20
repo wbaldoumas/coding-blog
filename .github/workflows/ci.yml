@@ -60,6 +60,9 @@ jobs:
   
   dependabot:
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: write
     needs: [analyze, test]
     # Only run this action on dependabot PRs.
     if: ${{ github.actor == 'dependabot[bot]' }}
