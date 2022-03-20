@@ -1,7 +1,7 @@
 name: Auto-Approve Dependabot
 on:
-  pull_request:
-    branches: [ main ] 
+  check_suite:
+    types: [completed]
 permissions:
   pull-requests: write
   contents: write
@@ -11,18 +11,6 @@ jobs:
     # Only run this action on dependabot PRs.
     if: ${{ github.actor == 'dependabot[bot]' }}
     steps:
-      - name: Wait for Build & Test
-        uses: lewagon/wait-on-check-action@v1.0.0
-        with:
-          ref: ${{ github.ref }}
-          check-name: '.NET Build & Test'
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Wait for Analyze (csharp)
-        uses: lewagon/wait-on-check-action@v1.0.0
-        with:
-          ref: ${{ github.ref }}
-          check-name: 'CodeQL'
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
       # This first step will fail if there's no dependabot metadata, so the PR approval will not occur.
       - name: Dependabot Metadata
         id: dependabot-metadata
@@ -41,4 +29,3 @@ jobs:
         uses: fastify/github-action-merge-dependabot@v3.0.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-
