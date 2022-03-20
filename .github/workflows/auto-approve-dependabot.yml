@@ -15,13 +15,13 @@ jobs:
         uses: lewagon/wait-on-check-action@v1.0.0
         with:
           ref: ${{ github.ref }}
-          check-name: 'build'
+          check-name: '.NET Build & Test'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Wait for Analyze (csharp)
         uses: lewagon/wait-on-check-action@v1.0.0
         with:
           ref: ${{ github.ref }}
-          check-name: 'Analyze (csharp)'
+          check-name: 'CodeQL'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
       # This first step will fail if there's no dependabot metadata, so the PR approval will not occur.
       - name: Dependabot Metadata
