@@ -1,4 +1,4 @@
-name: Build Image & Deploy
+name: Continuous Deployment
 
 on:
   push:
