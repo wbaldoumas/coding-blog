@@ -70,12 +70,12 @@ jobs:
       # This first step will fail if there's no dependabot metadata, so the PR approval will not occur.
       - name: Dependabot Metadata
         id: dependabot-metadata
-        uses: dependabot/fetch-metadata@v1.3.0
+        uses: dependabot/fetch-metadata@v1.3.3
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
       # Approve and Auto-merge the PR for patch and minor updates if all checks pass.
       - name: Enable auto-merge for Dependabot PRs
         if: ${{ steps.dependabot-metadata.outputs.update-type != 'version-update:semver-major' }}
-        uses: fastify/github-action-merge-dependabot@v3.0.0
+        uses: fastify/github-action-merge-dependabot@v3.3.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
