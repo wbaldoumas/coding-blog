@@ -76,6 +76,6 @@ jobs:
       # Approve and Auto-merge the PR for patch and minor updates if all checks pass.
       - name: Enable auto-merge for Dependabot PRs
         if: ${{ steps.dependabot-metadata.outputs.update-type != 'version-update:semver-major' }}
-        uses: fastify/github-action-merge-dependabot@v3.3.0
+        uses: fastify/github-action-merge-dependabot@v3.3.1
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
