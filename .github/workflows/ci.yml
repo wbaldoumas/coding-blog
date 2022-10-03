@@ -16,22 +16,28 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: ["csharp"]
+        language: ["csharp", "javascript"]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v2
         with:
           languages: ${{ matrix.language }}
+          queries: security-and-quality
+
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 6.0.x
+
       - name: Restore dependencies
         run: dotnet restore src
+
       - name: Build
         run: dotnet build src --configuration Release --no-restore
+
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
 
@@ -39,23 +45,28 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 6.0.x
-      - name: Restore dependencies
+
+      - name: Restore Dependencies
         run: dotnet restore src
+
       - name: Build
         run: dotnet build src --configuration Release --no-restore
-      - name: Unit Test With Coverage Report
+
+      - name: Unit Test
         run: |
-          cd src/Tests/Coding.Blog.UnitTests/
-          dotnet test --no-restore /p:CollectCoverage=true /p:CoverletOutput=TestResults/ /p:CoverletOutputFormat=lcov
-      - name: Publish Coverage Report
-        uses: coverallsapp/github-action@master
+          cd ./src/Tests/Coding.Blog.UnitTests/
+          dotnet test --no-restore /p:CollectCoverage=true /p:CoverletOutput=/home/runner/work/coding-blog/coding-blog/ /p:CoverletOutputFormat=opencover
+
+      - name: Publish Code Coverage
+        uses: codecov/codecov-action@v3
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          path-to-lcov: src/Tests/Coding.Blog.UnitTests/TestResults/coverage.info
+          files: /home/runner/work/coding-blog/coding-blog/coverage.opencover.xml
+          fail_ci_if_error: true
 
   lint:
     runs-on: ubuntu-latest
