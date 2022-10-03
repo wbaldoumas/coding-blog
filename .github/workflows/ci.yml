@@ -2,12 +2,11 @@ name: Continuous Integration
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
-
   analyze:
     runs-on: ubuntu-latest
     permissions:
@@ -17,43 +16,60 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: [ 'csharp' ]
+        language: ["csharp"]
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
-    - name: Initialize CodeQL
-      uses: github/codeql-action/init@v2
-      with:
-        languages: ${{ matrix.language }}
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: 6.0.x
-    - name: Restore dependencies
-      run: dotnet restore src
-    - name: Build
-      run: dotnet build src --configuration Release --no-restore
-    - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v2
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
+        with:
+          languages: ${{ matrix.language }}
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 6.0.x
+      - name: Restore dependencies
+        run: dotnet restore src
+      - name: Build
+        run: dotnet build src --configuration Release --no-restore
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v2
 
   test:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: 6.0.x
-    - name: Restore dependencies
-      run: dotnet restore src
-    - name: Build
-      run: dotnet build src --configuration Release --no-restore
-    - name: Unit Test With Coverage Report
-      run: |
-        cd src/Tests/Coding.Blog.UnitTests/
-        dotnet test --no-restore /p:CollectCoverage=true /p:CoverletOutput=TestResults/ /p:CoverletOutputFormat=lcov
-    - name: Publish Coverage Report
-      uses: coverallsapp/github-action@master
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        path-to-lcov: src/Tests/Coding.Blog.UnitTests/TestResults/coverage.info
+      - uses: actions/checkout@v3
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 6.0.x
+      - name: Restore dependencies
+        run: dotnet restore src
+      - name: Build
+        run: dotnet build src --configuration Release --no-restore
+      - name: Unit Test With Coverage Report
+        run: |
+          cd src/Tests/Coding.Blog.UnitTests/
+          dotnet test --no-restore /p:CollectCoverage=true /p:CoverletOutput=TestResults/ /p:CoverletOutputFormat=lcov
+      - name: Publish Coverage Report
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path-to-lcov: src/Tests/Coding.Blog.UnitTests/TestResults/coverage.info
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: 🧼 lint markdown files
+        uses: avto-dev/markdown-lint@v1.5.0
+
+      - uses: actions/checkout@v3
+      - name: 🧼 lint json files
+        uses: ocular-d/json-linter@0.0.2
+
+      - uses: actions/checkout@v3
+      - name: 🧼 lint renovate config
+        uses: suzuki-shunsuke/github-action-renovate-config-validator@v0.1.2
+        with:
+          config_file_path: "renovate.json"
