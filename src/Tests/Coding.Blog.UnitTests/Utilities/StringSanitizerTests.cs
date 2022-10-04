@@ -6,7 +6,7 @@ using NUnit.Framework;
 namespace Coding.Blog.UnitTests.Utilities;
 
 [TestFixture]
-public class StringSanitizerTests
+public sealed class StringSanitizerTests
 {
     [Test]
     public void StringSanitizer_generates_expected_string()

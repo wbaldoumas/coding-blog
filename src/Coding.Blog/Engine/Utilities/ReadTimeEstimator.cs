@@ -1,6 +1,6 @@
 ﻿namespace Coding.Blog.Engine.Utilities;
 
-internal class ReadTimeEstimator : IReadTimeEstimator
+internal sealed class ReadTimeEstimator : IReadTimeEstimator
 {
     private const double AverageWordsPerMinute = 250.00;
 

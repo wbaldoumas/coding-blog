@@ -12,7 +12,7 @@ using Polly;
 namespace Coding.Blog.Engine.Modules;
 
 [ExcludeFromCodeCoverage]
-public class CodingBlogModule : Module
+public sealed class CodingBlogModule : Module
 {
     protected override void Load(ContainerBuilder builder)
     {

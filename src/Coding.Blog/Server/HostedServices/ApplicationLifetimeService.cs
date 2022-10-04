@@ -4,7 +4,7 @@ using Coding.Blog.Server.Configurations;
 namespace Coding.Blog.Server.HostedServices;
 
 [ExcludeFromCodeCoverage]
-internal class ApplicationLifetimeService : IHostedService
+internal sealed class ApplicationLifetimeService : IHostedService
 {
     private readonly IHostApplicationLifetime _hostApplicationLifetime;
     private readonly TimeSpan _applicationStoppingGracePeriod;

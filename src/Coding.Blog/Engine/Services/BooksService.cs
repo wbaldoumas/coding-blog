@@ -5,7 +5,7 @@ using Grpc.Core;
 
 namespace Coding.Blog.Engine.Services;
 
-public class BooksService : Books.BooksBase
+public sealed class BooksService : Books.BooksBase
 {
     private readonly ICosmicClient<CosmicBooks> _cosmicClient;
     private readonly IMapper<CosmicBook, Book> _mapper;
@@ -18,7 +18,7 @@ public class BooksService : Books.BooksBase
 
     public override async Task<BooksReply> GetBooks(BooksRequest request, ServerCallContext context)
     {
-        var cosmicBooks = await _cosmicClient.GetAsync();
+        var cosmicBooks = await _cosmicClient.GetAsync().ConfigureAwait(false);
 
         return new BooksReply
         { 

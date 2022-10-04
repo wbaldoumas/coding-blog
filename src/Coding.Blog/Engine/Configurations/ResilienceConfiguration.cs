@@ -3,7 +3,7 @@
 namespace Coding.Blog.Engine.Configurations;
 
 [ExcludeFromCodeCoverage]
-public record ResilienceConfiguration : IKeyedConfiguration
+public sealed record ResilienceConfiguration : IKeyedConfiguration
 {
     public string Key => "Resilience";
 

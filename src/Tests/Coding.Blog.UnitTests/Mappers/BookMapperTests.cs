@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Coding.Blog.Engine;
+﻿using Coding.Blog.Engine;
 using Coding.Blog.Engine.Mappers;
 using Coding.Blog.Engine.Records;
 using FluentAssertions;
@@ -10,7 +8,7 @@ using NUnit.Framework;
 namespace Coding.Blog.UnitTests.Mappers;
 
 [TestFixture]
-public class BookMapperTests
+public sealed class BookMapperTests
 {
     [Test]
     public void Map_generates_expected_book()

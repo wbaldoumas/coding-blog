@@ -1,6 +1,6 @@
 ﻿namespace Coding.Blog.Engine.Mappers;
 
-public class PostLinker : IPostLinker
+public sealed class PostLinker : IPostLinker
 {
     public IReadOnlyCollection<Post> Link(IEnumerable<Post> posts)
     {

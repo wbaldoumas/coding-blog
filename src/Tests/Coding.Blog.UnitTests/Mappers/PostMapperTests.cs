@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Coding.Blog.Engine;
+﻿using Coding.Blog.Engine;
 using Coding.Blog.Engine.Mappers;
 using Coding.Blog.Engine.Records;
 using Coding.Blog.Engine.Utilities;
@@ -12,9 +10,9 @@ using NUnit.Framework;
 namespace Coding.Blog.UnitTests.Mappers;
 
 [TestFixture]
-public class PostMapperTests
+public sealed class PostMapperTests
 {
-    private IReadTimeEstimator _mockReadTimeEstimator;
+    private IReadTimeEstimator? _mockReadTimeEstimator;
 
     [SetUp]
     public void SetUp() => _mockReadTimeEstimator = Substitute.For<IReadTimeEstimator>();
@@ -23,7 +21,7 @@ public class PostMapperTests
     public void Map_generates_expected_post()
     {
         // arrange
-        _mockReadTimeEstimator
+        _mockReadTimeEstimator!
             .Estimate(Arg.Any<string>())
             .Returns(TimeSpan.MaxValue);
 
@@ -70,7 +68,7 @@ public class PostMapperTests
     public void Map_generates_expected_posts()
     {
         // arrange
-        _mockReadTimeEstimator
+        _mockReadTimeEstimator!
             .Estimate(Arg.Any<string>())
             .Returns(TimeSpan.MaxValue);
 

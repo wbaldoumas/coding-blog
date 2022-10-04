@@ -3,7 +3,7 @@
 namespace Coding.Blog.Engine.Configurations;
 
 [ExcludeFromCodeCoverage]
-public record GrpcResilienceConfiguration : IKeyedConfiguration
+public sealed record GrpcResilienceConfiguration : IKeyedConfiguration
 {
     public string Key => "GrpcResilience";
 
