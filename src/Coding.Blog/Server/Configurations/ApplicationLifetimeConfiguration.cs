@@ -13,5 +13,5 @@ internal sealed class ApplicationLifetimeConfiguration : IKeyedConfiguration
 
     public int ApplicationStoppingGracePeriodSeconds { get; init; }
 
-    public int ApplicationShutdownTimeoutSeconds { get; set; }
+    public int ApplicationShutdownTimeoutSeconds { get; init; }
 }

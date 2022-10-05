@@ -7,9 +7,9 @@ public sealed record CosmicConfiguration : IKeyedConfiguration
 {
     public string Key => "Cosmic";
 
-    public string Endpoint { get; set; } = string.Empty;
+    public string Endpoint { get; init; } = string.Empty;
 
-    public string BucketSlug { get; set; } = string.Empty;
+    public string BucketSlug { get; init; } = string.Empty;
 
-    public string ReadKey { get; set; } = string.Empty;
+    public string ReadKey { get; init; } = string.Empty;
 }

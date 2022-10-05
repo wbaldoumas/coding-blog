@@ -6,6 +6,9 @@
         <DockerfileTag>coding-blog</DockerfileTag>
         <DockerfileContext>..\..</DockerfileContext>
         <UserSecretsId>b7ac665c-bbb5-4060-89ae-0cc05f776033</UserSecretsId>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     </PropertyGroup>
 
     <ItemGroup>
