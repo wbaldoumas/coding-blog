@@ -3,13 +3,13 @@
 namespace Coding.Blog.Engine.Configurations;
 
 [ExcludeFromCodeCoverage]
-public record ResilienceConfiguration : IKeyedConfiguration
+public sealed record ResilienceConfiguration : IKeyedConfiguration
 {
     public string Key => "Resilience";
 
-    public int MedianFirstRetryDelayMilliseconds { get; set; }
+    public int MedianFirstRetryDelayMilliseconds { get; init; }
 
-    public int RetryCount { get; set; }
+    public int RetryCount { get; init; }
 
-    public int TimeToLiveMilliseconds { get; set; }
+    public int TimeToLiveMilliseconds { get; init; }
 }

@@ -4,7 +4,7 @@ using Google.Protobuf.WellKnownTypes;
 
 namespace Coding.Blog.Engine.Mappers;
 
-internal class PostMapper : BaseMapper<CosmicPost, Post>
+internal sealed class PostMapper : BaseMapper<CosmicPost, Post>
 {
     private readonly IReadTimeEstimator _readTimeEstimator;
 

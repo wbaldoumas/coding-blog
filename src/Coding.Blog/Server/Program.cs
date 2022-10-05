@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.HttpOverrides;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Configuration.AddJsonFile("secrets/appsettings.secrets.json", true);
+builder.Configuration.AddJsonFile("secrets/appsettings.secrets.json", optional: true);
 
 // Add services to the container.
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
@@ -61,7 +61,7 @@ app.Use(async (context, next) =>
 {
     if (context.Request.IsHttps || context.Request.Headers["X-Forwarded-Proto"] == Uri.UriSchemeHttps)
     {
-        await next();
+        await next().ConfigureAwait(false);
     }
     else
     {
@@ -70,7 +70,7 @@ app.Use(async (context, next) =>
             : string.Empty;
         var https = "https://" + context.Request.Host + context.Request.Path + queryString;
 
-        context.Response.Redirect(https, true);
+        context.Response.Redirect(https, permanent: true);
     }
 });
 
@@ -96,4 +96,4 @@ app.MapRazorPages();
 app.MapControllers();
 app.MapFallbackToFile("index.html");
 
-await app.RunAsync();
+await app.RunAsync().ConfigureAwait(false);

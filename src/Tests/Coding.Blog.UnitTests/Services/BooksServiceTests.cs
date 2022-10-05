@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Coding.Blog.Engine;
+﻿using Coding.Blog.Engine;
 using Coding.Blog.Engine.Clients;
 using Coding.Blog.Engine.Mappers;
 using Coding.Blog.Engine.Records;
@@ -18,10 +13,10 @@ using Grpc.Core.Testing;
 namespace Coding.Blog.UnitTests.Services;
 
 [TestFixture]
-public class BooksServiceTests
+public sealed class BooksServiceTests
 {
-    private ICosmicClient<CosmicBooks> _mockCosmicBookClient;
-    private IMapper<CosmicBook, Book> _mockBookMapper;
+    private ICosmicClient<CosmicBooks>? _mockCosmicBookClient;
+    private IMapper<CosmicBook, Book>? _mockBookMapper;
 
     [SetUp]
     public void SetUp()
@@ -45,7 +40,7 @@ public class BooksServiceTests
             }
         );
 
-        _mockCosmicBookClient
+        _mockCosmicBookClient!
             .GetAsync()
             .Returns(mockCosmicBooksClientResponse);
 
@@ -58,7 +53,7 @@ public class BooksServiceTests
             DatePublished = Timestamp.FromDateTime(mockDatePublished)
         });
 
-        _mockBookMapper
+        _mockBookMapper!
             .Map(mockCosmicBooksClientResponse.Books)
             .Returns(mockBookMapperResponse);
 
@@ -69,7 +64,7 @@ public class BooksServiceTests
             Metadata.Empty,
             CancellationToken.None,
             "TestPeer",
-            new AuthContext("TestPeerIdentity", new Dictionary<string, List<AuthProperty>>()),
+            new AuthContext("TestPeerIdentity", new Dictionary<string, List<AuthProperty>>(StringComparer.OrdinalIgnoreCase)),
             null,
             _ => Task.CompletedTask,
             () => new WriteOptions(),
@@ -100,11 +95,11 @@ public class BooksServiceTests
         // arrange
         var mockCosmicBooksClientResponse = new CosmicBooks(new List<CosmicBook>());
 
-        _mockCosmicBookClient
+        _mockCosmicBookClient!
             .GetAsync()
             .Returns(mockCosmicBooksClientResponse);
 
-        _mockBookMapper
+        _mockBookMapper!
             .Map(mockCosmicBooksClientResponse.Books)
             .Returns(new List<Book>());
 
@@ -115,7 +110,7 @@ public class BooksServiceTests
             Metadata.Empty,
             CancellationToken.None,
             "TestPeer",
-            new AuthContext("TestPeerIdentity", new Dictionary<string, List<AuthProperty>>()),
+            new AuthContext("TestPeerIdentity", new Dictionary<string, List<AuthProperty>>(StringComparer.OrdinalIgnoreCase)),
             null,
             _ => Task.CompletedTask,
             () => new WriteOptions(),

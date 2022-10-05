@@ -8,7 +8,7 @@ using Polly;
 [assembly: InternalsVisibleTo("Coding.Blog.UnitTests")]
 namespace Coding.Blog.Engine.Clients;
 
-internal class CosmicClient<T> : ICosmicClient<T>
+internal sealed class CosmicClient<T> : ICosmicClient<T>
 {
     private readonly CosmicConfiguration _configuration;
     private readonly ILogger<T> _logger;
@@ -38,9 +38,9 @@ internal class CosmicClient<T> : ICosmicClient<T>
                     .SetQueryParam("query", $"{{\"type\":\"{type}\"}}")
                     .SetQueryParam("read_key", _configuration.ReadKey)
                     .SetQueryParam("props", props)
-                    .GetJsonAsync<T>(),
+                    .GetJsonAsync<T>().ConfigureAwait(false),
                 new Context(typeName)
-            );
+            ).ConfigureAwait(false);
         }
         catch (Exception exception)
         {

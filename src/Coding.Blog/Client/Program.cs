@@ -108,4 +108,4 @@ builder.Services.AddSingleton(_ => new MarkdownPipelineBuilder()
     .UseColorCode()
     .Build());
 
-await builder.Build().RunAsync();
+await builder.Build().RunAsync().ConfigureAwait(false);

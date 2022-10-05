@@ -7,11 +7,11 @@ namespace Coding.Blog.Server.Configurations;
 ///     signal. This prevents in-flight traffic from being dropped during deployments or
 ///     application restarts.
 /// </summary>
-internal class ApplicationLifetimeConfiguration : IKeyedConfiguration
+internal sealed class ApplicationLifetimeConfiguration : IKeyedConfiguration
 {
     public string Key => "ApplicationLifetime";
 
     public int ApplicationStoppingGracePeriodSeconds { get; init; }
 
-    public int ApplicationShutdownTimeoutSeconds { get; set; }
+    public int ApplicationShutdownTimeoutSeconds { get; init; }
 }

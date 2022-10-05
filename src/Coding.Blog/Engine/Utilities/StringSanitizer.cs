@@ -2,7 +2,7 @@
 
 namespace Coding.Blog.Engine.Utilities;
 
-internal class StringSanitizer : IStringSanitizer
+internal sealed class StringSanitizer : IStringSanitizer
 {
     private readonly MarkdownPipeline _markdownPipeline;
 

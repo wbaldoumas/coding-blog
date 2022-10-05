@@ -1,8 +1,8 @@
 ﻿@page "/post/{Slug}"
-@inject MarkdownPipeline _markdownPipeline;
-@inject NavigationManager _navigationManager
-@inject IResilientClient<Post> _postsClient;
-@inject IJSRuntime _js;
+@inject MarkdownPipeline MarkdownPipeline;
+@inject NavigationManager NavigationManager
+@inject IResilientClient<Post> PostsClient;
+@inject IJSRuntime Js;
 @using Coding.Blog.Engine
 @using Coding.Blog.Engine.Clients
 @using Coding.Blog.Engine.Extensions
@@ -99,11 +99,11 @@
 
     private async Task Refresh()
     {
-        await _js.InvokeVoidAsync("resetScrollPosition");
+        await Js.InvokeVoidAsync("resetScrollPosition");
 
         if (!Posts.Any())
         {
-            var posts = await _postsClient.GetAsync();
+            var posts = await PostsClient.GetAsync();
 
             Posts = posts.ToDictionary(post => post.Slug, post => post);
         }
@@ -111,7 +111,7 @@
         Posts.TryGetValue(Slug, out _selectedPost);
     }
 
-    private void NavigateToMain() => _navigationManager.NavigateTo("blog");
+    private void NavigateToMain() => NavigationManager.NavigateTo("blog");
 
-    private MarkupString GeneratePostMarkup(string markdown) => new(Markdown.ToHtml(markdown, _markdownPipeline));
+    private MarkupString GeneratePostMarkup(string markdown) => new(Markdown.ToHtml(markdown, MarkdownPipeline));
 }

@@ -5,7 +5,7 @@ using Polly;
 namespace Coding.Blog.Engine.Clients;
 
 [ExcludeFromCodeCoverage]
-public class ResilientBooksClient : IResilientClient<Book>
+public sealed class ResilientBooksClient : IResilientClient<Book>
 {
     private readonly Books.BooksClient _booksClient;
     private readonly ILogger<Book> _logger;
@@ -27,12 +27,12 @@ public class ResilientBooksClient : IResilientClient<Book>
         {
             return await _resiliencePolicy.ExecuteAsync(async _ =>
                 {
-                    var booksReply = await _booksClient.GetBooksAsync(new BooksRequest());
+                    var booksReply = await _booksClient.GetBooksAsync(new BooksRequest()).ConfigureAwait(false);
 
                     return booksReply.Books;
                 },
                 new Context("GetBooks")
-            );
+            ).ConfigureAwait(false);
         }
         catch (Exception exception)
         {

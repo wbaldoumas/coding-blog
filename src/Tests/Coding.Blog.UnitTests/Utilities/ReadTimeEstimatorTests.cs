@@ -1,7 +1,4 @@
-﻿using System;
-using System.Data;
-using System.Linq;
-using Coding.Blog.Engine.Utilities;
+﻿using Coding.Blog.Engine.Utilities;
 using FluentAssertions;
 using NSubstitute;
 using NUnit.Framework;
@@ -9,9 +6,9 @@ using NUnit.Framework;
 namespace Coding.Blog.UnitTests.Utilities;
 
 [TestFixture]
-public class ReadTimeEstimatorTests
+public sealed class ReadTimeEstimatorTests
 {
-    private IStringSanitizer _mockStringSanitizer;
+    private IStringSanitizer? _mockStringSanitizer;
 
     [SetUp]
     public void SetUp()
@@ -28,7 +25,7 @@ public class ReadTimeEstimatorTests
         // arrange
         var content = string.Join(' ', Enumerable.Range(0, wordCount).Select(_ => "hello"));
 
-        _mockStringSanitizer
+        _mockStringSanitizer!
             .Sanitize(content)
             .Returns(content);
 

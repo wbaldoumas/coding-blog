@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using Coding.Blog.Engine;
+﻿using Coding.Blog.Engine;
 using Coding.Blog.Engine.Mappers;
 using FluentAssertions;
 using Google.Protobuf.WellKnownTypes;
@@ -11,7 +7,7 @@ using NUnit.Framework;
 namespace Coding.Blog.UnitTests.Mappers;
 
 [TestFixture]
-public class PostLinkerTests
+public sealed class PostLinkerTests
 {
     [Test]
     public void PostLinker_links_expected_posts()
@@ -58,14 +54,14 @@ public class PostLinkerTests
         // assert
         linkedPosts.Select(post => post.DatePublished).Should().BeInDescendingOrder();
 
-        linkedPosts.First(post => post.Id == firstPost.Id).Next.Should().BeEquivalentTo(expectedFirstPost.Next);
-        linkedPosts.First(post => post.Id == firstPost.Id).Previous.Should().BeEquivalentTo(expectedFirstPost.Previous);
+        linkedPosts.First(post => string.Equals(post.Id, firstPost.Id, StringComparison.OrdinalIgnoreCase)).Next.Should().BeEquivalentTo(expectedFirstPost.Next);
+        linkedPosts.First(post => string.Equals(post.Id, firstPost.Id, StringComparison.OrdinalIgnoreCase)).Previous.Should().BeEquivalentTo(expectedFirstPost.Previous);
 
-        linkedPosts.First(post => post.Id == secondPost.Id).Next.Should().BeEquivalentTo(expectedSecondPost.Next);
-        linkedPosts.First(post => post.Id == secondPost.Id).Previous.Should().BeEquivalentTo(expectedSecondPost.Previous);
+        linkedPosts.First(post => string.Equals(post.Id, secondPost.Id, StringComparison.OrdinalIgnoreCase)).Next.Should().BeEquivalentTo(expectedSecondPost.Next);
+        linkedPosts.First(post => string.Equals(post.Id, secondPost.Id, StringComparison.OrdinalIgnoreCase)).Previous.Should().BeEquivalentTo(expectedSecondPost.Previous);
 
-        linkedPosts.First(post => post.Id == thirdPost.Id).Next.Should().BeEquivalentTo(expectedThirdPost.Next);
-        linkedPosts.First(post => post.Id == thirdPost.Id).Previous.Should().BeEquivalentTo(expectedThirdPost.Previous);
+        linkedPosts.First(post => string.Equals(post.Id, thirdPost.Id, StringComparison.OrdinalIgnoreCase)).Next.Should().BeEquivalentTo(expectedThirdPost.Next);
+        linkedPosts.First(post => string.Equals(post.Id, thirdPost.Id, StringComparison.OrdinalIgnoreCase)).Previous.Should().BeEquivalentTo(expectedThirdPost.Previous);
     }
 
     private static Post CreatePost(string id) =>
