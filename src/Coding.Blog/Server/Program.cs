@@ -3,8 +3,10 @@ using Autofac.Extensions.DependencyInjection;
 using Coding.Blog.Engine.Configurations;
 using Coding.Blog.Engine.Modules;
 using Coding.Blog.Engine.Services;
+using Coding.Blog.Server.Configurations;
 using Coding.Blog.Server.HostedServices;
 using Microsoft.AspNetCore.HttpOverrides;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,11 +29,20 @@ builder.Services.Configure<ResilienceConfiguration>(
     builder.Configuration.GetSection(ResilienceConfiguration.Key)
 );
 
+builder.Services.Configure<ApplicationLifetimeConfiguration>(
+    builder.Configuration.GetSection(ApplicationLifetimeConfiguration.Key)
+);
+
 builder.Services.AddHostedService<ApplicationLifetimeService>();
 
 builder.Services.Configure<HostOptions>(options =>
 {
-    options.ShutdownTimeout = TimeSpan.FromSeconds(45);
+    var applicationShutdownTimeoutSeconds = int.Parse(
+        builder.Configuration[$"{ApplicationLifetimeConfiguration.Key}:ApplicationShutdownTimeoutSeconds"],
+        CultureInfo.InvariantCulture
+    );
+
+    options.ShutdownTimeout = TimeSpan.FromSeconds(applicationShutdownTimeoutSeconds);
 });
 
 builder.Services.AddGrpc();

@@ -17,11 +17,11 @@ internal sealed class CosmicClient<T> : ICosmicClient<T>
     private readonly string _baseUrl;
 
     public CosmicClient(
-        IOptions<CosmicConfiguration> configuration,
+        IOptions<CosmicConfiguration> configurationOptions,
         ILogger<T> logger,
         IAsyncPolicy<T> resiliencePolicy)
     {
-        _configuration = configuration.Value;
+        _configuration = configurationOptions.Value;
         _logger = logger;
         _resiliencePolicy = resiliencePolicy;
         _baseUrl = $"{_configuration.Endpoint}/buckets/{_configuration.BucketSlug}/objects";
