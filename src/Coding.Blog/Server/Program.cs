@@ -6,6 +6,7 @@ using Coding.Blog.Engine.Services;
 using Coding.Blog.Server.Configurations;
 using Coding.Blog.Server.HostedServices;
 using Microsoft.AspNetCore.HttpOverrides;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,27 +21,28 @@ builder.Services.Configure<ForwardedHeadersOptions>(options =>
     options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
 });
 
-static T RegisterKeyedConfiguration<T>(WebApplicationBuilder webApplicationBuilder) where T : class, IKeyedConfiguration, new()
-{
-    var configuration = new T();
-    webApplicationBuilder.Configuration.GetSection(configuration.Key).Bind(configuration);
-    webApplicationBuilder.Services.AddSingleton(configuration);
-    
-    return configuration;
-}
+builder.Services.Configure<CosmicConfiguration>(
+    builder.Configuration.GetSection(CosmicConfiguration.Key)
+);
 
-RegisterKeyedConfiguration<CosmicConfiguration>(builder);
-RegisterKeyedConfiguration<ResilienceConfiguration>(builder);
+builder.Services.Configure<ResilienceConfiguration>(
+    builder.Configuration.GetSection(ResilienceConfiguration.Key)
+);
 
-var applicationLifetimeConfiguration = RegisterKeyedConfiguration<ApplicationLifetimeConfiguration>(builder);
+builder.Services.Configure<ApplicationLifetimeConfiguration>(
+    builder.Configuration.GetSection(ApplicationLifetimeConfiguration.Key)
+);
 
 builder.Services.AddHostedService<ApplicationLifetimeService>();
 
 builder.Services.Configure<HostOptions>(options =>
 {
-    options.ShutdownTimeout = TimeSpan.FromSeconds(
-        applicationLifetimeConfiguration.ApplicationShutdownTimeoutSeconds
+    var applicationShutdownTimeoutSeconds = int.Parse(
+        builder.Configuration[$"{ApplicationLifetimeConfiguration.Key}:ApplicationShutdownTimeoutSeconds"],
+        CultureInfo.InvariantCulture
     );
+
+    options.ShutdownTimeout = TimeSpan.FromSeconds(applicationShutdownTimeoutSeconds);
 });
 
 builder.Services.AddGrpc();
