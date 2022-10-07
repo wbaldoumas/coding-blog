@@ -11,27 +11,24 @@ using Markdown.ColorCode;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Microsoft.Extensions.Options;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-static void RegisterKeyedConfiguration<T>(WebAssemblyHostBuilder webAssemblyHostBuilder)
-    where T : class, IKeyedConfiguration, new()
-{
-    var configuration = new T();
+builder.Services.Configure<ResilienceConfiguration>(
+    builder.Configuration.GetSection(ResilienceConfiguration.Key)
+);
 
-    webAssemblyHostBuilder.Configuration.GetSection(configuration.Key).Bind(configuration);
-    webAssemblyHostBuilder.Services.AddSingleton(configuration);
-}
-
-RegisterKeyedConfiguration<GrpcResilienceConfiguration>(builder);
-RegisterKeyedConfiguration<ResilienceConfiguration>(builder);
+builder.Services.Configure<GrpcResilienceConfiguration>(
+    builder.Configuration.GetSection(GrpcResilienceConfiguration.Key)
+);
 
 builder.Services.AddSingleton(serviceProvider =>
 {
-    var grpcResilienceConfiguration = serviceProvider.GetRequiredService<GrpcResilienceConfiguration>();
+    var grpcResilienceConfiguration = serviceProvider.GetRequiredService<IOptions<GrpcResilienceConfiguration>>().Value;
 
     return new ServiceConfig
     {
@@ -77,7 +74,7 @@ builder.Services
 
 builder.Services.AddSingleton<IResilientClient<Book>, ResilientBooksClient>(serviceProvider =>
 {
-    var configuration = serviceProvider.GetRequiredService<ResilienceConfiguration>();
+    var configuration = serviceProvider.GetRequiredService<IOptions<ResilienceConfiguration>>().Value;
     var booksClient = serviceProvider.GetRequiredService<Books.BooksClient>();
     var logger = serviceProvider.GetRequiredService<ILogger<Book>>();
     var resiliencePolicy = ResiliencePolicyBuilder.Build<IEnumerable<Book>>(
@@ -91,7 +88,7 @@ builder.Services.AddSingleton<IResilientClient<Book>, ResilientBooksClient>(serv
 
 builder.Services.AddSingleton<IResilientClient<Post>, ResilientPostsClient>(serviceProvider =>
 {
-    var configuration = serviceProvider.GetRequiredService<ResilienceConfiguration>();
+    var configuration = serviceProvider.GetRequiredService<IOptions<ResilienceConfiguration>>().Value;
     var booksClient = serviceProvider.GetRequiredService<Posts.PostsClient>();
     var logger = serviceProvider.GetRequiredService<ILogger<Post>>();
     var resiliencePolicy = ResiliencePolicyBuilder.Build<IEnumerable<Post>>(

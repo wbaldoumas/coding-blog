@@ -3,9 +3,9 @@
 namespace Coding.Blog.Engine.Configurations;
 
 [ExcludeFromCodeCoverage]
-public sealed record GrpcResilienceConfiguration : IKeyedConfiguration
+public sealed record GrpcResilienceConfiguration
 {
-    public string Key => "GrpcResilience";
+    public static string Key => "GrpcResilience";
 
     public int MaxAttempts { get; init; }
 

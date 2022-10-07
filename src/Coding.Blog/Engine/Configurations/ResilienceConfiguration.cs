@@ -3,9 +3,9 @@
 namespace Coding.Blog.Engine.Configurations;
 
 [ExcludeFromCodeCoverage]
-public sealed record ResilienceConfiguration : IKeyedConfiguration
+public sealed record ResilienceConfiguration
 {
-    public string Key => "Resilience";
+    public static string Key => "Resilience";
 
     public int MedianFirstRetryDelayMilliseconds { get; init; }
 

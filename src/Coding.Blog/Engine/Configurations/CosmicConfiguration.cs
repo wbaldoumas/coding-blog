@@ -3,9 +3,9 @@
 namespace Coding.Blog.Engine.Configurations;
 
 [ExcludeFromCodeCoverage]
-public sealed record CosmicConfiguration : IKeyedConfiguration
+public sealed record CosmicConfiguration
 {
-    public string Key => "Cosmic";
+    public static string Key => "Cosmic";
 
     public string Endpoint { get; init; } = string.Empty;
 

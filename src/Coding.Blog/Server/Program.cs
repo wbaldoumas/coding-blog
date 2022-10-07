@@ -3,7 +3,6 @@ using Autofac.Extensions.DependencyInjection;
 using Coding.Blog.Engine.Configurations;
 using Coding.Blog.Engine.Modules;
 using Coding.Blog.Engine.Services;
-using Coding.Blog.Server.Configurations;
 using Coding.Blog.Server.HostedServices;
 using Microsoft.AspNetCore.HttpOverrides;
 
@@ -20,27 +19,19 @@ builder.Services.Configure<ForwardedHeadersOptions>(options =>
     options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
 });
 
-static T RegisterKeyedConfiguration<T>(WebApplicationBuilder webApplicationBuilder) where T : class, IKeyedConfiguration, new()
-{
-    var configuration = new T();
-    webApplicationBuilder.Configuration.GetSection(configuration.Key).Bind(configuration);
-    webApplicationBuilder.Services.AddSingleton(configuration);
-    
-    return configuration;
-}
+builder.Services.Configure<CosmicConfiguration>(
+    builder.Configuration.GetSection(CosmicConfiguration.Key)
+);
 
-RegisterKeyedConfiguration<CosmicConfiguration>(builder);
-RegisterKeyedConfiguration<ResilienceConfiguration>(builder);
-
-var applicationLifetimeConfiguration = RegisterKeyedConfiguration<ApplicationLifetimeConfiguration>(builder);
+builder.Services.Configure<ResilienceConfiguration>(
+    builder.Configuration.GetSection(ResilienceConfiguration.Key)
+);
 
 builder.Services.AddHostedService<ApplicationLifetimeService>();
 
 builder.Services.Configure<HostOptions>(options =>
 {
-    options.ShutdownTimeout = TimeSpan.FromSeconds(
-        applicationLifetimeConfiguration.ApplicationShutdownTimeoutSeconds
-    );
+    options.ShutdownTimeout = TimeSpan.FromSeconds(45);
 });
 
 builder.Services.AddGrpc();
