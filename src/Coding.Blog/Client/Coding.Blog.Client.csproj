@@ -5,21 +5,20 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <InvariantGlobalization>true</InvariantGlobalization>
+        <BlazorEnableTimeZoneSupport>false</BlazorEnableTimeZoneSupport>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="Grpc.Net.Client.Web" Version="2.49.0" />
         <PackageReference Include="Grpc.Net.ClientFactory" Version="2.49.0" />
-        <PackageReference Include="Markdig" Version="0.30.4" />
         <PackageReference Include="Markdown.ColorCode" Version="1.0.1" />
         <PackageReference Include="Meziantou.Analyzer" Version="1.0.733">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.9" />
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.9"
-                          PrivateAssets="all" />
-        <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.9" PrivateAssets="all" />
         <PackageReference Include="TaskTupleAwaiter" Version="2.0.1" />
     </ItemGroup>
 

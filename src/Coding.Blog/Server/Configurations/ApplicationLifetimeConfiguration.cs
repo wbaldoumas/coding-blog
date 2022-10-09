@@ -7,7 +7,5 @@
 /// </summary>
 internal sealed class ApplicationLifetimeConfiguration
 {
-    public static string Key => "ApplicationLifetime";
-
     public int ApplicationStoppingGracePeriodSeconds { get; init; }
 }

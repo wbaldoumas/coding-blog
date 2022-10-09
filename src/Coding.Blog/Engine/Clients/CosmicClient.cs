@@ -3,7 +3,6 @@ using Coding.Blog.Engine.Configurations;
 using Flurl;
 using Flurl.Http;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Polly;
 
 [assembly: InternalsVisibleTo("Coding.Blog.UnitTests")]
@@ -17,11 +16,11 @@ internal sealed class CosmicClient<T> : ICosmicClient<T>
     private readonly string _baseUrl;
 
     public CosmicClient(
-        IOptions<CosmicConfiguration> configurationOptions,
+        CosmicConfiguration configuration,
         ILogger<T> logger,
         IAsyncPolicy<T> resiliencePolicy)
     {
-        _configuration = configurationOptions.Value;
+        _configuration = configuration;
         _logger = logger;
         _resiliencePolicy = resiliencePolicy;
         _baseUrl = $"{_configuration.Endpoint}/buckets/{_configuration.BucketSlug}/objects";

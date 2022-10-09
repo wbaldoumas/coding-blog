@@ -7,7 +7,6 @@ using Coding.Blog.Engine.Records;
 using Coding.Blog.Engine.Resilience;
 using Coding.Blog.Engine.Utilities;
 using Markdig;
-using Microsoft.Extensions.Options;
 using Polly;
 
 namespace Coding.Blog.Engine.Modules;
@@ -49,7 +48,7 @@ public sealed class CodingBlogModule : Module
     {
         builder.Register(componentContext =>
             {
-                var configuration = componentContext.Resolve<IOptions<ResilienceConfiguration>>().Value;
+                var configuration = componentContext.Resolve<ResilienceConfiguration>();
 
                 return ResiliencePolicyBuilder.Build<T>(
                     TimeSpan.FromMilliseconds(configuration.MedianFirstRetryDelayMilliseconds),

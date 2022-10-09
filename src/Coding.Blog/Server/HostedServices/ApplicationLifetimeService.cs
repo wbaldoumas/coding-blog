@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using Coding.Blog.Server.Configurations;
-using Microsoft.Extensions.Options;
 
 namespace Coding.Blog.Server.HostedServices;
 
@@ -12,12 +11,10 @@ internal sealed class ApplicationLifetimeService : IHostedService
 
     public ApplicationLifetimeService(
         IHostApplicationLifetime hostApplicationLifetime,
-        IOptions<ApplicationLifetimeConfiguration> configurationOptions)
+        ApplicationLifetimeConfiguration configuration)
     {
         _hostApplicationLifetime = hostApplicationLifetime;
-        _applicationStoppingGracePeriod = TimeSpan.FromSeconds(
-            configurationOptions.Value.ApplicationStoppingGracePeriodSeconds
-        );
+        _applicationStoppingGracePeriod = TimeSpan.FromSeconds(configuration.ApplicationStoppingGracePeriodSeconds);
     }
 
     public Task StartAsync(CancellationToken cancellationToken)

@@ -5,8 +5,6 @@ namespace Coding.Blog.Engine.Configurations;
 [ExcludeFromCodeCoverage]
 public sealed record CosmicConfiguration
 {
-    public static string Key => "Cosmic";
-
     public string Endpoint { get; init; } = string.Empty;
 
     public string BucketSlug { get; init; } = string.Empty;
