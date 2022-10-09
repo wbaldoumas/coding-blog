@@ -8,6 +8,10 @@
         <UserSecretsId>b7ac665c-bbb5-4060-89ae-0cc05f776033</UserSecretsId>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
+        <PublishReadyToRun>true</PublishReadyToRun>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)'=='DEBUG'">
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     </PropertyGroup>
 

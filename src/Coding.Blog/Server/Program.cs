@@ -1,6 +1,6 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
-using Coding.Blog.Engine.Configurations;
+using Coding.Blog.Engine.Extensions;
 using Coding.Blog.Engine.Modules;
 using Coding.Blog.Engine.Services;
 using Coding.Blog.Server.Configurations;
@@ -16,34 +16,25 @@ builder.Configuration.AddJsonFile("secrets/appsettings.secrets.json", optional: 
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 
 builder.Services.AddHealthChecks();
-builder.Services.Configure<ForwardedHeadersOptions>(options =>
-{
-    options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
-});
 
-builder.Services.Configure<CosmicConfiguration>(
-    builder.Configuration.GetSection(CosmicConfiguration.Key)
-);
+builder.Services
+    .AddCosmicConfiguration(builder.Configuration)
+    .AddResilienceConfiguration(builder.Configuration)
+    .AddApplicationLifetimeConfiguration(builder.Configuration)
+    .Configure<ForwardedHeadersOptions>(options =>
+    {
+        options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+    })
+    .Configure<HostOptions>(options =>
+    {
+        var applicationShutdownTimeoutSeconds = int.Parse(
+            builder.Configuration["ApplicationLifetime:ApplicationShutdownTimeoutSeconds"],
+            CultureInfo.InvariantCulture
+        );
 
-builder.Services.Configure<ResilienceConfiguration>(
-    builder.Configuration.GetSection(ResilienceConfiguration.Key)
-);
-
-builder.Services.Configure<ApplicationLifetimeConfiguration>(
-    builder.Configuration.GetSection(ApplicationLifetimeConfiguration.Key)
-);
-
-builder.Services.AddHostedService<ApplicationLifetimeService>();
-
-builder.Services.Configure<HostOptions>(options =>
-{
-    var applicationShutdownTimeoutSeconds = int.Parse(
-        builder.Configuration[$"{ApplicationLifetimeConfiguration.Key}:ApplicationShutdownTimeoutSeconds"],
-        CultureInfo.InvariantCulture
-    );
-
-    options.ShutdownTimeout = TimeSpan.FromSeconds(applicationShutdownTimeoutSeconds);
-});
+        options.ShutdownTimeout = TimeSpan.FromSeconds(applicationShutdownTimeoutSeconds);
+    })
+    .AddHostedService<ApplicationLifetimeService>();
 
 builder.Services.AddGrpc();
 builder.Services.AddControllersWithViews();
@@ -57,24 +48,25 @@ builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-app.UseHealthChecks("/healthz");
-app.UseForwardedHeaders();
-app.Use(async (context, next) =>
-{
-    if (context.Request.IsHttps || context.Request.Headers["X-Forwarded-Proto"] == Uri.UriSchemeHttps)
+app
+    .UseHealthChecks("/healthz")
+    .UseForwardedHeaders()
+    .Use(async (context, next) =>
     {
-        await next().ConfigureAwait(false);
-    }
-    else
-    {
-        var queryString = context.Request.QueryString.HasValue
-            ? context.Request.QueryString.Value
-            : string.Empty;
-        var https = "https://" + context.Request.Host + context.Request.Path + queryString;
+        if (context.Request.IsHttps || context.Request.Headers["X-Forwarded-Proto"] == Uri.UriSchemeHttps)
+        {
+            await next().ConfigureAwait(false);
+        }
+        else
+        {
+            var queryString = context.Request.QueryString.HasValue
+                ? context.Request.QueryString.Value
+                : string.Empty;
+            var https = "https://" + context.Request.Host + context.Request.Path + queryString;
 
-        context.Response.Redirect(https, permanent: true);
-    }
-});
+            context.Response.Redirect(https, permanent: true);
+        }
+    });
 
 if (app.Environment.IsDevelopment())
 {
@@ -82,15 +74,14 @@ if (app.Environment.IsDevelopment())
 }
 else
 {
-    app.UseExceptionHandler("/Error");
-    app.UseHsts();
+    app.UseExceptionHandler("/Error").UseHsts();
 }
 
-app.UseHttpsRedirection();
-app.UseBlazorFrameworkFiles();
-app.UseStaticFiles();
-app.UseRouting();
-app.UseGrpcWeb();
+app.UseHttpsRedirection()
+    .UseBlazorFrameworkFiles()
+    .UseStaticFiles()
+    .UseRouting()
+    .UseGrpcWeb();
 
 app.MapGrpcService<BooksService>().EnableGrpcWeb();
 app.MapGrpcService<PostsService>().EnableGrpcWeb();
@@ -98,4 +89,6 @@ app.MapRazorPages();
 app.MapControllers();
 app.MapFallbackToFile("index.html");
 
-await app.RunAsync().ConfigureAwait(false);
+await app
+    .RunAsync()
+    .ConfigureAwait(false);

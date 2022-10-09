@@ -9,13 +9,6 @@
 public interface IMapper<in TSource, out TTarget>
 {
     /// <summary>
-    ///     Map from the given <paramref name="source"/> object to an object of type <typeparamref name="TTarget"/>.
-    /// </summary>
-    /// <param name="source">The source object being mapped from</param>
-    /// <returns>An object of type <typeparamref name="TTarget"/> that was mapped to from the <paramref name="source"/></returns>
-    TTarget Map(TSource source);
-
-    /// <summary>
     ///     Map from the given <paramref name="sources"/> to a list of objects of type <typeparamref name="TTarget"/>.
     /// </summary>
     /// <param name="sources">The source objects being mapped from</param>

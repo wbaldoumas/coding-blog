@@ -1,7 +1,7 @@
 ﻿@using Coding.Blog.Engine
 @using Coding.Blog.Engine.Clients
-@inject IResilientClient<Book> _booksClient;
-@inject IResilientClient<Post> _postsClient;
+@inject IResilientClient<Book> BooksClient;
+@inject IResilientClient<Post> PostsClient;
 @inherits LayoutComponentBase
 
 <div class="page">
@@ -25,7 +25,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var (books, posts) = await (_booksClient.GetAsync(), _postsClient.GetAsync());
+        var (books, posts) = await (BooksClient.GetAsync(), PostsClient.GetAsync());
 
         _books = new List<Book>(books);
 

@@ -6,7 +6,6 @@ using FluentAssertions;
 using Flurl.Http;
 using Flurl.Http.Testing;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using NSubstitute;
 using NUnit.Framework;
 using Polly;
@@ -16,7 +15,6 @@ namespace Coding.Blog.UnitTests.Clients;
 [TestFixture]
 public sealed class CosmicClientTests
 {
-    private IOptions<CosmicConfiguration>? _configurationOptions;
     private CosmicConfiguration? _configuration;
     private ILogger<CosmicBooks>? _mockLogger;
     private IAsyncPolicy<CosmicBooks>? _resiliencePolicy;
@@ -30,10 +28,6 @@ public sealed class CosmicClientTests
             BucketSlug = "TestBucket",
             ReadKey = "TestReadKey"
         };
-
-        _configurationOptions = Substitute.For<IOptions<CosmicConfiguration>>();
-
-        _configurationOptions.Value.Returns(_configuration);
 
         _mockLogger = Substitute.For<ILogger<CosmicBooks>>();
         _resiliencePolicy = ResiliencePolicyBuilder.Build<CosmicBooks>(TimeSpan.FromMilliseconds(1), 3, TimeSpan.FromSeconds(1));
@@ -54,7 +48,7 @@ public sealed class CosmicClientTests
             }
         ));
 
-        var client = new CosmicClient<CosmicBooks>(_configurationOptions!, _mockLogger!, _resiliencePolicy!);
+        var client = new CosmicClient<CosmicBooks>(_configuration!, _mockLogger!, _resiliencePolicy!);
 
         // act
         var response = await client.GetAsync();
@@ -78,7 +72,7 @@ public sealed class CosmicClientTests
 
         httpTest.RespondWith("bang!", 500);
 
-        var client = new CosmicClient<CosmicBooks>(_configurationOptions!, _mockLogger!, _resiliencePolicy!);
+        var client = new CosmicClient<CosmicBooks>(_configuration!, _mockLogger!, _resiliencePolicy!);
 
         // act
         var act = async () => await client.GetAsync().ConfigureAwait(false);
