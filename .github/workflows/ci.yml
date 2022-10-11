@@ -8,6 +8,7 @@ on:
 
 jobs:
   analyze:
+    name: analyze code
     runs-on: ubuntu-latest
     permissions:
       actions: read
@@ -18,57 +19,60 @@ jobs:
       matrix:
         language: ["csharp"]
     steps:
-      - name: Checkout repository
+      - name: checkout code
         uses: actions/checkout@v3
 
-      - name: Initialize CodeQL
+      - name: initialize codeql
         uses: github/codeql-action/init@v2
         with:
           languages: ${{ matrix.language }}
           queries: security-and-quality
 
-      - name: Setup .NET
+      - name: setup .net
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 6.0.x
 
-      - name: Restore dependencies
+      - name: restore dependencies
         run: dotnet restore src
 
-      - name: Build
+      - name: 🔨 build application
         run: dotnet build src --configuration Release --no-restore
 
-      - name: Perform CodeQL Analysis
+      - name: 🧪 perform codeql analysis
         uses: github/codeql-action/analyze@v2
 
   test:
+    name: unit test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: checkout code
+        uses: actions/checkout@v3
 
-      - name: Setup .NET
+      - name: setup .net
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 6.0.x
 
-      - name: Restore Dependencies
+      - name: restore dependencies
         run: dotnet restore src
 
-      - name: Build
+      - name: 🔨 build application
         run: dotnet build src --configuration Release --no-restore
 
-      - name: Unit Test
+      - name: 🧪 run unit tests
         run: |
           cd ./src/Tests/Coding.Blog.UnitTests/
           dotnet test --no-restore /p:CollectCoverage=true /p:CoverletOutput=/home/runner/work/coding-blog/coding-blog/ /p:CoverletOutputFormat=opencover
 
-      - name: Publish Code Coverage
+      - name: 💌 publish code coverage
         uses: codecov/codecov-action@v3
         with:
           files: /home/runner/work/coding-blog/coding-blog/coverage.opencover.xml
           fail_ci_if_error: true
 
   lint:
+    name: lint code
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3

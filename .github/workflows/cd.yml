@@ -14,48 +14,45 @@ env:
   IMAGE: coding-blog
 
 jobs:
-  setup-build-publish-deploy:
-    name: Setup, Build, Publish, and Deploy
+  build-publish-deploy:
+    name: build, publish, and deploy
     runs-on: ubuntu-latest
     environment: production
 
     steps:
-    - name: Checkout
+    - name: checkout code
       uses: actions/checkout@v3
 
-    # Get the GKE credentials so we can deploy to the cluster
-    - uses: 'google-github-actions/auth@v0'
+    - name: authorize gcloud
+      uses: 'google-github-actions/auth@v0'
       with:
         credentials_json: ${{ secrets.GKE_SA_KEY }}
 
-    # Setup gcloud CLI
-    - uses: google-github-actions/setup-gcloud@v0.6.0
+    - name: setup gcloud cli
+      uses: google-github-actions/setup-gcloud@v0.6.0
       with:
         project_id: ${{ secrets.GKE_PROJECT }}
 
-    # Configure Docker to use the gcloud command-line tool as a credential
-    # helper for authentication
-    - run: |-
+    - name: configure docker
+      run: |-
         gcloud --quiet auth configure-docker
 
-    - uses: google-github-actions/get-gke-credentials@v0.8.0
+    - name: configure kubectl
+      uses: google-github-actions/get-gke-credentials@v0.8.0
       with:
         cluster_name: ${{ env.GKE_CLUSTER }}
         location: ${{ env.GKE_ZONE }}
 
-    # Build the Docker image
-    - name: Build
+    - name: build docker image
       run: |-
         docker build -f "src/Coding.Blog/Server/Dockerfile" \
           --tag "gcr.io/$PROJECT_ID/$IMAGE" \
           "src"
 
-    # Push the Docker image to Google Container Registry
-    - name: Publish
+    - name: publish docker image
       run: |-
         docker push "gcr.io/$PROJECT_ID/$IMAGE"
 
-    # Deploy the Docker image to the GKE cluster
-    - name: Deploy
+    - name: deploy
       run: |-
         kubectl rollout restart deployment/$DEPLOYMENT_NAME
