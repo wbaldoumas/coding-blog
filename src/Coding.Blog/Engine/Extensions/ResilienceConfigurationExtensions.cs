@@ -15,9 +15,9 @@ public static class ResilienceConfigurationExtensions
     ) => serviceCollection.AddSingleton(
         new ResilienceConfiguration
         {
-            MedianFirstRetryDelayMilliseconds = int.Parse(configuration["Resilience:MedianFirstRetryDelayMilliseconds"], CultureInfo.InvariantCulture),
-            RetryCount = int.Parse(configuration["Resilience:RetryCount"], CultureInfo.InvariantCulture),
-            TimeToLiveMilliseconds = int.Parse(configuration["Resilience:TimeToLiveMilliseconds"], CultureInfo.InvariantCulture)
+            MedianFirstRetryDelayMilliseconds = int.Parse(configuration["Resilience:MedianFirstRetryDelayMilliseconds"]!, CultureInfo.InvariantCulture),
+            RetryCount = int.Parse(configuration["Resilience:RetryCount"]!, CultureInfo.InvariantCulture),
+            TimeToLiveMilliseconds = int.Parse(configuration["Resilience:TimeToLiveMilliseconds"]!, CultureInfo.InvariantCulture)
         }
     );
 }

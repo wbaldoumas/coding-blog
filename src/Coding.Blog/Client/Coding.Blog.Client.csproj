@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net7.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -13,12 +13,12 @@
         <PackageReference Include="Grpc.Net.Client.Web" Version="2.49.0" />
         <PackageReference Include="Grpc.Net.ClientFactory" Version="2.49.0" />
         <PackageReference Include="Markdown.ColorCode" Version="1.0.1" />
-        <PackageReference Include="Meziantou.Analyzer" Version="1.0.746">
+        <PackageReference Include="Meziantou.Analyzer" Version="1.0.748">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.11" />
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.11" PrivateAssets="all" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.0.0" PrivateAssets="all" />
         <PackageReference Include="TaskTupleAwaiter" Version="2.0.2" />
     </ItemGroup>
 

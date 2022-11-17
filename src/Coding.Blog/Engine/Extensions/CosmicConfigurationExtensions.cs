@@ -14,9 +14,9 @@ public static class CosmicConfigurationExtensions
     ) => serviceCollection.AddSingleton(
         new CosmicConfiguration
         {
-            Endpoint = configuration["Cosmic:Endpoint"],
-            BucketSlug = configuration["Cosmic:BucketSlug"],
-            ReadKey = configuration["Cosmic:ReadKey"]
+            Endpoint = configuration["Cosmic:Endpoint"]!,
+            BucketSlug = configuration["Cosmic:BucketSlug"]!,
+            ReadKey = configuration["Cosmic:ReadKey"]!
         }
     );
 }
