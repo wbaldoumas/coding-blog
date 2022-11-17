@@ -28,7 +28,7 @@ builder.Services
     .Configure<HostOptions>(options =>
     {
         var applicationShutdownTimeoutSeconds = int.Parse(
-            builder.Configuration["ApplicationLifetime:ApplicationShutdownTimeoutSeconds"],
+            builder.Configuration["ApplicationLifetime:ApplicationShutdownTimeoutSeconds"]!,
             CultureInfo.InvariantCulture
         );
 

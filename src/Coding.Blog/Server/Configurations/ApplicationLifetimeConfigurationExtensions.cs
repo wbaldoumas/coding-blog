@@ -12,7 +12,7 @@ public static class ApplicationLifetimeConfigurationExtensions
     ) => serviceCollection.AddSingleton(
         new ApplicationLifetimeConfiguration
         {
-            ApplicationStoppingGracePeriodSeconds = int.Parse(configuration["ApplicationLifetime:ApplicationStoppingGracePeriodSeconds"], CultureInfo.InvariantCulture)
+            ApplicationStoppingGracePeriodSeconds = int.Parse(configuration["ApplicationLifetime:ApplicationStoppingGracePeriodSeconds"]!, CultureInfo.InvariantCulture)
         }
     );
 }
