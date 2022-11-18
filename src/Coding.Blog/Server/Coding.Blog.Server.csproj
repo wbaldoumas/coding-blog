@@ -16,9 +16,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Grpc.AspNetCore" Version="2.49.0" />
-        <PackageReference Include="Grpc.AspNetCore.Web" Version="2.49.0" />
-        <PackageReference Include="Meziantou.Analyzer" Version="1.0.748">
+        <PackageReference Include="Grpc.AspNetCore" Version="2.50.0" />
+        <PackageReference Include="Grpc.AspNetCore.Web" Version="2.50.0" />
+        <PackageReference Include="Meziantou.Analyzer" Version="1.0.750">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
