@@ -1,12 +1,4 @@
 ﻿@page "/post/{Slug}"
-@inject MarkdownPipeline MarkdownPipeline;
-@inject NavigationManager NavigationManager
-@inject IResilientClient<Post> PostsClient;
-@inject IJSRuntime Js;
-@using Coding.Blog.Engine
-@using Coding.Blog.Engine.Clients
-@using Coding.Blog.Engine.Extensions
-@using Markdig
 
 <div class="container mb-3">
     @if (_selectedPost is null)
@@ -40,7 +32,7 @@
                 <div class="col col-auto mt-2">
                     @foreach (var tag in _selectedPost.Tags)
                     {
-                        <a href="@($"blog/{tag}")">
+                        <a href="@($"{tag}")">
                             <span class="badge bg-secondary mx-1">
                                 @tag
                             </span>
@@ -111,7 +103,7 @@
         Posts.TryGetValue(Slug, out _selectedPost);
     }
 
-    private void NavigateToMain() => NavigationManager.NavigateTo("blog");
+    private void NavigateToMain() => NavigationManager.NavigateTo("");
 
     private MarkupString GeneratePostMarkup(string markdown) => new(Markdown.ToHtml(markdown, MarkdownPipeline));
 }
