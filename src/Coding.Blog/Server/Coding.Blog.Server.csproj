@@ -18,12 +18,12 @@
     <ItemGroup>
         <PackageReference Include="Grpc.AspNetCore" Version="2.52.0" />
         <PackageReference Include="Grpc.AspNetCore.Web" Version="2.52.0" />
-        <PackageReference Include="Meziantou.Analyzer" Version="2.0.20">
+        <PackageReference Include="Meziantou.Analyzer" Version="2.0.22">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="7.0.4" />
-        <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
+        <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.18.1" />
     </ItemGroup>
 
     <ItemGroup>
