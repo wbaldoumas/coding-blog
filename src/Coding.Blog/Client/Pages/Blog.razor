@@ -1,13 +1,11 @@
-﻿@page "/blog"
-@page "/blog/{Tag}"
-@using Coding.Blog.Engine
-@using Coding.Blog.Engine.Extensions
+﻿@page "/"
+@page "/{Tag}"
 
 <div class="container mb-3">
     @if (!Posts.Any())
     {
         <div class="d-flex align-items-center">
-            <strong class="ms-2">Loading...</strong>
+            <strong class="ms-2">Loading posts...</strong>
             <div class="spinner-border ms-auto me-2 mt-2" role="status" aria-hidden="true"></div>
         </div>
     }
@@ -20,7 +18,7 @@
             @foreach (var (slug, post) in GetFilteredPosts())
             {
                 <div class="col-12 col-lg-4">
-                    <div class="card">
+                    <div class="card border-0 shadow">
                         <a href="@($"post/{slug}")">
                             <img src=@post.Hero.ImgixUrl class="card-img-top" alt="hero"/>
                         </a>

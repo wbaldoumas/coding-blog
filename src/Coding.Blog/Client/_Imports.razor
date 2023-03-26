@@ -8,3 +8,13 @@
 @using Microsoft.JSInterop
 @using Coding.Blog.Client
 @using Coding.Blog.Client.Shared
+@using Coding.Blog.Engine
+@using Coding.Blog.Engine.Clients
+@using Coding.Blog.Engine.Extensions
+@using Markdig
+
+@inject IResilientClient<Book> BooksClient;
+@inject IResilientClient<Post> PostsClient;
+@inject MarkdownPipeline MarkdownPipeline;
+@inject NavigationManager NavigationManager
+@inject IJSRuntime Js;

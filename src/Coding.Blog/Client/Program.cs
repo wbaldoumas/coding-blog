@@ -1,3 +1,5 @@
+using Blazorise;
+using Blazorise.Icons.FontAwesome;
 using Coding.Blog.Client;
 using Coding.Blog.Engine;
 using Coding.Blog.Engine.Clients;
@@ -96,6 +98,11 @@ builder.Services
     {
         grpcChannelOptions.ServiceConfig = serviceProvider.GetRequiredService<ServiceConfig>();
     });
+
+builder.Services
+    .AddBlazorise()
+    .AddEmptyProviders()
+    .AddFontAwesomeIcons();
 
 await builder
     .Build()
