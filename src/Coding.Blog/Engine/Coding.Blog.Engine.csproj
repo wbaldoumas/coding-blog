@@ -12,12 +12,12 @@
         <PackageReference Include="Flurl.Http" Version="3.2.4" />
         <PackageReference Include="Google.Protobuf" Version="3.22.1" />
         <PackageReference Include="Grpc.Net.Client" Version="2.52.0" />
-        <PackageReference Include="Grpc.Tools" Version="2.52.0">
+        <PackageReference Include="Grpc.Tools" Version="2.53.0">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="Markdig" Version="0.31.0" />
-        <PackageReference Include="Meziantou.Analyzer" Version="2.0.22">
+        <PackageReference Include="Meziantou.Analyzer" Version="2.0.28">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
