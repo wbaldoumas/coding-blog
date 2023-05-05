@@ -10,14 +10,14 @@
     <ItemGroup>
         <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
         <PackageReference Include="Flurl.Http" Version="3.2.4" />
-        <PackageReference Include="Google.Protobuf" Version="3.22.3" />
+        <PackageReference Include="Google.Protobuf" Version="3.22.4" />
         <PackageReference Include="Grpc.Net.Client" Version="2.52.0" />
         <PackageReference Include="Grpc.Tools" Version="2.54.0">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="Markdig" Version="0.31.0" />
-        <PackageReference Include="Meziantou.Analyzer" Version="2.0.43">
+        <PackageReference Include="Meziantou.Analyzer" Version="2.0.45">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
