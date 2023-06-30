@@ -14,7 +14,7 @@
         <PackageReference Include="Grpc.Net.Client.Web" Version="2.54.0" />
         <PackageReference Include="Grpc.Net.ClientFactory" Version="2.54.0" />
         <PackageReference Include="Markdown.ColorCode" Version="1.0.4" />
-        <PackageReference Include="Meziantou.Analyzer" Version="2.0.61">
+        <PackageReference Include="Meziantou.Analyzer" Version="2.0.62">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
