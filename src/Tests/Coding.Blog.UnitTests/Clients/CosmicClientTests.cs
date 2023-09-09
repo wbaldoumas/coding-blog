@@ -15,9 +15,9 @@ namespace Coding.Blog.UnitTests.Clients;
 [TestFixture]
 public sealed class CosmicClientTests
 {
-    private CosmicConfiguration? _configuration;
-    private ILogger<CosmicBooks>? _mockLogger;
-    private IAsyncPolicy<CosmicBooks>? _resiliencePolicy;
+    private CosmicConfiguration _configuration = default!;
+    private ILogger<CosmicBooks> _mockLogger = default!;
+    private IAsyncPolicy<CosmicBooks> _resiliencePolicy = default!;
 
     [SetUp]
     public void SetUp()
