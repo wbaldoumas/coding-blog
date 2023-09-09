@@ -10,9 +10,9 @@ using NUnit.Framework;
 namespace Coding.Blog.UnitTests.Mappers;
 
 [TestFixture]
-public sealed class PostMapperTests
+internal sealed class PostMapperTests
 {
-    private IReadTimeEstimator? _mockReadTimeEstimator;
+    private IReadTimeEstimator _mockReadTimeEstimator = default!;
 
     [SetUp]
     public void SetUp() => _mockReadTimeEstimator = Substitute.For<IReadTimeEstimator>();
@@ -21,7 +21,7 @@ public sealed class PostMapperTests
     public void Map_generates_expected_post()
     {
         // arrange
-        _mockReadTimeEstimator!
+        _mockReadTimeEstimator
             .Estimate(Arg.Any<string>())
             .Returns(TimeSpan.MaxValue);
 
@@ -68,7 +68,7 @@ public sealed class PostMapperTests
     public void Map_generates_expected_posts()
     {
         // arrange
-        _mockReadTimeEstimator!
+        _mockReadTimeEstimator
             .Estimate(Arg.Any<string>())
             .Returns(TimeSpan.MaxValue);
 

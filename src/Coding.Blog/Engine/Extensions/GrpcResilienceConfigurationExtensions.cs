@@ -18,7 +18,7 @@ public static class GrpcResilienceConfigurationExtensions
             MaxAttempts = int.Parse(configuration["GrpcResilience:MaxAttempts"]!, CultureInfo.InvariantCulture),
             BackoffMultiplier = double.Parse(configuration["GrpcResilience:BackoffMultiplier"]!, CultureInfo.InvariantCulture),
             InitialBackoffMilliseconds = int.Parse(configuration["GrpcResilience:InitialBackoffMilliseconds"]!, CultureInfo.InvariantCulture),
-            MaxBackoffMilliseconds = int.Parse(configuration["GrpcResilience:MaxBackoffMilliseconds"]!, CultureInfo.InvariantCulture),
+            MaxBackoffMilliseconds = int.Parse(configuration["GrpcResilience:MaxBackoffMilliseconds"]!, CultureInfo.InvariantCulture)
         }
     );
 }

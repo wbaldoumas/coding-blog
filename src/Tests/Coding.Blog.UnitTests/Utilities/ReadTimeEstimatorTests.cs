@@ -6,15 +6,12 @@ using NUnit.Framework;
 namespace Coding.Blog.UnitTests.Utilities;
 
 [TestFixture]
-public sealed class ReadTimeEstimatorTests
+internal sealed class ReadTimeEstimatorTests
 {
-    private IStringSanitizer? _mockStringSanitizer;
+    private IStringSanitizer _mockStringSanitizer = default!;
 
     [SetUp]
-    public void SetUp()
-    {
-        _mockStringSanitizer = Substitute.For<IStringSanitizer>();
-    }
+    public void SetUp() => _mockStringSanitizer = Substitute.For<IStringSanitizer>();
 
     [Test]
     [TestCase(1, 1)]
@@ -25,7 +22,7 @@ public sealed class ReadTimeEstimatorTests
         // arrange
         var content = string.Join(' ', Enumerable.Range(0, wordCount).Select(_ => "hello"));
 
-        _mockStringSanitizer!
+        _mockStringSanitizer
             .Sanitize(content)
             .Returns(content);
 

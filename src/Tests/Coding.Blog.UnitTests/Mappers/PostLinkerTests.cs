@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace Coding.Blog.UnitTests.Mappers;
 
 [TestFixture]
-public sealed class PostLinkerTests
+internal sealed class PostLinkerTests
 {
     [Test]
     public void PostLinker_links_expected_posts()

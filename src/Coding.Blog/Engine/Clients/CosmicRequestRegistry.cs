@@ -8,6 +8,6 @@ internal static class CosmicRequestRegistry
         (StringComparer.OrdinalIgnoreCase)
         {
             { typeof(CosmicBooks).FullName!, new CosmicRequest("books", "title,content,metadata,created_at") },
-            { typeof(CosmicPosts).FullName!, new CosmicRequest("posts", "id,slug,title,metadata,created_at") },
+            { typeof(CosmicPosts).FullName!, new CosmicRequest("posts", "id,slug,title,metadata,created_at") }
         };
 }

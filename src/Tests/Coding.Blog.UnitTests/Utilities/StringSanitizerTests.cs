@@ -6,7 +6,7 @@ using NUnit.Framework;
 namespace Coding.Blog.UnitTests.Utilities;
 
 [TestFixture]
-public sealed class StringSanitizerTests
+internal sealed class StringSanitizerTests
 {
     [Test]
     public void StringSanitizer_generates_expected_string()
@@ -19,27 +19,36 @@ public sealed class StringSanitizerTests
         var sanitizedString = sanitizer.Sanitize(MarkdownString);
 
         // assert
-        sanitizedString.Should().Be(SanitizedString);
+        AssertEqualIgnoreNewLines(ExpectedSanitizedString, sanitizedString);
     }
 
-    private const string MarkdownString = @"
-# This is a header
+    public static void AssertEqualIgnoreNewLines(string expected, string actual)
+    {
+        var normalizedExpected = expected.Replace("\r\n", "\n", StringComparison.OrdinalIgnoreCase).Replace('\r', '\n');
+        var normalizedActual = actual.Replace("\r\n", "\n", StringComparison.OrdinalIgnoreCase).Replace('\r', '\n');
 
-Here is some other content with a [link](https://google.com).
+        normalizedExpected.Should().Be(normalizedActual);
+    }
 
-## Code example sub-header
+    private const string MarkdownString = """
+                                          # This is a header
 
-```
-var foo = new Bar();
-var bar = foo.Bar();
-```
-";
+                                          Here is some other content with a [link](https://google.com).
 
-    private const string SanitizedString = @"This is a header
-Here is some other content with a link.
-Code example sub-header
-var foo = new Bar();
-var bar = foo.Bar();
-";
+                                          ## Code example sub-header
 
+                                          ```
+                                          var foo = new Bar();
+                                          var bar = foo.Bar();
+                                          ```
+                                          """;
+
+    private const string ExpectedSanitizedString = """
+                                                   This is a header
+                                                   Here is some other content with a link.
+                                                   Code example sub-header
+                                                   var foo = new Bar();
+                                                   var bar = foo.Bar();
+
+                                                   """;
 }
