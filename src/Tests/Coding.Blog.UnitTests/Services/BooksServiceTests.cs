@@ -13,10 +13,10 @@ using Grpc.Core.Testing;
 namespace Coding.Blog.UnitTests.Services;
 
 [TestFixture]
-public sealed class BooksServiceTests
+internal sealed class BooksServiceTests
 {
-    private ICosmicClient<CosmicBooks>? _mockCosmicBookClient;
-    private IMapper<CosmicBook, Book>? _mockBookMapper;
+    private ICosmicClient<CosmicBooks> _mockCosmicBookClient = default!;
+    private IMapper<CosmicBook, Book> _mockBookMapper = default!;
 
     [SetUp]
     public void SetUp()
@@ -40,7 +40,7 @@ public sealed class BooksServiceTests
             }
         );
 
-        _mockCosmicBookClient!
+        _mockCosmicBookClient
             .GetAsync()
             .Returns(mockCosmicBooksClientResponse);
 
@@ -53,7 +53,7 @@ public sealed class BooksServiceTests
             DatePublished = Timestamp.FromDateTime(mockDatePublished)
         });
 
-        _mockBookMapper!
+        _mockBookMapper
             .Map(mockCosmicBooksClientResponse.Books)
             .Returns(mockBookMapperResponse);
 
@@ -95,11 +95,11 @@ public sealed class BooksServiceTests
         // arrange
         var mockCosmicBooksClientResponse = new CosmicBooks(new List<CosmicBook>());
 
-        _mockCosmicBookClient!
+        _mockCosmicBookClient
             .GetAsync()
             .Returns(mockCosmicBooksClientResponse);
 
-        _mockBookMapper!
+        _mockBookMapper
             .Map(mockCosmicBooksClientResponse.Books)
             .Returns(new List<Book>());
 

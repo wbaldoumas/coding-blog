@@ -13,11 +13,11 @@ using Grpc.Core.Testing;
 namespace Coding.Blog.UnitTests.Services;
 
 [TestFixture]
-public sealed class PostsServiceTests
+internal sealed class PostsServiceTests
 {
-    private ICosmicClient<CosmicPosts>? _mockCosmicPostClient;
-    private IMapper<CosmicPost, Post>? _mockPostMapper;
-    private IPostLinker? _mockPostLinker;
+    private ICosmicClient<CosmicPosts> _mockCosmicPostClient = default!;
+    private IMapper<CosmicPost, Post> _mockPostMapper = default!;
+    private IPostLinker _mockPostLinker = default!;
 
     [SetUp]
     public void SetUp()
@@ -61,7 +61,7 @@ public sealed class PostsServiceTests
             }
         );
 
-        _mockCosmicPostClient!
+        _mockCosmicPostClient
             .GetAsync()
             .Returns(mockCosmicPostsClientResponse);
 
@@ -79,7 +79,7 @@ public sealed class PostsServiceTests
             }
         }).ToList();
 
-        _mockPostMapper!
+        _mockPostMapper
             .Map(mockCosmicPostsClientResponse.Posts)
             .Returns(mockPostMapperResponse);
 
@@ -89,7 +89,7 @@ public sealed class PostsServiceTests
             Previous = new Post()
         }).ToList();
 
-        _mockPostLinker!
+        _mockPostLinker
             .Link(mockPostMapperResponse)
             .Returns(mockPostLinkerResponse);
 
@@ -135,18 +135,18 @@ public sealed class PostsServiceTests
         // arrange
         var mockCosmicPostsClientResponse = new CosmicPosts(new List<CosmicPost>());
 
-        _mockCosmicPostClient!
+        _mockCosmicPostClient
             .GetAsync()
             .Returns(mockCosmicPostsClientResponse);
 
         // ReSharper disable once CollectionNeverUpdated.Local
         var mockPostMapperResponse = new List<Post>();
 
-        _mockPostMapper!
+        _mockPostMapper
             .Map(mockCosmicPostsClientResponse.Posts)
             .Returns(mockPostMapperResponse);
 
-        _mockPostLinker!
+        _mockPostLinker
             .Link(mockPostMapperResponse)
             .Returns(new List<Post>());
 

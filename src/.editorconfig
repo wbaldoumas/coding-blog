@@ -2,3 +2,8 @@
 
 # file name must match type name
 dotnet_diagnostic.MA0048.severity = none
+
+[*.cs]
+
+# add trailing commas
+dotnet_diagnostic.MA0007.severity = none

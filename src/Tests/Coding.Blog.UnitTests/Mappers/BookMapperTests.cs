@@ -8,7 +8,7 @@ using NUnit.Framework;
 namespace Coding.Blog.UnitTests.Mappers;
 
 [TestFixture]
-public sealed class BookMapperTests
+internal sealed class BookMapperTests
 {
     [Test]
     public void Map_generates_expected_book()

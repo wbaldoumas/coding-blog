@@ -13,7 +13,7 @@ using Polly;
 namespace Coding.Blog.UnitTests.Clients;
 
 [TestFixture]
-public sealed class CosmicClientTests
+internal sealed class CosmicClientTests
 {
     private CosmicConfiguration _configuration = default!;
     private ILogger<CosmicBooks> _mockLogger = default!;
@@ -48,7 +48,7 @@ public sealed class CosmicClientTests
             }
         ));
 
-        var client = new CosmicClient<CosmicBooks>(_configuration!, _mockLogger!, _resiliencePolicy!);
+        var client = new CosmicClient<CosmicBooks>(_configuration, _mockLogger, _resiliencePolicy);
 
         // act
         var response = await client.GetAsync();
@@ -72,7 +72,7 @@ public sealed class CosmicClientTests
 
         httpTest.RespondWith("bang!", 500);
 
-        var client = new CosmicClient<CosmicBooks>(_configuration!, _mockLogger!, _resiliencePolicy!);
+        var client = new CosmicClient<CosmicBooks>(_configuration, _mockLogger, _resiliencePolicy);
 
         // act
         var act = async () => await client.GetAsync().ConfigureAwait(false);
