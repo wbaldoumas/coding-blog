@@ -1,6 +1,6 @@
 # coding-blog
 
-A coding blog. Check it out [here](https://wbaldoumas.codes/)!
+A coding blog. Check it out [here](https://wbaldoumas.codes/)! 🚀
 
 [![Build][github-checks-shield]][github-checks-url]
 [![Coverage][coverage-shield]][coverage-url]
