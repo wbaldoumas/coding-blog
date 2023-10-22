@@ -14,7 +14,7 @@
         </PackageReference>
         <PackageReference Include="FluentAssertions" Version="6.12.0" />
         <PackageReference Include="Grpc.Core.Testing" Version="2.46.6" />
-        <PackageReference Include="Meziantou.Analyzer" Version="2.0.85">
+        <PackageReference Include="Meziantou.Analyzer" Version="2.0.93">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
