@@ -18,12 +18,13 @@
     <ItemGroup>
         <PackageReference Include="Grpc.AspNetCore" Version="2.58.0" />
         <PackageReference Include="Grpc.AspNetCore.Web" Version="2.58.0" />
-        <PackageReference Include="Meziantou.Analyzer" Version="2.0.93">
+        <PackageReference Include="Meziantou.Analyzer" Version="2.0.98">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="7.0.12" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="7.0.13" />
         <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.5" />
+        <PackageReference Include="Quartz.Extensions.Hosting" Version="3.7.0" />
     </ItemGroup>
 
     <ItemGroup>
