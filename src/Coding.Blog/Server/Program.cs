@@ -7,12 +7,14 @@ using Coding.Blog.Server.Configurations;
 using Coding.Blog.Server.HostedServices;
 using Microsoft.AspNetCore.HttpOverrides;
 using System.Globalization;
+using Coding.Blog.Server.Extensions;
+using Coding.Blog.Engine.Jobs;
+using Quartz;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration.AddJsonFile("secrets/appsettings.secrets.json", optional: true);
 
-// Add services to the container.
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 
 builder.Services.AddHealthChecks();
@@ -36,6 +38,14 @@ builder.Services
     })
     .AddHostedService<ApplicationLifetimeService>();
 
+builder.Services.AddQuartz(serviceCollectionQuartzConfigurator =>
+{
+    serviceCollectionQuartzConfigurator
+        .ConfigureJob<PostsWarmingJob>(builder.Configuration)
+        .ConfigureJob<BooksWarmingJob>(builder.Configuration);
+});
+
+builder.Services.AddQuartzHostedService();
 builder.Services.AddGrpc();
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
