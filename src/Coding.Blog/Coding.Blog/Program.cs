@@ -33,7 +33,13 @@ builder.Services
     .AddFontAwesomeIcons();
 
 builder.Services.AddSignalR(hubOptions => {
-    hubOptions.MaximumReceiveMessageSize = 256000;
+    hubOptions.MaximumReceiveMessageSize = 1024000;
+    hubOptions.KeepAliveInterval = TimeSpan.FromSeconds(1);
+    hubOptions.EnableDetailedErrors = true;
+    hubOptions.HandshakeTimeout = TimeSpan.FromSeconds(30);
+    hubOptions.ClientTimeoutInterval = TimeSpan.FromMinutes(30);
+    hubOptions.StreamBufferCapacity = 20;
+    hubOptions.StatefulReconnectBufferSize = 1024000;
 });
 
 builder.Services.AddSingleton(_ => new MarkdownPipelineBuilder().UseAdvancedExtensions().UseColorCode().Build());
