@@ -1,3 +1,6 @@
+[*]
+insert_final_newline = true
+
 [*.cshtml.cs]
 
 # file name must match type name
@@ -5,5 +8,34 @@ dotnet_diagnostic.MA0048.severity = none
 
 [*.cs]
 
+# require XML documentation
+dotnet_diagnostic.CS1591.severity = none
+dotnet_diagnostic.SA1600.severity = none
+
+# require file header
+dotnet_diagnostic.SA1633.severity = none
+
+# naming conventions
+dotnet_diagnostic.SA1309.severity = none
+
+# prefix local calls with 'this'
+dotnet_diagnostic.SA1101.severity = none
+
+# arithmetic expressions must declare precedence
+dotnet_diagnostic.SA1407.severity = none
+
+# the 'new' keyword should be followed by a space
+dotnet_diagnostic.SA1000.severity = none
+
+# closing parenthesis should not be preceded by a space
+dotnet_diagnostic.SA1009.severity = none
+
+# closing parenthesis should be on line of last parameter
+dotnet_diagnostic.SA1111.severity = none
+
 # add trailing commas
 dotnet_diagnostic.MA0007.severity = none
+
+[*.{csproj,targets,props}]
+indent_style = space
+indent_size = 2

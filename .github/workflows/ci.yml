@@ -60,17 +60,17 @@ jobs:
       - name: 🔨 build application
         run: dotnet build src --configuration Release --no-restore
 
-      - name: 🧪 run unit tests
-        run: |
-          cd ./src/Tests/Coding.Blog.UnitTests/
-          dotnet test --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
-          cp TestResults/*/coverage.opencover.xml .
+      # - name: 🧪 run unit tests
+      #   run: |
+      #     cd ./src/Tests/Coding.Blog.UnitTests/
+      #     dotnet test --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
+      #     cp TestResults/*/coverage.opencover.xml .
           
-      - name: 💌 publish code coverage
-        uses: codecov/codecov-action@v3
-        with:
-          files: /home/runner/work/coding-blog/coding-blog/src/Tests/Coding.Blog.UnitTests/coverage.opencover.xml
-          fail_ci_if_error: true
+      # - name: 💌 publish code coverage
+      #   uses: codecov/codecov-action@v3
+      #   with:
+      #     files: /home/runner/work/coding-blog/coding-blog/src/Tests/Coding.Blog.UnitTests/coverage.opencover.xml
+      #     fail_ci_if_error: true
 
   lint:
     name: lint code

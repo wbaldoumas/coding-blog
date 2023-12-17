@@ -1,0 +1,54 @@
+﻿@page "/reading"
+@attribute [StreamRendering]
+
+<h1>Reading Recommendations</h1>
+
+<div>
+    <p>
+        Below are some reading recommendations based on books that I've read and enjoyed. Most are programming-language and technology-agnostic and instead focus on building up the fundamentals needed for a successful career as a software engineer.
+    </p>
+    <p>
+        <em>Last updated: @(Books.Any() ? Books.Max(book => book.DatePublished).ToShortDateString() : "Loading...")</em>
+    </p>
+</div>
+
+<div class="container mb-3">
+    @if (!Books.Any())
+    {
+        <p>
+            <strong>Loading...</strong>
+        </p>
+    }
+    else
+    {
+        @foreach (var book in Books)
+        {
+            <hr/>
+            <div class="row justify-content-md-center">
+                <div class="col col-md-auto">
+                    <a href="@book.PurchaseUrl" target="_blank">
+                        <h3 style="text-align: center">@book.Title</h3>
+                    </a>
+                </div>
+            </div>
+            <div class="row gy-3 justify-content-md-center">
+                <div class="col col-md-auto">
+                    <a href="@book.PurchaseUrl" target="_blank">
+                        <img src="@book.CoverImageUrl" alt="@book.Title" class="rounded mx-auto d-block img-fluid"/>
+                    </a>
+                </div>
+                <div>
+                    @(new MarkupString(book.Content))
+                </div>
+            </div>
+        }
+    }
+</div>
+
+@code {
+
+    private IEnumerable<Book> Books { get; set; } = new List<Book>();
+
+    protected override async Task OnInitializedAsync() => Books = await BooksService.GetAsync();
+
+}
