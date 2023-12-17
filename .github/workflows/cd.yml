@@ -45,7 +45,7 @@ jobs:
 
     - name: build docker image
       run: |-
-        docker build -f "src/Coding.Blog/Server/Dockerfile" \
+        docker build -f "src/Coding.Blog/Coding.Blog/Dockerfile" \
           --tag "gcr.io/$PROJECT_ID/$IMAGE" \
           "src"
 

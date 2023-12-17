@@ -1,0 +1,150 @@
+﻿@page "/post/{Slug}"
+
+@rendermode InteractiveServer
+@implements IDisposable
+
+<div class="container mb-3">
+    @if (_selectedPost is null)
+    {
+        <div class="d-flex align-items-center">
+            <strong class="ms-2">Loading...</strong>
+            <div class="spinner-border ms-auto me-2 mt-2" role="status" aria-hidden="true"></div>
+        </div>
+    }
+    else
+    {
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col col-auto">
+                    <h1>@_selectedPost!.Title</h1>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col col-auto">
+                    <p class="text-muted">@_selectedPost!.DatePublished.ToShortDateString() · @_selectedPost!.ReadingTime.Minutes minute read</p>
+                </div>
+            </div>
+        </div>
+        <div class="container overflow-hidden">
+            <div class="row justify-content-center">
+                <div class="col col-auto">
+                    <img class="rounded mx-auto d-block img-fluid post-hero" src="@_selectedPost!.Hero.ImgixUrl" alt="hero">
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col col-auto mt-2">
+                    @foreach (var tag in _selectedPost!.Tags)
+                    {
+                        <a href="@($"/blog/{tag}")">
+                            <span class="badge bg-secondary mx-1">
+                                @tag
+                            </span>
+                        </a>
+                    }
+                </div>
+            </div>
+            <hr/>
+            <div class="row">
+                <div class="col">
+                    <div>@GeneratePostMarkup(_selectedPost!.Content)</div>
+                </div>
+            </div>
+            <div class="row justify-content-between">
+                <div class="col col-auto">
+                    @if (_selectedPost!.Next is not null)
+                    {
+                        <h6 class="text-muted">Next</h6>
+                        <a href="@($"post/{_selectedPost.Next.Slug}")">
+                            <h5>@_selectedPost.Next.Title</h5>
+                        </a>
+                    }
+                </div >
+                <div class="col col-auto">
+                    @if (_selectedPost!.Previous is not null)
+                    {
+                        <h6 class="text-muted">Previous</h6>
+                        <a href="@($"post/{_selectedPost.Previous.Slug}")">
+                            <h5>@_selectedPost.Previous.Title</h5>
+                        </a>
+                    }
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col col-auto">
+                    <button class="btn btn-secondary btn-lg" @onclick="NavigateToMain">Back</button>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@code {
+
+    [Parameter] public string Slug { get; set; } = string.Empty;
+
+    private const string PostsKey = "Posts";
+
+    private PersistingComponentStateSubscription persistingComponentStateSubscription;
+
+    private IDictionary<string, Post> Posts { get; set; } = new Dictionary<string, Post>();
+
+    private Post? _selectedPost;
+
+    protected override Task OnInitializedAsync()
+    {
+        persistingComponentStateSubscription = ApplicationState.RegisterOnPersisting(PersistData);
+
+        return _selectedPost is null ? RefreshPostAsync() : Task.CompletedTask;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender) => await Js.InvokeVoidAsync("resetScrollPosition");
+
+    protected override Task OnParametersSetAsync() => RefreshPostAsync();
+
+    private async Task RefreshPostAsync()
+    {
+        if (!ApplicationState.TryTakeFromJson<IDictionary<string, Post>>(PostsKey, out var posts) && !BlogPostsContainer.Posts.Any())
+        {
+            Posts = await GetPostsAsync();
+
+            BlogPostsContainer.Posts = Posts;
+        }
+        else
+        {
+            if (BlogPostsContainer.Posts.Any())
+            {
+                Posts = BlogPostsContainer.Posts;
+            }
+            else
+            {
+                Posts = posts!;
+                BlogPostsContainer.Posts = Posts;
+            }
+        }
+
+        if (_selectedPost is null)
+        {
+            Posts.TryGetValue(Slug, out _selectedPost);
+        }
+    }
+
+    private async Task<IDictionary<string, Post>> GetPostsAsync()
+    {
+        var posts = await PostsService.GetAsync();
+
+        return posts.ToDictionary(post => post.Slug, post => post);
+    }
+
+    private void NavigateToMain() => NavigationManager.NavigateTo("/blog");
+
+    private MarkupString GeneratePostMarkup(string markdown) => new(Markdown.ToHtml(markdown, MarkdownPipeline));
+
+    private Task PersistData()
+    {
+        ApplicationState.PersistAsJson(PostsKey, Posts);
+
+        return Task.CompletedTask;
+    }
+
+    public void Dispose() => persistingComponentStateSubscription.Dispose();
+}

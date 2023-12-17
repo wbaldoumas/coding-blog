@@ -1,0 +1,56 @@
+﻿@page "/"
+
+<div class="container">
+    <h1 class="text-center mb-5 display-3">About</h1>
+
+    <div class="row align-items-center">
+        <div class="col-md-3">
+            <div class="profile-image-container rounded mb-4 shadow-lg">
+                <img src="images/avatar.jpg" alt="avatar" class="img-fluid rounded profile-image">
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="card border-0 shadow">
+                <div class="card-body">
+                    <h2 class="card-title display-6 mb-3">Who am I?</h2>
+                    <p class="card-text">
+                        Hey there! My name is Will. I am a software engineer, musician, and cat dad currently located in Las Vegas, Nevada. I enjoy <a href="@("reading")" class="hover-link">reading</a> about tech, contributing to <a href="https://github.com/wbaldoumas" class="hover-link">open source</a>, and exploring new ways to make music. 🤘
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr class="my-5">
+
+    <div class="card border-0 shadow">
+        <div class="card-body">
+            <h2 class="card-title display-6 mb-3">What is this?</h2>
+            <p class="card-text">
+                This is my blog. Here, I'll share insights and experiences in areas that excite me, like cloud-native technologies, distributed systems, DevOps automation, development excellence, and whatever it is that I'm currently working on. I'll also be using this space as a playground to experiment with things that I'm learning and have some fun breaking stuff. 💥
+            </p>
+        </div>
+    </div>
+
+    <hr class="my-5">
+
+    <div class="card border-0 shadow">
+        <div class="card-body">
+            <h2 class="card-title display-6 mb-3">Looking to connect?</h2>
+            <p class="card-text">Find me at:</p>
+            <ul class="list-unstyled">
+                <li class="mb-2">
+                    <a href="https://github.com/wbaldoumas" target="_blank" rel="noopener noreferrer" class="hover-link"><i class="fab fa-github"></i> GitHub</a>
+                </li>
+                <li>
+                    <a href="https://www.linkedin.com/in/williambaldoumas/" target="_blank" rel="noopener noreferrer" class="hover-link"><i class="fab fa-linkedin"></i> LinkedIn</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+@code
+{
+    protected override async Task OnAfterRenderAsync(bool firstRender) => await Js.InvokeVoidAsync("resetScrollPosition");
+}

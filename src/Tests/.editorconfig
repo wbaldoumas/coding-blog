@@ -1,4 +1,0 @@
-[*.cs]
-
-# method is too long
-dotnet_diagnostic.MA0051.severity = none
