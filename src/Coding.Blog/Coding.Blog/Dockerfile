@@ -17,7 +17,7 @@ RUN dotnet build "./Coding.Blog.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./Coding.Blog.csproj" -c $BUILD_CONFIGURATION --runtime linux-x64 --self-contained true -p:PublishTrimmed=true -o /app/publish
+RUN dotnet publish "./Coding.Blog.csproj" -c $BUILD_CONFIGURATION --runtime linux-x64 --self-contained true -o /app/publish
 
 FROM base AS final
 WORKDIR /app
