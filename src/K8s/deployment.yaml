@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: coding-blog-deployment
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       # attaches this deployment to the pods below
