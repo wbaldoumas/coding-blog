@@ -11,7 +11,7 @@
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
     <PackageReference Include="Flurl.Http" Version="4.0.0" />
     <PackageReference Include="Markdig" Version="0.34.0" />
-    <PackageReference Include="Meziantou.Analyzer" Version="2.0.122">
+    <PackageReference Include="Meziantou.Analyzer" Version="2.0.127">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
