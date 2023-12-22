@@ -36,7 +36,8 @@ internal static class ServiceCollectionExtensions
         {
             serviceCollectionQuartzConfigurator
                 .ConfigureJob<PostsWarmingJob>(configuration)
-                .ConfigureJob<BooksWarmingJob>(configuration);
+                .ConfigureJob<BooksWarmingJob>(configuration)
+                .ConfigureJob<ProjectsWarmingJob>(configuration);
         });
 
         return services.AddQuartzHostedService();
