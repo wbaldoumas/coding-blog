@@ -10,12 +10,12 @@
         <input type="search" class="form-control rounded" placeholder="Search..." aria-label="search" aria-describedby="search-button" @bind-value="_searchText" @bind-value:event="oninput">
     </div>
     <div class="row g-3 d-flex align-items-stretch">
-        @foreach (var (slug, post) in GetFilteredPosts())
+        @foreach (var (slug, post) in GetSearchedPosts(Posts))
         {
             <div class="col-12 col-lg-4">
                 <div class="card border-0 h-100 shadow">
                     <a href="@($"post/{slug}")">
-                        <img src=@post.Hero.ImgixUrl class="card-img-top" alt="hero"/>
+                        <img src=@post.Hero.ImgixUrl class="card-img-top post-image" alt="hero"/>
                     </a>
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title">@post.Title</h5>
@@ -37,12 +37,12 @@
 
     private const string PostsKey = "Posts";
 
-    [Parameter]
-    public string? Tag { get; set; }
-
     private IDictionary<string, Post> Posts { get; set; } = new Dictionary<string, Post>();
 
     private PersistingComponentStateSubscription _persistingComponentStateSubscription;
+
+    [Parameter]
+    public string? Tag { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -67,8 +67,12 @@
         }
 
         Posts = posts;
-    }
 
+        if (!string.IsNullOrWhiteSpace(Tag))
+        {
+            _searchText = Tag;
+        }
+    }
 
     protected override async Task OnAfterRenderAsync(bool firstRender) => await Js.InvokeVoidAsync("resetScrollPosition");
 
@@ -79,22 +83,16 @@
         return blogPosts.ToDictionary(post => post.Slug, post => post);
     }
 
-    private IDictionary<string, Post> GetFilteredPosts() => GetTaggedPosts(GetSearchedPosts(Posts));
-
-    private IDictionary<string, Post> GetTaggedPosts(IDictionary<string, Post> posts) => Tag is null ?
-        posts :
-        posts.Where(post => post.Value.Tags.Any(tag => tag.Equals(Tag, StringComparison.OrdinalIgnoreCase))).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-
     private IDictionary<string, Post> GetSearchedPosts(IDictionary<string, Post> posts)
     {
-        return string.IsNullOrEmpty(_searchText) ? posts : posts.Where(post =>
+        return string.IsNullOrEmpty(_searchText) ? posts : posts.Where(postBySlug =>
         {
-            var postValue = post.Value;
+            var (_, post) = postBySlug;
 
-            return postValue.Title.Contains(_searchText, StringComparison.OrdinalIgnoreCase) ||
-                   postValue.Tags.Any(tag => tag.Contains(_searchText, StringComparison.OrdinalIgnoreCase)) ||
-                   postValue.Content.Contains(_searchText, StringComparison.OrdinalIgnoreCase);
-        }).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+            return post.Title.Contains(_searchText, StringComparison.OrdinalIgnoreCase) ||
+                   post.Tags.Any(tag => tag.Contains(_searchText, StringComparison.OrdinalIgnoreCase)) ||
+                   post.Content.Contains(_searchText, StringComparison.OrdinalIgnoreCase);
+        }).ToDictionary();
     }
 
     private Task PersistData()
