@@ -1,0 +1,54 @@
+﻿@page "/projects"
+@attribute [StreamRendering]
+
+<div class="container mt-3">
+    @if (_projects is null)
+    {
+        <div class="d-flex align-items-center">
+            <strong class="ms-2">Loading...</strong>
+            <div class="spinner-border text-success ms-auto me-2 mt-2" role="status" aria-hidden="true"></div>
+        </div>
+    }
+    else
+    {
+        @if (!_projects.Any())
+        {
+            <div class="alert alert-warning" role="alert">
+                No content found. Consider reloading the page.
+            </div>
+        }
+        else
+        {
+            @foreach (var project in _projects)
+            {
+                <div class="card border-0 mb-3 shadow">
+                    <div class="row g-0">
+                        <div class="col-md-4 d-flex image-wrapper" style="background-image: url('@project.ImageUrl');">
+                        </div>
+                        <div class="col-md-8 d-flex flex-column">
+                            <div class="card-body">
+                                <h5 class="card-title">@project.Title</h5>
+                                <p class="card-text">@GenerateDescription(project.Description)</p>
+                                <p class="card-text">
+                                    <TagsDisplay Tags=@project.Tags></TagsDisplay>
+                                </p>
+                            </div>
+                            <div class="mt-auto p-3">
+                                <a href="@project.ProjectUrl" target="_blank" rel="noreferrer noopener" class="btn btn-success w-100"><i class="fab fa-github"></i> View on GitHub</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    }
+</div>
+
+@code {
+    private IEnumerable<Project>? _projects;
+
+    protected override async Task OnInitializedAsync() => _projects = await ProjectsService.GetAsync();
+
+    private MarkupString GenerateDescription(string markdown) => new(Markdown.ToHtml(markdown, MarkdownPipeline));
+
+}

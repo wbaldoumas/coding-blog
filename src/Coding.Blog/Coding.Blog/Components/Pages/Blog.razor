@@ -9,18 +9,21 @@
     <div class="text-center mb-3">
         <input type="search" class="form-control rounded" placeholder="Search..." aria-label="search" aria-describedby="search-button" @bind-value="_searchText" @bind-value:event="oninput">
     </div>
-    <div class="row g-3">
+    <div class="row g-3 d-flex align-items-stretch">
         @foreach (var (slug, post) in GetFilteredPosts())
         {
             <div class="col-12 col-lg-4">
-                <div class="card border-0 shadow">
+                <div class="card border-0 h-100 shadow">
                     <a href="@($"post/{slug}")">
                         <img src=@post.Hero.ImgixUrl class="card-img-top" alt="hero"/>
                     </a>
-                    <div class="card-body">
+                    <div class="card-body d-flex flex-column">
                         <h5 class="card-title">@post.Title</h5>
                         <h6 class="card-subtitle text-muted">@post.DatePublished.ToShortDateString() · @post.ReadingTime.Minutes minute read</h6>
-                        <a href="@($"post/{slug}")" class="card-link">Read More</a>
+                        <p class="card-text mt-2">
+                            <TagsDisplay Tags=@post.Tags></TagsDisplay>
+                        </p>
+                        <a href="@($"post/{slug}")" class="card-link mt-auto">Read More</a>
                     </div>
                 </div>
             </div>
@@ -39,11 +42,11 @@
 
     private IDictionary<string, Post> Posts { get; set; } = new Dictionary<string, Post>();
 
-    private PersistingComponentStateSubscription persistingComponentStateSubscription;
+    private PersistingComponentStateSubscription _persistingComponentStateSubscription;
 
     protected override async Task OnInitializedAsync()
     {
-        persistingComponentStateSubscription = ApplicationState.RegisterOnPersisting(PersistData);
+        _persistingComponentStateSubscription = ApplicationState.RegisterOnPersisting(PersistData);
 
         IDictionary<string, Post> posts = new Dictionary<string, Post>();
 
@@ -101,5 +104,5 @@
         return Task.CompletedTask;
     }
 
-    public void Dispose() => persistingComponentStateSubscription.Dispose();
+    public void Dispose() => _persistingComponentStateSubscription.Dispose();
 }

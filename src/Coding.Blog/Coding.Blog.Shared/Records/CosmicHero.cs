@@ -2,7 +2,7 @@
 
 namespace Coding.Blog.Shared.Records;
 
-public sealed record CosmicPostHero(
+public sealed record CosmicHero(
     [property: JsonPropertyName("url")] string Url,
     [property: JsonPropertyName("imgix_url")] string ImgixUrl
 );

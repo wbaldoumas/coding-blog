@@ -1,0 +1,59 @@
+﻿.image-wrapper {
+    background-size: cover;
+    background-position: center;
+    border-top-left-radius: .25rem;
+    border-bottom-left-radius: .25rem;
+}
+
+.card {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 1rem;
+
+
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effect */
+    border-radius: 0.5rem; /* Rounded corners for a softer look */
+}
+
+    .card .col-md-4 {
+        display: flex;
+        align-items: stretch; /* Stretch the .image-wrapper to the height of the card */
+        padding: 0;
+    }
+
+    .card:hover {
+        transform: translateY(-5px); /* Slight raise effect on hover */
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2); /* Subtle shadow for depth */
+    }
+
+
+.card-body {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+
+    border-top-right-radius: calc(.5rem - 1px); /* Match border-radius of the card */
+    border-bottom-right-radius: calc(.5rem - 1px); /* Match border-radius of the card */
+}
+
+.card .btn {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@media (max-width: 768px) {
+    .card {
+        flex-direction: column;
+    }
+
+        .card .col-md-4 {
+            height: 150px;
+        }
+
+    .image-wrapper {
+        height: 100%;
+    }
+}

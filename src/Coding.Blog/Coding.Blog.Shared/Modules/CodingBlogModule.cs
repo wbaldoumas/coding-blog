@@ -19,6 +19,7 @@ public sealed class CodingBlogModule : Module
     {
         RegisterCosmicClient<CosmicBooks>(builder);
         RegisterCosmicClient<CosmicPosts>(builder);
+        RegisterCosmicClient<CosmicProjects>(builder);
 
         builder.RegisterType<CosmicPostMapper>()
             .As<IMapper<CosmicPost, Post>>()
@@ -28,12 +29,24 @@ public sealed class CodingBlogModule : Module
             .As<IMapper<CosmicBook, Book>>()
             .SingleInstance();
 
+        builder.RegisterType<CosmicProjectMapper>()
+            .As<IMapper<CosmicProject, Project>>()
+            .SingleInstance();
+
         builder.RegisterType<PostsService>()
             .As<IPostsService>()
             .SingleInstance();
 
         builder.RegisterType<BooksService>()
             .As<IBooksService>()
+            .SingleInstance();
+
+        builder.RegisterType<ProjectsService>()
+            .As<IProjectsService>()
+            .SingleInstance();
+
+        builder.RegisterType<ProjectsService>()
+            .As<IProjectsService>()
             .SingleInstance();
 
         builder.RegisterType<StringSanitizer>()

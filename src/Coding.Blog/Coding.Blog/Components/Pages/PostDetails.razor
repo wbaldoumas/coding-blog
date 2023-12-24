@@ -33,14 +33,7 @@
             </div>
             <div class="row justify-content-center">
                 <div class="col col-auto mt-2">
-                    @foreach (var tag in _selectedPost!.Tags)
-                    {
-                        <a href="@($"/blog/{tag}")">
-                            <span class="badge bg-secondary mx-1">
-                                @tag
-                            </span>
-                        </a>
-                    }
+                    <TagsDisplay Tags=@_selectedPost!.Tags></TagsDisplay>
                 </div>
             </div>
             <hr/>
@@ -84,7 +77,7 @@
 
     private const string PostsKey = "Posts";
 
-    private PersistingComponentStateSubscription persistingComponentStateSubscription;
+    private PersistingComponentStateSubscription _persistingComponentStateSubscription;
 
     private IDictionary<string, Post> Posts { get; set; } = new Dictionary<string, Post>();
 
@@ -92,7 +85,7 @@
 
     protected override Task OnInitializedAsync()
     {
-        persistingComponentStateSubscription = ApplicationState.RegisterOnPersisting(PersistData);
+        _persistingComponentStateSubscription = ApplicationState.RegisterOnPersisting(PersistData);
 
         return _selectedPost is null ? RefreshPostAsync() : Task.CompletedTask;
     }
@@ -146,5 +139,5 @@
         return Task.CompletedTask;
     }
 
-    public void Dispose() => persistingComponentStateSubscription.Dispose();
+    public void Dispose() => _persistingComponentStateSubscription.Dispose();
 }
