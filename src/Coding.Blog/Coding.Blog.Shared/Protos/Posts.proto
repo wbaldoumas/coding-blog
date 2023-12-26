@@ -1,0 +1,34 @@
+syntax = "proto3"; 
+
+option csharp_namespace = "Coding.Blog.Shared.Protos"; 
+
+import "google/protobuf/timestamp.proto"; 
+import "google/protobuf/duration.proto";
+
+service Posts { 
+	rpc GetPosts (PostsRequest) returns (PostsReply); 
+} 
+
+message PostsRequest {}
+
+message PostsReply { 
+	repeated Post posts = 1; 
+} 
+
+message Post {
+	string id = 1;
+	string slug = 2;
+	string title = 3;
+	string content = 4;
+	repeated string tags = 5;
+	Hero hero = 6;
+	google.protobuf.Timestamp datePublished = 7;
+	Post previous = 8;
+	Post next = 9;
+	google.protobuf.Duration readingTime = 10;
+}
+
+message Hero {
+	string url = 1;
+	string imgixUrl = 2;
+}

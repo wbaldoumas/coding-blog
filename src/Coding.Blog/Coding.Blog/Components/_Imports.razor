@@ -12,12 +12,12 @@
 @using Coding.Blog.Shared.Services
 @using Markdig
 @using Coding.Blog.Shared.Domain
-@using Coding.Blog.Components.State
+@using Coding.Blog.Shared.State
 
 @inject IPostsService PostsService
 @inject IBooksService BooksService
 @inject IProjectsService ProjectsService
-@inject IJSRuntime Js
+@inject IJSRuntime JavaScript
 @inject PersistentComponentState ApplicationState
-@inject MarkdownPipeline MarkdownPipeline;
+@inject MarkdownPipeline MarkdownPipeline
 @inject NavigationManager NavigationManager

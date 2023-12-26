@@ -1,13 +1,12 @@
 ﻿@page "/blog"
-@page "/blog/{Tag}"
+@page "/blog/{Search}"
 
-@rendermode InteractiveServer
+@rendermode InteractiveAuto
 @implements IDisposable
 
 <div class="container mb-3">
-
     <div class="text-center mb-3">
-        <input type="search" class="form-control rounded" placeholder="Search..." aria-label="search" aria-describedby="search-button" @bind-value="_searchText" @bind-value:event="oninput">
+        <input type="search" class="form-control rounded" placeholder="Search..." aria-label="search" aria-describedby="search-button" @bind-value="_search" @bind-value:event="oninput">
     </div>
     <div class="row g-3 d-flex align-items-stretch">
         @foreach (var (slug, post) in GetSearchedPosts(Posts))
@@ -19,7 +18,7 @@
                     </a>
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title">@post.Title</h5>
-                        <h6 class="card-subtitle text-muted">@post.DatePublished.ToShortDateString() · @post.ReadingTime.Minutes minute read</h6>
+                        <h6 class="card-subtitle text-muted">@post.DatePublished.ToString("D", new CultureInfo("en-US")) · @post.ReadingTime.Minutes minute read</h6>
                         <p class="card-text mt-2">
                             <TagsDisplay Tags=@post.Tags></TagsDisplay>
                         </p>
@@ -33,7 +32,7 @@
 
 @code {
 
-    private string _searchText = string.Empty;
+    private string _search = string.Empty;
 
     private const string PostsKey = "Posts";
 
@@ -41,11 +40,15 @@
 
     private PersistingComponentStateSubscription _persistingComponentStateSubscription;
 
-    [Parameter]
-    public string? Tag { get; set; }
+    [Parameter] public string? Search { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
+        if (OperatingSystem.IsBrowser())
+        {
+            await JavaScript.InvokeVoidAsync("resetScrollPosition");
+        }
+
         _persistingComponentStateSubscription = ApplicationState.RegisterOnPersisting(PersistData);
 
         IDictionary<string, Post> posts = new Dictionary<string, Post>();
@@ -53,28 +56,29 @@
         if (ApplicationState.TryTakeFromJson<IDictionary<string, Post>>(PostsKey, out var postsFromState))
         {
             posts = postsFromState ?? new Dictionary<string, Post>();
+            PostsContainer.Posts = posts;
         }
 
-        if (posts.Count == 0 && BlogPostsContainer.Posts.Any())
+        if (!posts.Any())
         {
-            posts = BlogPostsContainer.Posts;
-        }
-
-        if (posts.Count == 0)
-        {
-            posts = await GetPostsAsync();
-            BlogPostsContainer.Posts = posts;
+            if (PostsContainer.Posts.Any())
+            {
+                posts = PostsContainer.Posts;
+            }
+            else
+            {
+                posts = await GetPostsAsync();
+                PostsContainer.Posts = posts;
+            }
         }
 
         Posts = posts;
 
-        if (!string.IsNullOrWhiteSpace(Tag))
+        if (!string.IsNullOrWhiteSpace(Search))
         {
-            _searchText = Tag;
+            _search = Search;
         }
     }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender) => await Js.InvokeVoidAsync("resetScrollPosition");
 
     private async Task<IDictionary<string, Post>> GetPostsAsync()
     {
@@ -85,14 +89,16 @@
 
     private IDictionary<string, Post> GetSearchedPosts(IDictionary<string, Post> posts)
     {
-        return string.IsNullOrEmpty(_searchText) ? posts : posts.Where(postBySlug =>
-        {
-            var (_, post) = postBySlug;
+        return string.IsNullOrEmpty(_search)
+            ? posts
+            : posts.Where(postBySlug =>
+            {
+                var (_, post) = postBySlug;
 
-            return post.Title.Contains(_searchText, StringComparison.OrdinalIgnoreCase) ||
-                   post.Tags.Any(tag => tag.Contains(_searchText, StringComparison.OrdinalIgnoreCase)) ||
-                   post.Content.Contains(_searchText, StringComparison.OrdinalIgnoreCase);
-        }).ToDictionary();
+                return post.Title.Contains(_search, StringComparison.OrdinalIgnoreCase) ||
+                       post.Tags.Any(tag => tag.Contains(_search, StringComparison.OrdinalIgnoreCase)) ||
+                       post.Content.Contains(_search, StringComparison.OrdinalIgnoreCase);
+            }).ToDictionary();
     }
 
     private Task PersistData()

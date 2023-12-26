@@ -2,13 +2,14 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Blazorise;
 using Blazorise.Icons.FontAwesome;
+using Coding.Blog.Client.Pages;
 using Coding.Blog.Components;
 using Coding.Blog.Extensions;
 using Coding.Blog.Shared.Extensions;
 using Coding.Blog.Shared.Modules;
+using Coding.Blog.Shared.Services;
 using Markdig;
 using Markdown.ColorCode;
-using _Imports = Coding.Blog.Client._Imports;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +27,8 @@ builder.Services
     .AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
+
+builder.Services.AddGrpc();
 
 builder.Services
     .AddBlazorise()
@@ -82,11 +85,13 @@ else
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseAntiforgery();
+app.UseGrpcWeb();
+app.MapGrpcService<ProtoPostsService>().EnableGrpcWeb();
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode()
     .AddInteractiveWebAssemblyRenderMode()
-    .AddAdditionalAssemblies(typeof(_Imports).Assembly);
+    .AddAdditionalAssemblies(typeof(Blog).Assembly);
 
 await app
     .RunAsync()

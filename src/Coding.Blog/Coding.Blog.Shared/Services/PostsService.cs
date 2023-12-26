@@ -7,14 +7,15 @@ namespace Coding.Blog.Shared.Services;
 
 internal sealed class PostsService(
     ICosmicClient<CosmicPosts> postsClient,
-    IMapper<CosmicPost, Post> postsMapper,
-    IPostLinker linker) : IPostsService
+    IMapper<CosmicPost, Post> postMapper,
+    IPostLinker postLinker
+) : IPostsService
 {
     public async Task<IEnumerable<Post>> GetAsync()
     {
         var cosmicPosts = await postsClient.GetAsync().ConfigureAwait(false);
-        var posts = postsMapper.Map(cosmicPosts.Posts);
+        var posts = postMapper.Map(cosmicPosts.Posts);
 
-        return linker.Link(posts);
+        return postLinker.Link(posts);
     }
 }

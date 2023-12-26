@@ -9,6 +9,7 @@ using Coding.Blog.Shared.Resilience;
 using Coding.Blog.Shared.Services;
 using Coding.Blog.Shared.Utilities;
 using Polly;
+using PostProto = Coding.Blog.Shared.Protos.Post;
 
 namespace Coding.Blog.Shared.Modules;
 
@@ -21,15 +22,19 @@ public sealed class CodingBlogModule : Module
         RegisterCosmicClient<CosmicPosts>(builder);
         RegisterCosmicClient<CosmicProjects>(builder);
 
-        builder.RegisterType<CosmicPostMapper>()
+        builder.RegisterType<CosmicPostToPostMapper>()
             .As<IMapper<CosmicPost, Post>>()
             .SingleInstance();
 
-        builder.RegisterType<CosmicBookMapper>()
+        builder.RegisterType<CosmicPostToPostProtoMapper>()
+            .As<IMapper<CosmicPost, PostProto>>()
+                       .SingleInstance();
+
+        builder.RegisterType<CosmicBookToBookMapper>()
             .As<IMapper<CosmicBook, Book>>()
             .SingleInstance();
 
-        builder.RegisterType<CosmicProjectMapper>()
+        builder.RegisterType<CosmicProjectToProjectMapper>()
             .As<IMapper<CosmicProject, Project>>()
             .SingleInstance();
 

@@ -3,7 +3,7 @@ using Coding.Blog.Shared.Records;
 
 namespace Coding.Blog.Shared.Mappers;
 
-internal sealed class CosmicBookMapper : BaseMapper<CosmicBook, Book>
+internal sealed class CosmicBookToBookMapper : BaseMapper<CosmicBook, Book>
 {
     public override Book Map(CosmicBook source) => new(
         source.Title,
