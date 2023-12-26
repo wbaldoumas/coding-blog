@@ -3,7 +3,7 @@ using Coding.Blog.Shared.Records;
 
 namespace Coding.Blog.Shared.Mappers;
 
-internal sealed class CosmicProjectMapper : BaseMapper<CosmicProject, Project>
+internal sealed class CosmicProjectToProjectMapper : BaseMapper<CosmicProject, Project>
 {
     public override Project Map(CosmicProject source)
     {

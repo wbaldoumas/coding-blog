@@ -2,7 +2,7 @@
 
 namespace Coding.Blog.Shared.Mappers;
 
-internal sealed class PostLinker : IPostLinker
+public sealed class PostLinker : IPostLinker
 {
     public IEnumerable<Post> Link(IEnumerable<Post> posts)
     {

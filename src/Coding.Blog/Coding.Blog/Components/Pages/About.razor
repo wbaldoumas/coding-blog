@@ -49,8 +49,3 @@
         </div>
     </div>
 </div>
-
-@code
-{
-    protected override async Task OnAfterRenderAsync(bool firstRender) => await Js.InvokeVoidAsync("resetScrollPosition");
-}

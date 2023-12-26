@@ -7,3 +7,14 @@
 @using Microsoft.AspNetCore.Components.Web.Virtualization
 @using Microsoft.JSInterop
 @using Coding.Blog.Client
+@using Coding.Blog.Shared.Services
+@using Coding.Blog.Shared.Domain
+@using Markdig
+@using Coding.Blog.Shared.State
+@using System.Globalization
+
+@inject IPostsService PostsService
+@inject PersistentComponentState ApplicationState
+@inject IJSRuntime JavaScript
+@inject MarkdownPipeline MarkdownPipeline
+@inject NavigationManager NavigationManager

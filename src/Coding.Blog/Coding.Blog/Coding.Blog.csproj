@@ -20,7 +20,8 @@
   <ItemGroup>
     <PackageReference Include="Blazorise.Bootstrap5" Version="1.4.0" />
     <PackageReference Include="Blazorise.Icons.FontAwesome" Version="1.4.0" />
-    <PackageReference Include="Markdown.ColorCode" Version="2.1.0" />
+    <PackageReference Include="Grpc.AspNetCore" Version="2.59.0" />
+    <PackageReference Include="Grpc.AspNetCore.Web" Version="2.59.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.5" />
     <PackageReference Include="Quartz.Extensions.Hosting" Version="3.8.0" />

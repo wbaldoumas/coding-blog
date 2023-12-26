@@ -1,6 +1,6 @@
 ﻿@page "/post/{Slug}"
 
-@rendermode InteractiveServer
+@rendermode InteractiveAuto
 @implements IDisposable
 
 <div class="container mb-3">
@@ -21,7 +21,7 @@
             </div>
             <div class="row justify-content-center">
                 <div class="col col-auto">
-                    <p class="text-muted">@_selectedPost!.DatePublished.ToShortDateString() · @_selectedPost!.ReadingTime.Minutes minute read</p>
+                    <p class="text-muted">@_selectedPost!.DatePublished.ToString("D", new CultureInfo("en-US")) · @_selectedPost!.ReadingTime.Minutes minute read</p>
                 </div>
             </div>
         </div>
@@ -83,37 +83,47 @@
 
     private Post? _selectedPost;
 
-    protected override Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
+        if (OperatingSystem.IsBrowser())
+        {
+            await JavaScript.InvokeVoidAsync("resetScrollPosition");
+        }
+
         _persistingComponentStateSubscription = ApplicationState.RegisterOnPersisting(PersistData);
 
-        return _selectedPost is null ? RefreshPostAsync() : Task.CompletedTask;
+        if (_selectedPost is null)
+        {
+            await RefreshPostAsync();
+        }
     }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender) => await Js.InvokeVoidAsync("resetScrollPosition");
 
     protected override Task OnParametersSetAsync() => RefreshPostAsync();
 
     private async Task RefreshPostAsync()
     {
-        if (!ApplicationState.TryTakeFromJson<IDictionary<string, Post>>(PostsKey, out var posts) && !BlogPostsContainer.Posts.Any())
-        {
-            Posts = await GetPostsAsync();
+        IDictionary<string, Post> posts = new Dictionary<string, Post>();
 
-            BlogPostsContainer.Posts = Posts;
-        }
-        else
+        if (ApplicationState.TryTakeFromJson<IDictionary<string, Post>>(PostsKey, out var postsFromState))
         {
-            if (BlogPostsContainer.Posts.Any())
+            posts = postsFromState ?? new Dictionary<string, Post>();
+            PostsContainer.Posts = posts;
+        }
+
+        if (!posts.Any())
+        {
+            if (PostsContainer.Posts.Any())
             {
-                Posts = BlogPostsContainer.Posts;
+                posts = PostsContainer.Posts;
             }
             else
             {
-                Posts = posts!;
-                BlogPostsContainer.Posts = Posts;
+                posts = await GetPostsAsync();
+                PostsContainer.Posts = posts;
             }
         }
+
+        Posts = posts;
 
         if (_selectedPost is null)
         {
