@@ -1,7 +1,6 @@
 ﻿using System.Globalization;
-using Coding.Blog.Configurations;
-using Coding.Blog.HostedServices;
-using Coding.Blog.Shared.Jobs;
+using Coding.Blog.Library.Jobs;
+using Coding.Blog.Library.Services;
 using Microsoft.AspNetCore.HttpOverrides;
 using Quartz;
 

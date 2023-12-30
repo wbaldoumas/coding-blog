@@ -8,20 +8,19 @@
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileTag>coding-blog</DockerfileTag>
     <DockerfileContext>..\..</DockerfileContext>
-    <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <PublishReadyToRun>true</PublishReadyToRun>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)'=='DEBUG'">
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Blazorise.Bootstrap5" Version="1.4.0" />
     <PackageReference Include="Blazorise.Icons.FontAwesome" Version="1.4.0" />
     <PackageReference Include="Grpc.AspNetCore" Version="2.59.0" />
     <PackageReference Include="Grpc.AspNetCore.Web" Version="2.59.0" />
+    <PackageReference Include="Meziantou.Analyzer" Version="2.0.132">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.5" />
     <PackageReference Include="Quartz.Extensions.Hosting" Version="3.8.0" />
@@ -29,7 +28,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Coding.Blog.Client\Coding.Blog.Client.csproj" />
-    <ProjectReference Include="..\Coding.Blog.Shared\Coding.Blog.Shared.csproj" />
+    <ProjectReference Include="..\Coding.Blog.Library\Coding.Blog.Library.csproj" />
   </ItemGroup>
 
 </Project>

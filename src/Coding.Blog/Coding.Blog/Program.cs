@@ -5,9 +5,9 @@ using Blazorise.Icons.FontAwesome;
 using Coding.Blog.Client.Pages;
 using Coding.Blog.Components;
 using Coding.Blog.Extensions;
-using Coding.Blog.Shared.Extensions;
-using Coding.Blog.Shared.Modules;
-using Coding.Blog.Shared.Services;
+using Coding.Blog.Library.Extensions;
+using Coding.Blog.Library.Modules;
+using Coding.Blog.Library.Services;
 using Markdig;
 using Markdown.ColorCode;
 
