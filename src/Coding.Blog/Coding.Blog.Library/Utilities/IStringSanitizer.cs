@@ -3,7 +3,7 @@
 /// <summary>
 ///     Sanitizes a given string, with the assumption that the content is markdown.
 /// </summary>
-internal interface IStringSanitizer
+public interface IStringSanitizer
 {
     /// <summary>
     ///     Sanitizes the given string, with the assumption that the content is markdown.

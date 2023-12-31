@@ -4,7 +4,7 @@ using Coding.Blog.Library.Utilities;
 
 namespace Coding.Blog.Library.Mappers;
 
-internal sealed class CosmicPostToPostMapper(IReadTimeEstimator readTimeEstimator) : BaseMapper<CosmicPost, Post>
+public sealed class CosmicPostToPostMapper(IReadTimeEstimator readTimeEstimator) : BaseMapper<CosmicPost, Post>
 {
     public override Post Map(CosmicPost source) => new(
         source.Id,

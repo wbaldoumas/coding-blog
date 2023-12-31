@@ -5,7 +5,7 @@ using Coding.Blog.Library.Records;
 
 namespace Coding.Blog.Library.Services;
 
-internal sealed class BooksService(
+public sealed class BooksService(
     ICosmicClient<CosmicBooks> booksClient,
     IMapper<CosmicBook, Book> booksMapper
 ) : IBooksService

@@ -7,7 +7,7 @@ namespace Coding.Blog.Library.Utilities;
 /// <summary>
 ///     Calculates estimated reading time.
 /// </summary>
-internal interface IReadTimeEstimator
+public interface IReadTimeEstimator
 {
     /// <summary>
     ///     Retrieves the estimated reading time of the given content.
