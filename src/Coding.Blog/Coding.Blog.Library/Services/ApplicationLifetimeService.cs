@@ -1,16 +1,17 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using Coding.Blog.Library.Configurations;
+using Coding.Blog.Library.Options;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 
 namespace Coding.Blog.Library.Services;
 
 [ExcludeFromCodeCoverage]
 public sealed class ApplicationLifetimeService(
     IHostApplicationLifetime hostApplicationLifetime,
-    ApplicationLifetimeConfiguration configuration
+    IOptions<ApplicationLifetimeOptions> options
 ) : IHostedService
 {
-    private readonly TimeSpan _applicationStoppingGracePeriod = TimeSpan.FromSeconds(configuration.ApplicationStoppingGracePeriodSeconds);
+    private readonly TimeSpan _applicationStoppingGracePeriod = TimeSpan.FromSeconds(options.Value.ApplicationStoppingGracePeriodSeconds);
 
     public Task StartAsync(CancellationToken cancellationToken)
     {

@@ -1,14 +1,14 @@
-﻿using Coding.Blog.Library.Configurations;
-using System.Globalization;
+﻿using Coding.Blog.Library.Mappers;
+using Coding.Blog.Library.Options;
 using Coding.Blog.Library.Protos;
+using Coding.Blog.Library.Services;
 using Grpc.Core;
 using Grpc.Net.Client.Configuration;
 using Grpc.Net.Client.Web;
-using Microsoft.AspNetCore.Components;
-using Coding.Blog.Library.Mappers;
-using Coding.Blog.Library.Services;
 using Markdig;
 using Markdown.ColorCode;
+using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Options;
 using Post = Coding.Blog.Library.Domain.Post;
 using PostProto = Coding.Blog.Library.Protos.Post;
 
@@ -25,11 +25,14 @@ internal static class ServiceCollectionExtensions
 
     private static IServiceCollection AddGrpc(this IServiceCollection services, IConfiguration configuration)
     {
-        services
-            .AddGrpcConfiguration(configuration)
-            .AddSingleton(serviceProvider =>
+        services.AddOptions<GrpcOptions>()
+            .Bind(configuration.GetSection(GrpcOptions.Key))
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
+
+        services.AddSingleton(serviceProvider =>
             {
-                var grpcConfiguration = serviceProvider.GetRequiredService<GrpcConfiguration>();
+                var grpcOptions = serviceProvider.GetRequiredService<IOptions<GrpcOptions>>();
 
                 return new ServiceConfig
                 {
@@ -40,10 +43,10 @@ internal static class ServiceCollectionExtensions
                             Names = { MethodName.Default },
                             RetryPolicy = new RetryPolicy
                             {
-                                MaxAttempts = grpcConfiguration.MaxAttempts,
-                                InitialBackoff = grpcConfiguration.InitialBackoff,
-                                MaxBackoff = grpcConfiguration.MaxBackoff,
-                                BackoffMultiplier = grpcConfiguration.BackoffMultiplier,
+                                MaxAttempts = grpcOptions.Value.MaxAttempts,
+                                InitialBackoff = grpcOptions.Value.InitialBackoff,
+                                MaxBackoff = grpcOptions.Value.MaxBackoff,
+                                BackoffMultiplier = grpcOptions.Value.BackoffMultiplier,
                                 RetryableStatusCodes = { StatusCode.Unavailable }
                             }
                         }
@@ -59,17 +62,4 @@ internal static class ServiceCollectionExtensions
 
         return services;
     }
-
-    private static IServiceCollection AddGrpcConfiguration(
-        this IServiceCollection serviceCollection,
-        IConfiguration configuration
-    ) => serviceCollection.AddSingleton(
-        new GrpcConfiguration
-        {
-            MaxAttempts = int.Parse(configuration["Grpc:MaxAttempts"]!, CultureInfo.InvariantCulture),
-            InitialBackoffMilliseconds = int.Parse(configuration["Grpc:InitialBackoffMilliseconds"]!, CultureInfo.InvariantCulture),
-            MaxBackoffMilliseconds = int.Parse(configuration["Grpc:MaxBackoffMilliseconds"]!, CultureInfo.InvariantCulture),
-            BackoffMultiplier = int.Parse(configuration["Grpc:BackoffMultiplier"]!, CultureInfo.InvariantCulture)
-        }
-    );
 }
