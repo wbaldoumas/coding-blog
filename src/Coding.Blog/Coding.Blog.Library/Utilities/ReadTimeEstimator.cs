@@ -1,6 +1,6 @@
 ﻿namespace Coding.Blog.Library.Utilities;
 
-internal sealed class ReadTimeEstimator(IStringSanitizer sanitizer) : IReadTimeEstimator
+public sealed class ReadTimeEstimator(IStringSanitizer sanitizer) : IReadTimeEstimator
 {
     private const double AverageWordsPerMinute = 250.00;
 

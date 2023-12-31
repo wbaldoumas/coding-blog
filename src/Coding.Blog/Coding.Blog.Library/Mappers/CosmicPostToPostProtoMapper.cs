@@ -5,7 +5,7 @@ using Google.Protobuf.WellKnownTypes;
 
 namespace Coding.Blog.Library.Mappers;
 
-internal sealed class CosmicPostToPostProtoMapper(IReadTimeEstimator readTimeEstimator) : BaseMapper<CosmicPost, Post>
+public sealed class CosmicPostToPostProtoMapper(IReadTimeEstimator readTimeEstimator) : BaseMapper<CosmicPost, Post>
 {
     public override Post Map(CosmicPost source) => new()
     {

@@ -5,7 +5,7 @@ using Coding.Blog.Library.Records;
 
 namespace Coding.Blog.Library.Services;
 
-internal sealed class PostsService(
+public sealed class PostsService(
     ICosmicClient<CosmicPosts> postsClient,
     IMapper<CosmicPost, Post> postMapper,
     IPostLinker postLinker

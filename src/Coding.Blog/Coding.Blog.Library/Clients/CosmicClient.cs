@@ -6,7 +6,7 @@ using Polly;
 
 namespace Coding.Blog.Library.Clients;
 
-internal sealed class CosmicClient<T>(
+public sealed class CosmicClient<T>(
     CosmicConfiguration configuration,
     ILogger<T> logger,
     IAsyncPolicy<T> resiliencePolicy
