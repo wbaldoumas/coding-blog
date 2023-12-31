@@ -3,7 +3,7 @@ using PostProto = Coding.Blog.Library.Protos.Post;
 
 namespace Coding.Blog.Library.Mappers;
 
-public class PostProtoToPostMapper : BaseMapper<PostProto, Post>
+public sealed class PostProtoToPostMapper : BaseMapper<PostProto, Post>
 {
     public override Post Map(PostProto source) => new(
         source.Id,
