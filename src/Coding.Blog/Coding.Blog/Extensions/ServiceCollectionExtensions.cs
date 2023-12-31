@@ -1,10 +1,10 @@
 ﻿using Blazorise;
 using Blazorise.Icons.FontAwesome;
 using Coding.Blog.Library.Clients;
-using Coding.Blog.Library.Configurations;
 using Coding.Blog.Library.Domain;
 using Coding.Blog.Library.Jobs;
 using Coding.Blog.Library.Mappers;
+using Coding.Blog.Library.Options;
 using Coding.Blog.Library.Records;
 using Coding.Blog.Library.Resilience;
 using Coding.Blog.Library.Services;
@@ -12,11 +12,11 @@ using Coding.Blog.Library.Utilities;
 using Markdig;
 using Markdown.ColorCode;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.Extensions.Options;
 using Quartz;
-using System.Configuration;
-using System.Globalization;
 using Post = Coding.Blog.Library.Domain.Post;
 using PostProto = Coding.Blog.Library.Protos.Post;
+using QuartzOptions = Coding.Blog.Library.Options.QuartzOptions;
 
 namespace Coding.Blog.Extensions;
 
@@ -31,7 +31,7 @@ internal static class ServiceCollectionExtensions
     public static IServiceCollection ConfigureServices(this IServiceCollection services, IConfiguration configuration)
     {
         services
-            .AddConfigurations(configuration)
+            .AddOptions(configuration)
             .AddApplicationLifetimeService(configuration)
             .AddQuartzJobs(configuration)
             .AddMappers()
@@ -79,12 +79,12 @@ internal static class ServiceCollectionExtensions
         return services
             .AddSingleton(serviceProvider =>
             {
-                var resilienceConfiguration = serviceProvider.GetRequiredService<ResilienceConfiguration>();
+                var resilienceOptions = serviceProvider.GetRequiredService<IOptions<ResilienceOptions>>();
 
                 return ResiliencePolicyBuilder.Build<T>(
-                    TimeSpan.FromMilliseconds(resilienceConfiguration.MedianFirstRetryDelayMilliseconds),
-                    resilienceConfiguration.RetryCount,
-                    TimeSpan.FromMilliseconds(resilienceConfiguration.TimeToLiveMilliseconds)
+                    TimeSpan.FromMilliseconds(resilienceOptions.Value.MedianFirstRetryDelayMilliseconds),
+                    resilienceOptions.Value.RetryCount,
+                    TimeSpan.FromMilliseconds(resilienceOptions.Value.TimeToLiveMilliseconds)
                 );
             })
             .AddSingleton<ICosmicClient<T>, CosmicClient<T>>();
@@ -105,69 +105,54 @@ internal static class ServiceCollectionExtensions
         this IServiceCollection services,
         IConfiguration configuration)
     {
+        var applicationLifetimeOptions = configuration.GetSection(ApplicationLifetimeOptions.Key).Get<ApplicationLifetimeOptions>();
+
         return services
             .Configure<ForwardedHeadersOptions>(options => { options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto; })
             .Configure<HostOptions>(options =>
             {
-                var applicationShutdownTimeoutSeconds = int.Parse(
-                    configuration["ApplicationLifetime:ApplicationShutdownTimeoutSeconds"]!,
-                    CultureInfo.InvariantCulture
-                );
-
-                options.ShutdownTimeout = TimeSpan.FromSeconds(applicationShutdownTimeoutSeconds);
+                options.ShutdownTimeout = TimeSpan.FromSeconds(applicationLifetimeOptions!.ApplicationStoppingGracePeriodSeconds);
             })
             .AddHostedService<ApplicationLifetimeService>();
     }
 
-    private static IServiceCollection AddConfigurations(this IServiceCollection services, IConfiguration configuration) => services
-        .AddCosmicConfiguration(configuration)
-        .AddResilienceConfiguration(configuration)
-        .AddApplicationLifetimeConfiguration(configuration);
+    private static IServiceCollection AddOptions(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddOptions<CosmicOptions>()
+            .Bind(configuration.GetSection(CosmicOptions.Key))
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
 
-    private static IServiceCollection AddApplicationLifetimeConfiguration(
-        this IServiceCollection serviceCollection,
-        IConfiguration configuration
-    ) => serviceCollection.AddSingleton(
-        new ApplicationLifetimeConfiguration
-        {
-            ApplicationStoppingGracePeriodSeconds = int.Parse(configuration["ApplicationLifetime:ApplicationStoppingGracePeriodSeconds"]!, CultureInfo.InvariantCulture)
-        }
-    );
+        services.AddOptions<ResilienceOptions>()
+            .Bind(configuration.GetSection(ResilienceOptions.Key))
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
 
-    private static IServiceCollection AddCosmicConfiguration(
-        this IServiceCollection serviceCollection,
-        IConfiguration configuration
-    ) => serviceCollection.AddSingleton(
-        new CosmicConfiguration
-        {
-            Endpoint = configuration["Cosmic:Endpoint"]!,
-            BucketSlug = configuration["Cosmic:BucketSlug"]!,
-            ReadKey = configuration["Cosmic:ReadKey"]!
-        }
-    );
+        services.AddOptions<ApplicationLifetimeOptions>()
+            .Bind(configuration.GetSection(ApplicationLifetimeOptions.Key))
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
 
-    private static IServiceCollection AddResilienceConfiguration(
-        this IServiceCollection serviceCollection,
-        IConfiguration configuration
-    ) => serviceCollection.AddSingleton(
-        new ResilienceConfiguration
-        {
-            MedianFirstRetryDelayMilliseconds = int.Parse(configuration["Resilience:MedianFirstRetryDelayMilliseconds"]!, CultureInfo.InvariantCulture),
-            RetryCount = int.Parse(configuration["Resilience:RetryCount"]!, CultureInfo.InvariantCulture),
-            TimeToLiveMilliseconds = int.Parse(configuration["Resilience:TimeToLiveMilliseconds"]!, CultureInfo.InvariantCulture)
-        }
-    );
+        services.AddOptions<QuartzOptions>()
+            .Bind(configuration.GetSection(QuartzOptions.Key))
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
+
+        return services;
+    }
 
     private static IServiceCollection AddQuartzJobs(
         this IServiceCollection services,
         IConfiguration configuration)
     {
+        var quartzOptions = configuration.GetSection(QuartzOptions.Key).Get<QuartzOptions>();
+
         services.AddQuartz(serviceCollectionQuartzConfigurator =>
         {
             serviceCollectionQuartzConfigurator
-                .ConfigureJob<PostsWarmingJob>(configuration)
-                .ConfigureJob<BooksWarmingJob>(configuration)
-                .ConfigureJob<ProjectsWarmingJob>(configuration);
+                .ConfigureJob<PostsWarmingJob>(quartzOptions!.PostsWarmingJob)
+                .ConfigureJob<BooksWarmingJob>(quartzOptions.BooksWarmingJob)
+                .ConfigureJob<ProjectsWarmingJob>(quartzOptions.ProjectsWarmingJob);
         });
 
         return services.AddQuartzHostedService();
@@ -175,42 +160,20 @@ internal static class ServiceCollectionExtensions
 
     private static IServiceCollectionQuartzConfigurator ConfigureJob<T>(
         this IServiceCollectionQuartzConfigurator serviceCollectionQuartzConfigurator,
-        IConfiguration configuration)
+        QuartzJobOptions jobOptions)
         where T : IJob
     {
-        var jobName = typeof(T).Name;
-        var intervalSeconds = GetQuartzIntervalSeconds(jobName, configuration);
-        var jobKey = new JobKey(jobName);
+        var jobKey = new JobKey(typeof(T).Name);
 
         serviceCollectionQuartzConfigurator.AddJob<T>(jobKey);
 
         return serviceCollectionQuartzConfigurator.AddTrigger(triggerConfigurator => triggerConfigurator
             .ForJob(jobKey)
             .WithSimpleSchedule(simpleScheduleBuilder => simpleScheduleBuilder
-                .WithIntervalInSeconds(intervalSeconds)
+                .WithIntervalInSeconds(jobOptions.IntervalSeconds)
                 .RepeatForever()
             )
             .StartNow()
         );
-    }
-
-    private static int GetQuartzIntervalSeconds(string jobName, IConfiguration configuration)
-    {
-        var configurationKey = $"Quartz:{jobName}:IntervalSeconds";
-        var intervalSecondsConfiguration = configuration[configurationKey];
-
-        if (string.IsNullOrEmpty(intervalSecondsConfiguration))
-        {
-            throw new ConfigurationErrorsException($"No job interval configuration found for {configurationKey}.");
-        }
-
-        if (!int.TryParse(intervalSecondsConfiguration, NumberStyles.Integer, CultureInfo.InvariantCulture, out var intervalSeconds) || intervalSeconds <= 0)
-        {
-            throw new ConfigurationErrorsException(
-                $"Invalid job interval configuration found for {configurationKey}. Job interval configuration: {intervalSecondsConfiguration}."
-            );
-        }
-
-        return intervalSeconds;
     }
 }

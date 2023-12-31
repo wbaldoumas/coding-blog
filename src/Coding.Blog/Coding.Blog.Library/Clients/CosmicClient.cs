@@ -1,13 +1,14 @@
-﻿using Coding.Blog.Library.Configurations;
+﻿using Coding.Blog.Library.Options;
 using Flurl;
 using Flurl.Http;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Polly;
 
 namespace Coding.Blog.Library.Clients;
 
 public sealed class CosmicClient<T>(
-    CosmicConfiguration configuration,
+    IOptions<CosmicOptions> options,
     ILogger<T> logger,
     IAsyncPolicy<T> resiliencePolicy
 ) : ICosmicClient<T>
@@ -16,14 +17,14 @@ public sealed class CosmicClient<T>(
     {
         var typeName = typeof(T).FullName;
         var (type, props) = CosmicRequestRegistry.Requests[typeName!];
-        var baseUrl = $"{configuration.Endpoint}/buckets/{configuration.BucketSlug}/objects";
+        var baseUrl = $"{options.Value.Endpoint}/buckets/{options.Value.BucketSlug}/objects";
 
         try
         {
             return await resiliencePolicy.ExecuteAsync(
                 _ => baseUrl
                     .SetQueryParam("query", $"{{\"type\":\"{type}\"}}")
-                    .SetQueryParam("read_key", configuration.ReadKey)
+                    .SetQueryParam("read_key", options.Value.ReadKey)
                     .SetQueryParam("props", props)
                     .GetJsonAsync<T>(),
                 new Context(typeName)
