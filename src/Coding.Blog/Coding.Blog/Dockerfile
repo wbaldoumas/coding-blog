@@ -9,7 +9,7 @@ ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["Coding.Blog/Coding.Blog/Coding.Blog.csproj", "Coding.Blog/Coding.Blog/"]
 COPY ["Coding.Blog/Coding.Blog.Client/Coding.Blog.Client.csproj", "Coding.Blog/Coding.Blog.Client/"]
-COPY ["Coding.Blog/Coding.Blog.Shared/Coding.Blog.Shared.csproj", "Coding.Blog/Coding.Blog.Shared/"]
+COPY ["Coding.Blog/Coding.Blog.Library/Coding.Blog.Library.csproj", "Coding.Blog/Coding.Blog.Library/"]
 RUN dotnet restore "./Coding.Blog/Coding.Blog/./Coding.Blog.csproj"
 COPY . .
 WORKDIR "/src/Coding.Blog/Coding.Blog"
