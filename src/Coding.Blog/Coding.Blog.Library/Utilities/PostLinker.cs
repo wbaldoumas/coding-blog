@@ -1,6 +1,6 @@
 ﻿using Coding.Blog.Library.Domain;
 
-namespace Coding.Blog.Library.Mappers;
+namespace Coding.Blog.Library.Utilities;
 
 public sealed class PostLinker : IPostLinker
 {

@@ -1,8 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-
-[assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
-
-namespace Coding.Blog.Library.Utilities;
+﻿namespace Coding.Blog.Library.Utilities;
 
 /// <summary>
 ///     Calculates estimated reading time.

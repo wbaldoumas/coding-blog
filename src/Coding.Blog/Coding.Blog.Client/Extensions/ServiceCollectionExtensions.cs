@@ -2,6 +2,7 @@
 using Coding.Blog.Library.Options;
 using Coding.Blog.Library.Protos;
 using Coding.Blog.Library.Services;
+using Coding.Blog.Library.Utilities;
 using Grpc.Core;
 using Grpc.Net.Client.Configuration;
 using Grpc.Net.Client.Web;
