@@ -22,6 +22,7 @@ internal static class ServiceCollectionExtensions
         .AddSingleton<IMapper<PostProto, Post>, PostProtoToPostMapper>()
         .AddSingleton<IPostLinker, PostLinker>()
         .AddSingleton<IPostsService, ClientPostsService>()
+        .AddSingleton<IPersistentPostsService, PersistentPostsService>()
         .AddGrpc(configuration);
 
     private static IServiceCollection AddGrpc(this IServiceCollection services, IConfiguration configuration)
