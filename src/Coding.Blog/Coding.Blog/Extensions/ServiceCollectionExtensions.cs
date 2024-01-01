@@ -93,7 +93,8 @@ internal static class ServiceCollectionExtensions
     private static IServiceCollection AddDomainServices(this IServiceCollection services) => services
         .AddSingleton<IPostsService, PostsService>()
         .AddSingleton<IBooksService, BooksService>()
-        .AddSingleton<IProjectsService, ProjectsService>();
+        .AddSingleton<IProjectsService, ProjectsService>()
+        .AddSingleton<IPersistentPostsService, PersistentPostsService>();
 
     private static IServiceCollection AddUtilities(this IServiceCollection services) => services
         .AddSingleton(_ => new MarkdownPipelineBuilder().UseAdvancedExtensions().UseColorCode().Build())

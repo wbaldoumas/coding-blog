@@ -107,40 +107,12 @@
 
     private async Task RefreshPostAsync()
     {
-        IDictionary<string, Post> posts = new Dictionary<string, Post>();
-
-        if (ApplicationState.TryTakeFromJson<IDictionary<string, Post>>(PostsKey, out var postsFromState))
-        {
-            posts = postsFromState ?? new Dictionary<string, Post>();
-            PostsContainer.Posts = posts;
-        }
-
-        if (!posts.Any())
-        {
-            if (PostsContainer.Posts.Any())
-            {
-                posts = PostsContainer.Posts;
-            }
-            else
-            {
-                posts = await GetPostsAsync();
-                PostsContainer.Posts = posts;
-            }
-        }
-
-        Posts = posts;
+        Posts = await PersistentPostsService.GetAsync(ApplicationState, PostsKey);
 
         if (_selectedPost is null)
         {
             Posts.TryGetValue(Slug, out _selectedPost);
         }
-    }
-
-    private async Task<IDictionary<string, Post>> GetPostsAsync()
-    {
-        var posts = await PostsService.GetAsync();
-
-        return posts.ToDictionary(post => post.Slug, post => post);
     }
 
     private void NavigateToMain() => NavigationManager.NavigateTo("/blog");
