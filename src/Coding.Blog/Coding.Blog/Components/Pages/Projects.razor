@@ -1,20 +1,16 @@
 ﻿@page "/projects"
-@using Coding.Blog.Library.Domain
 @attribute [StreamRendering]
 
-<div class="container mt-3">
+<div class="container mt-1">
     @if (_projects is null)
     {
-        <div class="d-flex align-items-center">
-            <strong class="ms-2">Loading...</strong>
-            <div class="spinner-border text-success ms-auto me-2 mt-2" role="status" aria-hidden="true"></div>
-        </div>
+        <LoadingSpinner/>
     }
     else
     {
         @if (!_projects.Any())
         {
-            <div class="alert alert-warning" role="alert">
+            <div class="alert alert-secondary" role="alert">
                 No content found. Consider reloading the page.
             </div>
         }
@@ -29,9 +25,9 @@
                         <div class="col-md-8 d-flex flex-column">
                             <div class="card-body">
                                 <h5 class="card-title">@project.Title</h5>
-                                <p class="card-text">@GenerateDescription(project.Description)</p>
+                                <p class="card-text">@GenerateProjectDescription(project.Description)</p>
                                 <p class="card-text">
-                                    <TagsDisplay Tags=@project.Tags></TagsDisplay>
+                                    <TagsDisplay Tags=@project.Tags/>
                                 </p>
                             </div>
                             <div class="mt-auto p-3">
@@ -50,6 +46,6 @@
 
     protected override async Task OnInitializedAsync() => _projects = await ProjectsService.GetAsync();
 
-    private MarkupString GenerateDescription(string markdown) => new(Markdown.ToHtml(markdown, MarkdownPipeline));
+    private MarkupString GenerateProjectDescription(string markdown) => new(Markdown.ToHtml(markdown, MarkdownPipeline));
 
 }
