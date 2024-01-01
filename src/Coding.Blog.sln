@@ -14,7 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "K8s", "K8s", "{F1F394CD-67B
 		K8s\service.yaml = K8s\service.yaml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coding.Blog.Library", "Coding.Blog\Coding.Blog.Library\Coding.Blog.Library.csproj", "{08B50183-D421-45D9-9E4A-AEFD18F0C9AA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Coding.Blog.Library", "Coding.Blog\Coding.Blog.Library\Coding.Blog.Library.csproj", "{08B50183-D421-45D9-9E4A-AEFD18F0C9AA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
