@@ -30,5 +30,3 @@ public class PersistentPostsService(IPostsService postsService) : IPersistentPos
         return posts.ToDictionary(post => post.Slug, post => post, StringComparer.Ordinal);
     }
 }
-
-
