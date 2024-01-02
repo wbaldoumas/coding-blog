@@ -32,8 +32,6 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-
-
     border-top-right-radius: calc(.5rem - 1px); /* Match border-radius of the card */
     border-bottom-right-radius: calc(.5rem - 1px); /* Match border-radius of the card */
 }
@@ -55,5 +53,9 @@
 
     .image-wrapper {
         height: 100%;
+        border-top-left-radius: .25rem;
+        border-bottom-left-radius: 0rem;
+        border-top-right-radius: .24rem;
+        border-bottom-right-radius: 0rem;
     }
 }
