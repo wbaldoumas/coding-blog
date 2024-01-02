@@ -40,10 +40,14 @@
                         <TagsDisplay Tags=@_selectedPost.Tags></TagsDisplay>
                     </div>
                 </div>
-                <hr />
+                <hr/>
                 <div class="row">
-                    <div class="col">
-                        <div>@GeneratePostMarkup(_selectedPost.Content)</div>
+                    <div class="card mb-3 shadow-sm rounded">
+                        <div class="card-body">
+                            <div class="col">
+                                <div>@GeneratePostMarkup(_selectedPost.Content)</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="row justify-content-between">
@@ -69,6 +73,28 @@
                 <div class="row justify-content-center mt-3">
                     <div class="col col-auto">
                         <button class="btn btn-secondary btn-lg" @onclick="NavigateToMain">Back</button>
+                    </div>
+                </div>
+                <div class="row justify-content-center mt-3">
+                    <div class="card shadow-sm rounded">
+                        <div class="card-body">
+                            <script src="https://giscus.app/client.js"
+                                    data-repo="wbaldoumas/coding-blog"
+                                    data-repo-id="MDEwOlJlcG9zaXRvcnk0MDE1MDQwMDY="
+                                    data-category="Announcements"
+                                    data-category-id="DIC_kwDOF-53Bs4CcJes"
+                                    data-mapping="pathname"
+                                    data-strict="1"
+                                    data-reactions-enabled="1"
+                                    data-emit-metadata="0"
+                                    data-input-position="top"
+                                    data-theme="dark"
+                                    data-lang="en"
+                                    data-loading="lazy"
+                                    crossorigin="anonymous"
+                                    async>
+                            </script>
+                        </div>
                     </div>
                 </div>
             </div>
