@@ -6,8 +6,6 @@ html, body {
 
 body {
     overflow-y: scroll;
-    min-width: 360px;
-    margin: 0 auto;
 }
 
 h1:focus {
@@ -101,13 +99,3 @@ h1:focus {
 .darker-border-checkbox.form-check-input {
     border-color: #929292;
 }
-
-@media (max-width: 640.98px) {
-    .card-body {
-        padding-left: 6px;
-        padding-right: 6px;
-        padding-top: 6px;
-        padding-bottom: 6px;
-    }
-}
-
