@@ -2,7 +2,7 @@
 @rendermode InteractiveAuto
 @implements IDisposable
 
-<div class="container mb-3">
+<div class="container-fluid mb-3">
     @if (Posts is not null && _selectedPost is null)
     {
         <div class="alert alert-secondary" role="alert">
@@ -17,7 +17,6 @@
         }
         else
         {
-            <div class="container">
                 <div class="row justify-content-center">
                     <div class="col col-auto">
                         <h1>@_selectedPost.Title</h1>
@@ -28,8 +27,7 @@
                         <p class="text-muted">@_selectedPost.DatePublished.ToString("D", new CultureInfo("en-US")) · @_selectedPost.ReadingTime.Minutes minute read</p>
                     </div>
                 </div>
-            </div>
-            <div class="container overflow-hidden">
+            <div class="overflow-hidden">
                 <div class="row justify-content-center">
                     <div class="col col-auto">
                         <img class="rounded mx-auto d-block img-fluid post-hero" src="@_selectedPost.Hero.ImgixUrl" alt="hero">
