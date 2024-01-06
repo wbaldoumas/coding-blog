@@ -13,7 +13,7 @@
     else
     {
         <div class="text-center mb-3">
-            <input type="search" class="form-control rounded" placeholder="Search..." aria-label="search" aria-describedby="search-button" @bind-value="_search" @bind-value:event="oninput">
+            <input type="search" class="form-control rounded" placeholder="Search..." aria-label="search" aria-describedby="search-button" value="@_search" @oninput="HandleSearchInput">
         </div>
         <div class="row g-3 d-flex align-items-stretch">
             @foreach (var (slug, post) in GetSearchedPosts(Posts))
@@ -50,6 +50,15 @@
 
     [Parameter] public string? Search { get; set; }
 
+    private void HandleSearchInput(ChangeEventArgs args)
+    {
+        _search = args.Value?.ToString() ?? string.Empty;
+
+        var path = string.IsNullOrEmpty(_search) ? "/" : $"/search/{HttpUtility.UrlEncode(_search)}";
+
+        JavaScript.InvokeVoidAsync("ChangeUrl", path);
+    }
+
     protected override async Task OnInitializedAsync()
     {
         if (OperatingSystem.IsBrowser())
@@ -63,7 +72,7 @@
 
         if (!string.IsNullOrWhiteSpace(Search))
         {
-            _search = Search;
+            _search = HttpUtility.UrlDecode(Search);
         }
     }
 
