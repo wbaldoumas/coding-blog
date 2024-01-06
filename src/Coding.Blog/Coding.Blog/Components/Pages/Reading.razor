@@ -1,6 +1,8 @@
 ﻿@page "/reading"
 @attribute [StreamRendering]
 
+<PageTitle>Will Baldoumas | Reading Recommendations</PageTitle>
+
 <div class="container mb-3">
     @if (Books is null)
     {
@@ -16,14 +18,14 @@
         }
         else
         {
-            <h1 class="text-center display-3">Reading Recommendations</h1>
+            <h1 class="text-center">Reading Recommendations</h1>
 
             <div>
                 <p>
                     Below are some reading recommendations based on books that I've read and enjoyed. Most are programming-language and technology-agnostic and instead focus on building up the fundamentals needed for a successful career as a software engineer.
                 </p>
                 <p>
-                    <em>Last updated: @(Books.Any() ? Books.Max(book => book.DatePublished).ToShortDateString() : "Loading...")</em>
+                    <em>Last updated: @Books.Max(book => book.DatePublished).ToShortDateString()</em>
                 </p>
             </div>
 
@@ -31,10 +33,10 @@
             {
                 <div class="card rounded">
                     <a href="@book.PurchaseUrl" target="_blank">
-                        <img src="@book.CoverImageUrl" alt="@book.Title" class="rounded mx-auto d-block img-fluid card-img-top" />
+                        <img src="@book.CoverImageUrl" alt="@book.Title" class="rounded mx-auto d-block card-img-top" />
                     </a>
                     <div class="card-body rounded">
-                        <a href="@book.PurchaseUrl" target="_blank">
+                        <a href="@book.PurchaseUrl" class="card-link" target="_blank">
                             <h3 class="text-center card-title">@book.Title</h3>
                         </a>
                         <div class="card-text">

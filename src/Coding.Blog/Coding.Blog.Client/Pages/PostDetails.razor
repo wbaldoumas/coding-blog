@@ -2,11 +2,13 @@
 @rendermode InteractiveAuto
 @implements IDisposable
 
+<PageTitle>Will Baldoumas | @Title</PageTitle>
+
 <div class="container mb-3">
     @if (Posts is not null && _selectedPost is null)
     {
         <div class="alert alert-secondary" role="alert">
-            No post found at address <strong>@Slug</strong>. Navigate to <a href="/blog">blog</a> to view all posts.
+            No post found at address <strong>@Slug</strong>. Navigate to <a href="">blog</a> to view all posts.
         </div>
     }
     else
@@ -112,6 +114,8 @@
 
     private Post? _selectedPost;
 
+    private string Title => _selectedPost?.Title ?? string.Empty;
+
     protected override async Task OnInitializedAsync()
     {
         if (OperatingSystem.IsBrowser())
@@ -139,7 +143,7 @@
         }
     }
 
-    private void NavigateToMain() => NavigationManager.NavigateTo("/blog");
+    private void NavigateToMain() => NavigationManager.NavigateTo("");
 
     private MarkupString GeneratePostMarkup(string markdown) => new(Markdown.ToHtml(markdown, MarkdownPipeline));
 

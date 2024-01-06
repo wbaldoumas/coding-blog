@@ -1,7 +1,9 @@
-﻿@page "/blog"
-@page "/blog/{Search}"
+﻿@page "/"
+@page "/search/{Search}"
 @rendermode InteractiveAuto
 @implements IDisposable
+
+<PageTitle>Will Baldoumas | Blog</PageTitle>
 
 <div class="container mb-3">
     @if (Posts is null)
@@ -18,7 +20,7 @@
             {
                 <div class="col-12 col-lg-4">
                     <div class="card rounded border-0 h-100 shadow">
-                        <a href="@($"post/{slug}")">
+                        <a class="card-link" href="@($"post/{slug}")">
                             <img src=@post.Hero.ImgixUrl class="card-img-top rounded" alt="hero" />
                         </a>
                         <div class="card-body rounded d-flex flex-column">
