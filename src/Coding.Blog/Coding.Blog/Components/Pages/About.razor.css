@@ -4,30 +4,6 @@
     padding: 2rem;
 }
 
-.text-center {
-    text-align: center;
-}
-
-.mb-2,
-.mb-3,
-.mb-4,
-.mb-5 {
-    margin-bottom: 0.5rem;
-    margin-bottom: 1rem;
-    margin-bottom: 1.5rem;
-    margin-bottom: 3rem;
-}
-
-.my-5 {
-    margin-top: 3rem;
-    margin-bottom: 3rem;
-}
-
-.list-unstyled {
-    padding-left: 0;
-    list-style: none;
-}
-
 .fab {
     margin-right: 8px;
 }
@@ -47,13 +23,11 @@
 }
 
 .profile-image-container:hover .profile-image {
-    transform: scale(1.1);
+    transform: scale(1.05);
 }
 
 .card {
     padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
 }
 
@@ -61,29 +35,12 @@
     transition: color 0.3s;
 }
 
-.animated-typing {
-    overflow: hidden;
-    white-space: nowrap;
-    border-right: .15em solid;
-    animation: typing 4s steps(30, end), blink-caret .5s step-end infinite alternate;
-}
-
-@keyframes typing {
-    from {
-        width: 0;
+@media (max-width: 640.98px) {
+    .container {
+        padding: 0.75rem;
     }
 
-    to {
-        width: 100%;
-    }
-}
-
-@keyframes blink-caret {
-    from, to {
-        border-color: transparent;
-    }
-
-    50% {
-        border-color: inherit;
+    .card {
+        padding: 10px;
     }
 }

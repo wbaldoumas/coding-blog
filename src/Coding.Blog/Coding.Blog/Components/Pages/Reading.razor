@@ -29,22 +29,17 @@
 
             @foreach (var book in Books)
             {
-                <hr/>
-                <div class="row justify-content-md-center">
-                    <div class="col col-md-auto">
+                <div class="card rounded">
+                    <a href="@book.PurchaseUrl" target="_blank">
+                        <img src="@book.CoverImageUrl" alt="@book.Title" class="rounded mx-auto d-block img-fluid card-img-top" />
+                    </a>
+                    <div class="card-body rounded">
                         <a href="@book.PurchaseUrl" target="_blank">
-                            <h3 style="text-align: center">@book.Title</h3>
+                            <h3 class="text-center card-title">@book.Title</h3>
                         </a>
-                    </div>
-                </div>
-                <div class="row gy-3 justify-content-md-center">
-                    <div class="col col-md-auto">
-                        <a href="@book.PurchaseUrl" target="_blank">
-                            <img src="@book.CoverImageUrl" alt="@book.Title" class="rounded mx-auto d-block img-fluid"/>
-                        </a>
-                    </div>
-                    <div>
-                        @(new MarkupString(book.Content))
+                        <div class="card-text">
+                            @(new MarkupString(book.Content))
+                        </div>
                     </div>
                 </div>
             }
