@@ -31,10 +31,6 @@
     margin-bottom: 20px;
 }
 
-.hover-link {
-    transition: color 0.3s;
-}
-
 @media (max-width: 640.98px) {
     .container {
         padding: 0.75rem;

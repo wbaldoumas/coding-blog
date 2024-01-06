@@ -1,6 +1,8 @@
 ﻿@page "/projects"
 @attribute [StreamRendering]
 
+<PageTitle>Will Baldoumas | Projects</PageTitle>
+
 <div class="container mb-3">
     @if (_projects is null)
     {
@@ -47,5 +49,4 @@
     protected override async Task OnInitializedAsync() => _projects = await ProjectsService.GetAsync();
 
     private MarkupString GenerateProjectDescription(string markdown) => new(Markdown.ToHtml(markdown, MarkdownPipeline));
-
 }
