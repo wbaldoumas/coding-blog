@@ -17,19 +17,17 @@
         }
         else
         {
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col col-auto">
-                        <h1>@_selectedPost.Title</h1>
-                    </div>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col col-auto">
-                        <p class="text-muted">@_selectedPost.DatePublished.ToString("D", new CultureInfo("en-US")) · @_selectedPost.ReadingTime.Minutes minute read</p>
-                    </div>
+            <div class="row justify-content-center">
+                <div class="col col-auto">
+                    <h1>@_selectedPost.Title</h1>
                 </div>
             </div>
-            <div class="container overflow-hidden">
+            <div class="row justify-content-center">
+                <div class="col col-auto">
+                    <p class="text-muted">@_selectedPost.DatePublished.ToString("D", new CultureInfo("en-US")) · @_selectedPost.ReadingTime.Minutes minute read</p>
+                </div>
+            </div>
+            <div class="overflow-hidden">
                 <div class="row justify-content-center">
                     <div class="col col-auto">
                         <img class="rounded mx-auto d-block img-fluid post-hero" src="@_selectedPost.Hero.ImgixUrl" alt="hero">
@@ -43,7 +41,7 @@
                 <hr/>
                 <div class="row">
                     <div class="card mb-3 shadow-sm rounded">
-                        <div class="card-body">
+                        <div class="card-body rounded">
                             <div class="col">
                                 <div>@GeneratePostMarkup(_selectedPost.Content)</div>
                             </div>
@@ -77,7 +75,7 @@
                 </div>
                 <div class="row justify-content-center mt-3">
                     <div class="card shadow-sm rounded">
-                        <div class="card-body">
+                        <div class="card-body rounded">
                             <script src="https://giscus.app/client.js"
                                     data-repo="wbaldoumas/coding-blog"
                                     data-repo-id="MDEwOlJlcG9zaXRvcnk0MDE1MDQwMDY="
