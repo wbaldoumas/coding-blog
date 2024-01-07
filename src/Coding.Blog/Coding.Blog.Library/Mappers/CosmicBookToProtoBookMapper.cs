@@ -12,6 +12,6 @@ public sealed class CosmicBookToProtoBookMapper : BaseMapper<CosmicBook, Book>
         Content = source.Content,
         CoverImageUrl = source.Metadata.Cover.Url,
         PurchaseUrl = source.Metadata.PurchaseUrl,
-        DatePublished = Timestamp.FromDateTime(source.DatePublished),
+        DatePublished = Timestamp.FromDateTime(source.DatePublished)
     };
 }

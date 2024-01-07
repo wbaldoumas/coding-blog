@@ -1,4 +1,5 @@
 ﻿@page "/reading"
+@using Coding.Blog.Library.Extensions
 @implements IDisposable
 
 <PageTitle>Will Baldoumas | Reading Recommendations</PageTitle>
@@ -40,7 +41,7 @@
                             <h3 class="text-center card-title">@book.Title</h3>
                         </a>
                         <div class="card-text">
-                            @(new MarkupString(book.Content))
+                            @book.Content.ToMarkupString(MarkdownPipeline)
                         </div>
                     </div>
                 </div>

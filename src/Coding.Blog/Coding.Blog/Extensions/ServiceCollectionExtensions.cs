@@ -1,7 +1,6 @@
 ﻿using Blazorise;
 using Blazorise.Icons.FontAwesome;
 using Coding.Blog.Library.Clients;
-using Coding.Blog.Library.Domain;
 using Coding.Blog.Library.Jobs;
 using Coding.Blog.Library.Mappers;
 using Coding.Blog.Library.Options;
@@ -14,11 +13,11 @@ using Markdown.ColorCode;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Options;
 using Quartz;
-using Post = Coding.Blog.Library.Domain.Post;
-using ProtoPost = Coding.Blog.Library.Protos.Post;
 using Book = Coding.Blog.Library.Domain.Book;
-using ProtoBook = Coding.Blog.Library.Protos.Book;
+using Post = Coding.Blog.Library.Domain.Post;
 using Project = Coding.Blog.Library.Domain.Project;
+using ProtoBook = Coding.Blog.Library.Protos.Book;
+using ProtoPost = Coding.Blog.Library.Protos.Post;
 using ProtoProject = Coding.Blog.Library.Protos.Project;
 using QuartzOptions = Coding.Blog.Library.Options.QuartzOptions;
 

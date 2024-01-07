@@ -1,5 +1,6 @@
 ﻿@page "/"
 @page "/search/{Search}"
+@using Coding.Blog.Library.Extensions
 @implements IDisposable
 
 <PageTitle>Will Baldoumas | Blog</PageTitle>
@@ -24,7 +25,7 @@
                         </a>
                         <div class="card-body rounded d-flex flex-column">
                             <h5 class="card-title">@post.Title</h5>
-                            <h6 class="card-subtitle text-muted">@post.DatePublished.ToString("D", new CultureInfo("en-US")) · @post.ReadingTime.Minutes minute read</h6>
+                            <h6 class="card-subtitle text-muted">@post.DatePublished.ToPreformattedString() · @post.ReadingTime.Minutes minute read</h6>
                             <p class="card-text mt-2">
                                 <TagsDisplay Tags=@post.Tags></TagsDisplay>
                             </p>
