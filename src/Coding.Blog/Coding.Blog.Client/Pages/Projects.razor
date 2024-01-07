@@ -52,15 +52,12 @@
 
     protected override async Task OnInitializedAsync()
     {
-        if (OperatingSystem.IsBrowser())
-        {
-            await JavaScript.InvokeVoidAsync("resetScrollPosition");
-        }
-
         _persistingComponentStateSubscription = ApplicationState.RegisterOnPersisting(PersistData);
 
         _projects = await PersistentProjectsService.GetAsync(ApplicationState, ProjectsKey);
     }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender) => await JavaScript.InvokeVoidAsync("resetScrollPosition");
 
     private Task PersistData()
     {
