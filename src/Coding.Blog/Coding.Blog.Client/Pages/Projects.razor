@@ -1,5 +1,5 @@
 ﻿@page "/projects"
-@attribute [StreamRendering]
+@implements IDisposable
 
 <PageTitle>Will Baldoumas | Projects</PageTitle>
 
@@ -46,7 +46,37 @@
 @code {
     private IEnumerable<Project>? _projects;
 
-    protected override async Task OnInitializedAsync() => _projects = await ProjectsService.GetAsync();
+    private const string ProjectsKey = "Projects";
+
+    private PersistingComponentStateSubscription _persistingComponentStateSubscription;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _projects = await Task.FromResult(new List<Project>());
+
+        if (OperatingSystem.IsBrowser())
+        {
+            await JavaScript.InvokeVoidAsync("resetScrollPosition");
+        }
+
+        if (OperatingSystem.IsBrowser())
+        {
+            await JavaScript.InvokeVoidAsync("resetScrollPosition");
+        }
+
+        _persistingComponentStateSubscription = ApplicationState.RegisterOnPersisting(PersistData);
+
+        _projects = await PersistentProjectsService.GetAsync(ApplicationState, ProjectsKey);
+    }
+
+    private Task PersistData()
+    {
+        ApplicationState.PersistAsJson(ProjectsKey, ProjectsKey);
+
+        return Task.CompletedTask;
+    }
+
+    public void Dispose() => _persistingComponentStateSubscription.Dispose();
 
     private MarkupString GenerateProjectDescription(string markdown) => new(Markdown.ToHtml(markdown, MarkdownPipeline));
 }

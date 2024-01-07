@@ -46,3 +46,14 @@
         </div>
     </div>
 </div>
+
+@code
+{
+    protected override async Task OnInitializedAsync()
+    {
+        if (OperatingSystem.IsBrowser())
+        {
+            await JavaScript.InvokeVoidAsync("resetScrollPosition");
+        }
+    }
+}

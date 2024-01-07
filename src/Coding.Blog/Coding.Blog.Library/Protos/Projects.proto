@@ -1,0 +1,22 @@
+﻿syntax = "proto3"; 
+
+option csharp_namespace = "Coding.Blog.Library.Protos";
+
+service Projects { 
+	rpc GetProjects (ProjectsRequest) returns (ProjectsReply); 
+} 
+
+message ProjectsRequest {}
+
+message ProjectsReply { 
+	repeated Project projects = 1; 
+} 
+
+message Project {
+	string title = 1;
+	string description = 2;
+	string imageUrl = 3;
+	string projectUrl = 4;
+	int32 rank = 5;
+	repeated string tags = 6;
+}

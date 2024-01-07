@@ -1,11 +1,11 @@
 ﻿using Coding.Blog.Library.Domain;
-using PostProto = Coding.Blog.Library.Protos.Post;
+using ProtoPost = Coding.Blog.Library.Protos.Post;
 
 namespace Coding.Blog.Library.Mappers;
 
-public sealed class PostProtoToPostMapper : BaseMapper<PostProto, Post>
+public sealed class ProtoPostToPostMapper : BaseMapper<ProtoPost, Post>
 {
-    public override Post Map(PostProto source) => new(
+    public override Post Map(ProtoPost source) => new(
         source.Id,
         source.Slug,
         source.Title,

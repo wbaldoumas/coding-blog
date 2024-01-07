@@ -10,8 +10,12 @@ using Markdig;
 using Markdown.ColorCode;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Options;
+using Book = Coding.Blog.Library.Domain.Book;
 using Post = Coding.Blog.Library.Domain.Post;
-using PostProto = Coding.Blog.Library.Protos.Post;
+using Project = Coding.Blog.Library.Domain.Project;
+using ProtoPost = Coding.Blog.Library.Protos.Post;
+using ProtoBook = Coding.Blog.Library.Protos.Book;
+using ProtoProject = Coding.Blog.Library.Protos.Project;
 
 namespace Coding.Blog.Client.Extensions;
 
@@ -19,10 +23,16 @@ internal static class ServiceCollectionExtensions
 {
     public static IServiceCollection ConfigureServices(this IServiceCollection services, IConfiguration configuration) => services
         .AddSingleton(_ => new MarkdownPipelineBuilder().UseAdvancedExtensions().UseColorCode().Build())
-        .AddSingleton<IMapper<PostProto, Post>, PostProtoToPostMapper>()
+        .AddSingleton<IMapper<ProtoPost, Post>, ProtoPostToPostMapper>()
+        .AddSingleton<IMapper<ProtoBook, Book>, ProtoBookToBookMapper>()
+        .AddSingleton<IMapper<ProtoProject, Project>, ProtoProjectToProjectMapper>()
         .AddSingleton<IPostLinker, PostLinker>()
         .AddSingleton<IPostsService, ClientPostsService>()
-        .AddSingleton<IPersistentPostsService, PersistentPostsService>()
+        .AddSingleton<IProjectsService, ClientProjectsService>()
+        .AddSingleton<IBooksService, ClientBooksService>()
+        .AddSingleton<IPersistentService<IDictionary<string, Post>>, PersistentPostsService>()
+        .AddSingleton<IPersistentService<IList<Book>>, PersistentBooksService>()
+        .AddSingleton<IPersistentService<IList<Project>>, PersistentProjectsService>()
         .AddGrpc(configuration);
 
     private static IServiceCollection AddGrpc(this IServiceCollection services, IConfiguration configuration)
@@ -33,34 +43,46 @@ internal static class ServiceCollectionExtensions
             .ValidateOnStart();
 
         services.AddSingleton(serviceProvider =>
-            {
-                var grpcOptions = serviceProvider.GetRequiredService<IOptions<GrpcOptions>>();
+        {
+            var grpcOptions = serviceProvider.GetRequiredService<IOptions<GrpcOptions>>();
 
-                return new ServiceConfig
+            return new ServiceConfig
+            {
+                MethodConfigs =
                 {
-                    MethodConfigs =
+                    new MethodConfig
                     {
-                        new MethodConfig
+                        Names = { MethodName.Default },
+                        RetryPolicy = new RetryPolicy
                         {
-                            Names = { MethodName.Default },
-                            RetryPolicy = new RetryPolicy
-                            {
-                                MaxAttempts = grpcOptions.Value.MaxAttempts,
-                                InitialBackoff = grpcOptions.Value.InitialBackoff,
-                                MaxBackoff = grpcOptions.Value.MaxBackoff,
-                                BackoffMultiplier = grpcOptions.Value.BackoffMultiplier,
-                                RetryableStatusCodes = { StatusCode.Unavailable }
-                            }
+                            MaxAttempts = grpcOptions.Value.MaxAttempts,
+                            InitialBackoff = grpcOptions.Value.InitialBackoff,
+                            MaxBackoff = grpcOptions.Value.MaxBackoff,
+                            BackoffMultiplier = grpcOptions.Value.BackoffMultiplier,
+                            RetryableStatusCodes = { StatusCode.Unavailable }
                         }
                     }
-                };
-            })
-            .AddGrpcClient<Posts.PostsClient>((serviceProvider, grpcClientFactoryOptions) =>
-            {
-                grpcClientFactoryOptions.Address = new Uri(serviceProvider.GetRequiredService<NavigationManager>().BaseUri);
-            })
-            .ConfigurePrimaryHttpMessageHandler(() => new GrpcWebHandler(GrpcWebMode.GrpcWeb, new HttpClientHandler()))
-            .ConfigureChannel((serviceProvider, grpcChannelOptions) => { grpcChannelOptions.ServiceConfig = serviceProvider.GetRequiredService<ServiceConfig>(); });
+                }
+            };
+        })
+        .AddConfiguredGrpcClient<Posts.PostsClient>()
+        .AddConfiguredGrpcClient<Books.BooksClient>()
+        .AddConfiguredGrpcClient<Projects.ProjectsClient>();
+
+        return services;
+    }
+
+    private static IServiceCollection AddConfiguredGrpcClient<T>(this IServiceCollection services) where T : ClientBase
+    {
+        services.AddGrpcClient<T>((serviceProvider, grpcClientFactoryOptions) =>
+        {
+            grpcClientFactoryOptions.Address = new Uri(serviceProvider.GetRequiredService<NavigationManager>().BaseUri);
+        })
+        .ConfigurePrimaryHttpMessageHandler(() => new GrpcWebHandler(GrpcWebMode.GrpcWeb, new HttpClientHandler()))
+        .ConfigureChannel((serviceProvider, grpcChannelOptions) =>
+        {
+            grpcChannelOptions.ServiceConfig = serviceProvider.GetRequiredService<ServiceConfig>();
+        });
 
         return services;
     }
