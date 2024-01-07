@@ -29,7 +29,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Protobuf Include="Protos\Books.proto" />
     <Protobuf Include="Protos\Posts.proto" />
+    <Protobuf Include="Protos\Projects.proto" />
   </ItemGroup>
 
 </Project>

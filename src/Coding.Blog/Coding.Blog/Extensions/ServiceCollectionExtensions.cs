@@ -1,7 +1,6 @@
 ﻿using Blazorise;
 using Blazorise.Icons.FontAwesome;
 using Coding.Blog.Library.Clients;
-using Coding.Blog.Library.Domain;
 using Coding.Blog.Library.Jobs;
 using Coding.Blog.Library.Mappers;
 using Coding.Blog.Library.Options;
@@ -14,8 +13,12 @@ using Markdown.ColorCode;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Options;
 using Quartz;
+using Book = Coding.Blog.Library.Domain.Book;
 using Post = Coding.Blog.Library.Domain.Post;
-using PostProto = Coding.Blog.Library.Protos.Post;
+using Project = Coding.Blog.Library.Domain.Project;
+using ProtoBook = Coding.Blog.Library.Protos.Book;
+using ProtoPost = Coding.Blog.Library.Protos.Post;
+using ProtoProject = Coding.Blog.Library.Protos.Project;
 using QuartzOptions = Coding.Blog.Library.Options.QuartzOptions;
 
 namespace Coding.Blog.Extensions;
@@ -65,9 +68,11 @@ internal static class ServiceCollectionExtensions
 
     private static IServiceCollection AddMappers(this IServiceCollection services) => services
         .AddSingleton<IMapper<CosmicPost, Post>, CosmicPostToPostMapper>()
-        .AddSingleton<IMapper<CosmicPost, PostProto>, CosmicPostToPostProtoMapper>()
+        .AddSingleton<IMapper<CosmicPost, ProtoPost>, CosmicPostToProtoPostMapper>()
         .AddSingleton<IMapper<CosmicBook, Book>, CosmicBookToBookMapper>()
-        .AddSingleton<IMapper<CosmicProject, Project>, CosmicProjectToProjectMapper>();
+        .AddSingleton<IMapper<CosmicBook, ProtoBook>, CosmicBookToProtoBookMapper>()
+        .AddSingleton<IMapper<CosmicProject, Project>, CosmicProjectToProjectMapper>()
+        .AddSingleton<IMapper<CosmicProject, ProtoProject>, CosmicProjectToProtoProjectMapper>();
 
     private static IServiceCollection AddCosmicClients(this IServiceCollection services) => services
         .AddCosmicClient<CosmicPosts>()
@@ -94,7 +99,9 @@ internal static class ServiceCollectionExtensions
         .AddSingleton<IPostsService, PostsService>()
         .AddSingleton<IBooksService, BooksService>()
         .AddSingleton<IProjectsService, ProjectsService>()
-        .AddSingleton<IPersistentPostsService, PersistentPostsService>();
+        .AddSingleton<IPersistentService<IDictionary<string, Post>>, PersistentPostsService>()
+        .AddSingleton<IPersistentService<IList<Book>>, PersistentBooksService>()
+        .AddSingleton<IPersistentService<IList<Project>>, PersistentProjectsService>();
 
     private static IServiceCollection AddUtilities(this IServiceCollection services) => services
         .AddSingleton(_ => new MarkdownPipelineBuilder().UseAdvancedExtensions().UseColorCode().Build())

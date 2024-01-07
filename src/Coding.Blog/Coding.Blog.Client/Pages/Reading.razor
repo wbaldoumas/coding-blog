@@ -1,5 +1,6 @@
 ﻿@page "/reading"
-@attribute [StreamRendering]
+@using Coding.Blog.Library.Extensions
+@implements IDisposable
 
 <PageTitle>Will Baldoumas | Reading Recommendations</PageTitle>
 
@@ -40,7 +41,7 @@
                             <h3 class="text-center card-title">@book.Title</h3>
                         </a>
                         <div class="card-text">
-                            @(new MarkupString(book.Content))
+                            @book.Content.ToMarkupString(MarkdownPipeline)
                         </div>
                     </div>
                 </div>
@@ -53,6 +54,28 @@
 
     private IEnumerable<Book>? Books { get; set; }
 
-    protected override async Task OnInitializedAsync() => Books = await BooksService.GetAsync();
+    private const string BooksKey = "Books";
 
+    private PersistingComponentStateSubscription _persistingComponentStateSubscription;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (OperatingSystem.IsBrowser())
+        {
+            await JavaScript.InvokeVoidAsync("resetScrollPosition");
+        }
+
+        _persistingComponentStateSubscription = ApplicationState.RegisterOnPersisting(PersistData);
+
+        Books = await PersistentBooksService.GetAsync(ApplicationState, BooksKey);
+    }
+
+    private Task PersistData()
+    {
+        ApplicationState.PersistAsJson(BooksKey, Books);
+
+        return Task.CompletedTask;
+    }
+
+    public void Dispose() => _persistingComponentStateSubscription.Dispose();
 }

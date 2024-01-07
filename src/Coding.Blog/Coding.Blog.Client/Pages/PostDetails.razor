@@ -1,5 +1,5 @@
 ﻿@page "/post/{Slug}"
-@rendermode InteractiveAuto
+@using Coding.Blog.Library.Extensions
 @implements IDisposable
 
 <PageTitle>Will Baldoumas | @Title</PageTitle>
@@ -26,7 +26,7 @@
             </div>
             <div class="row justify-content-center">
                 <div class="col col-auto">
-                    <p class="text-muted">@_selectedPost.DatePublished.ToString("D", new CultureInfo("en-US")) · @_selectedPost.ReadingTime.Minutes minute read</p>
+                    <p class="text-muted">@_selectedPost.DatePublished.ToPreformattedString() · @_selectedPost.ReadingTime.Minutes minute read</p>
                 </div>
             </div>
             <div class="overflow-hidden">
@@ -45,7 +45,7 @@
                     <div class="card mb-3 shadow-sm rounded">
                         <div class="card-body rounded">
                             <div class="col">
-                                <div>@GeneratePostMarkup(_selectedPost.Content)</div>
+                                <div>@_selectedPost.Content.ToMarkupString(MarkdownPipeline)</div>
                             </div>
                         </div>
                     </div>
@@ -144,8 +144,6 @@
     }
 
     private void NavigateToMain() => NavigationManager.NavigateTo("");
-
-    private MarkupString GeneratePostMarkup(string markdown) => new(Markdown.ToHtml(markdown, MarkdownPipeline));
 
     private Task PersistData()
     {

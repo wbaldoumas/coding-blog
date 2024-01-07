@@ -4,13 +4,13 @@ using Microsoft.AspNetCore.Components;
 
 namespace Coding.Blog.Library.Services;
 
-public class PersistentPostsService(IPostsService postsService) : IPersistentPostsService
+public sealed class PersistentPostsService(IPostsService postsService) : IPersistentService<IDictionary<string, Post>>
 {
     public async Task<IDictionary<string, Post>> GetAsync(PersistentComponentState applicationState, string stateKey)
     {
-        if (applicationState.TryTakeFromJson<IDictionary<string, Post>>(stateKey, out var postsFromState))
+        if (applicationState.TryTakeFromJson<IDictionary<string, Post>>(stateKey, out var postsState))
         {
-            PostsState.Posts = postsFromState ?? new Dictionary<string, Post>(StringComparer.Ordinal);
+            PostsState.Posts = postsState ?? new Dictionary<string, Post>(StringComparer.Ordinal);
         }
 
         if (PostsState.Posts.Any())

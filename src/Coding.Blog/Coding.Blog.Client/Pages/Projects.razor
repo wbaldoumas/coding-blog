@@ -1,5 +1,6 @@
 ﻿@page "/projects"
-@attribute [StreamRendering]
+@using Coding.Blog.Library.Extensions
+@implements IDisposable
 
 <PageTitle>Will Baldoumas | Projects</PageTitle>
 
@@ -27,7 +28,7 @@
                         <div class="col-md-8 d-flex flex-column">
                             <div class="card-body">
                                 <h5 class="card-title">@project.Title</h5>
-                                <p class="card-text">@GenerateProjectDescription(project.Description)</p>
+                                <p class="card-text">@project.Description.ToMarkupString(MarkdownPipeline)</p>
                                 <p class="card-text">
                                     <TagsDisplay Tags=@project.Tags/>
                                 </p>
@@ -44,9 +45,30 @@
 </div>
 
 @code {
-    private IEnumerable<Project>? _projects;
+    private IList<Project>? _projects;
 
-    protected override async Task OnInitializedAsync() => _projects = await ProjectsService.GetAsync();
+    private const string ProjectsKey = "Projects";
 
-    private MarkupString GenerateProjectDescription(string markdown) => new(Markdown.ToHtml(markdown, MarkdownPipeline));
+    private PersistingComponentStateSubscription _persistingComponentStateSubscription;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (OperatingSystem.IsBrowser())
+        {
+            await JavaScript.InvokeVoidAsync("resetScrollPosition");
+        }
+
+        _persistingComponentStateSubscription = ApplicationState.RegisterOnPersisting(PersistData);
+
+        _projects = await PersistentProjectsService.GetAsync(ApplicationState, ProjectsKey);
+    }
+
+    private Task PersistData()
+    {
+        ApplicationState.PersistAsJson(ProjectsKey, _projects);
+
+        return Task.CompletedTask;
+    }
+
+    public void Dispose() => _persistingComponentStateSubscription.Dispose();
 }
