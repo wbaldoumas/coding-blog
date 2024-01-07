@@ -49,11 +49,5 @@
 
 @code
 {
-    protected override async Task OnInitializedAsync()
-    {
-        if (OperatingSystem.IsBrowser())
-        {
-            await JavaScript.InvokeVoidAsync("resetScrollPosition");
-        }
-    }
+    protected override async Task OnAfterRenderAsync(bool firstRender) => await JavaScript.InvokeVoidAsync("resetScrollPosition");
 }

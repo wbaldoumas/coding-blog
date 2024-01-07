@@ -117,11 +117,6 @@
 
     protected override async Task OnInitializedAsync()
     {
-        if (OperatingSystem.IsBrowser())
-        {
-            await JavaScript.InvokeVoidAsync("resetScrollPosition");
-        }
-
         _persistingComponentStateSubscription = ApplicationState.RegisterOnPersisting(PersistData);
 
         await RefreshPostAsync();
@@ -135,6 +130,8 @@
 
         Posts.TryGetValue(Slug, out _selectedPost);
     }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender) => await JavaScript.InvokeVoidAsync("resetScrollPosition");
 
     private void NavigateToMain() => NavigationManager.NavigateTo("");
 
