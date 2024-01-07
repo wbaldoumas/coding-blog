@@ -1,5 +1,4 @@
 ﻿@page "/post/{Slug}"
-@using Coding.Blog.Library.Extensions
 @implements IDisposable
 
 <PageTitle>Will Baldoumas | @Title</PageTitle>
@@ -125,10 +124,7 @@
 
         _persistingComponentStateSubscription = ApplicationState.RegisterOnPersisting(PersistData);
 
-        if (_selectedPost is null)
-        {
-            await RefreshPostAsync();
-        }
+        await RefreshPostAsync();
     }
 
     protected override Task OnParametersSetAsync() => RefreshPostAsync();
@@ -137,10 +133,7 @@
     {
         Posts = await PersistentPostsService.GetAsync(ApplicationState, PostsKey);
 
-        if (_selectedPost is null)
-        {
-            Posts.TryGetValue(Slug, out _selectedPost);
-        }
+        Posts.TryGetValue(Slug, out _selectedPost);
     }
 
     private void NavigateToMain() => NavigationManager.NavigateTo("");
