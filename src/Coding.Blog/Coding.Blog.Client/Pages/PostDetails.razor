@@ -3,6 +3,10 @@
 
 <PageTitle>Will Baldoumas | @Title</PageTitle>
 
+<HeadContent>
+    <meta name="description" content="@_selectedPost?.Title">
+</HeadContent>
+
 <div class="container mb-3">
     @if (Posts is not null && _selectedPost is null)
     {
@@ -25,7 +29,7 @@
             </div>
             <div class="row justify-content-center">
                 <div class="col col-auto">
-                    <p class="text-muted">@_selectedPost.DatePublished.ToPreformattedString() · @_selectedPost.ReadingTime.Minutes minute read</p>
+                    <p class="text-light">@_selectedPost.DatePublished.ToPreformattedString() · @_selectedPost.ReadingTime.Minutes minute read</p>
                 </div>
             </div>
             <div class="overflow-hidden">
@@ -53,7 +57,7 @@
                     <div class="col col-auto">
                         @if (_selectedPost.Next is not null)
                         {
-                            <h6 class="text-muted">Next</h6>
+                            <h6 class="text-light">Next</h6>
                             <a href="@($"post/{_selectedPost.Next.Slug}")">
                                 <h5>@_selectedPost.Next.Title</h5>
                             </a>
@@ -62,7 +66,7 @@
                     <div class="col col-auto">
                         @if (_selectedPost.Previous is not null)
                         {
-                            <h6 class="text-muted text-end">Previous</h6>
+                            <h6 class="text-light text-end">Previous</h6>
                             <a href="@($"post/{_selectedPost.Previous.Slug}")">
                                 <h5>@_selectedPost.Previous.Title</h5>
                             </a>

@@ -4,6 +4,10 @@
 
 <PageTitle>Will Baldoumas | Blog</PageTitle>
 
+<HeadContent>
+    <meta name="description" content="My blog home page, where I can document my thoughts and learnings over time.">
+</HeadContent>
+
 <div class="container mb-3">
     @if (Posts is null)
     {
@@ -23,12 +27,13 @@
                             <img src=@post.Hero.ImgixUrl class="card-img-top rounded" alt="hero" />
                         </a>
                         <div class="card-body rounded d-flex flex-column">
+                            <a class="card-link" href="@($"post/{slug}")">
                             <h5 class="card-title">@post.Title</h5>
-                            <h6 class="card-subtitle text-muted">@post.DatePublished.ToPreformattedString() · @post.ReadingTime.Minutes minute read</h6>
+                            </a>
+                            <h6 class="card-subtitle text-light">@post.DatePublished.ToPreformattedString() · @post.ReadingTime.Minutes minute read</h6>
                             <p class="card-text mt-2">
                                 <TagsDisplay Tags=@post.Tags></TagsDisplay>
                             </p>
-                            <a href="@($"post/{slug}")" class="card-link mt-auto">Read More</a>
                         </div>
                     </div>
                 </div>
