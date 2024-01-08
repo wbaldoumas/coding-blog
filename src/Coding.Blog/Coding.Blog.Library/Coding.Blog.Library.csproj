@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="ColorCode.Core" Version="2.0.15" />
     <PackageReference Include="Google.Protobuf" Version="3.25.1" />
     <PackageReference Include="Grpc.Net.Client" Version="2.60.0" />
     <PackageReference Include="Grpc.Tools" Version="2.60.0">
@@ -16,7 +17,7 @@
     </PackageReference>
     <PackageReference Include="Flurl.Http" Version="4.0.0" />
     <PackageReference Include="Markdig" Version="0.34.0" />
-    <PackageReference Include="Meziantou.Analyzer" Version="2.0.133">
+    <PackageReference Include="Meziantou.Analyzer" Version="2.0.135">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
