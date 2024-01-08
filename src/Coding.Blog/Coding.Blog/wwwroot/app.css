@@ -8,6 +8,14 @@ body {
     margin: 0 auto;
 }
 
+pre {
+    padding: 1rem !important;
+    border: 1px solid #dee2e6 !important;
+    border-radius: .25rem !important;
+    border-color: #00bc8c !important;
+}
+
+
 h1:focus {
     outline: none;
 }

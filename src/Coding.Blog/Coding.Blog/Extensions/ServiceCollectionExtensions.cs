@@ -8,6 +8,7 @@ using Coding.Blog.Library.Records;
 using Coding.Blog.Library.Resilience;
 using Coding.Blog.Library.Services;
 using Coding.Blog.Library.Utilities;
+using ColorCode;
 using Markdig;
 using Markdown.ColorCode;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -104,7 +105,13 @@ internal static class ServiceCollectionExtensions
         .AddSingleton<IPersistentService<IList<Project>>, PersistentProjectsService>();
 
     private static IServiceCollection AddUtilities(this IServiceCollection services) => services
-        .AddSingleton(_ => new MarkdownPipelineBuilder().UseAdvancedExtensions().UseColorCode().Build())
+        .AddSingleton(_ => new MarkdownPipelineBuilder()
+            .UseAdvancedExtensions()
+            .UseColorCode(
+                HtmlFormatterType.Style,
+                SyntaxHighlighting.Dark,
+                new List<ILanguage> { new CSharpOverride() })
+            .Build())
         .AddSingleton<IStringSanitizer, StringSanitizer>()
         .AddSingleton<IPostLinker, PostLinker>()
         .AddSingleton<IReadTimeEstimator, ReadTimeEstimator>();

@@ -3,6 +3,7 @@ using Coding.Blog.Library.Options;
 using Coding.Blog.Library.Protos;
 using Coding.Blog.Library.Services;
 using Coding.Blog.Library.Utilities;
+using ColorCode;
 using Grpc.Core;
 using Grpc.Net.Client.Configuration;
 using Grpc.Net.Client.Web;
@@ -13,8 +14,8 @@ using Microsoft.Extensions.Options;
 using Book = Coding.Blog.Library.Domain.Book;
 using Post = Coding.Blog.Library.Domain.Post;
 using Project = Coding.Blog.Library.Domain.Project;
-using ProtoPost = Coding.Blog.Library.Protos.Post;
 using ProtoBook = Coding.Blog.Library.Protos.Book;
+using ProtoPost = Coding.Blog.Library.Protos.Post;
 using ProtoProject = Coding.Blog.Library.Protos.Project;
 
 namespace Coding.Blog.Client.Extensions;
@@ -22,7 +23,13 @@ namespace Coding.Blog.Client.Extensions;
 internal static class ServiceCollectionExtensions
 {
     public static IServiceCollection ConfigureServices(this IServiceCollection services, IConfiguration configuration) => services
-        .AddSingleton(_ => new MarkdownPipelineBuilder().UseAdvancedExtensions().UseColorCode().Build())
+        .AddSingleton(_ => new MarkdownPipelineBuilder()
+            .UseAdvancedExtensions()
+            .UseColorCode(
+                HtmlFormatterType.Style,
+                SyntaxHighlighting.Dark,
+                new List<ILanguage> { new CSharpOverride() })
+            .Build())
         .AddSingleton<IMapper<ProtoPost, Post>, ProtoPostToPostMapper>()
         .AddSingleton<IMapper<ProtoBook, Book>, ProtoBookToBookMapper>()
         .AddSingleton<IMapper<ProtoProject, Project>, ProtoProjectToProjectMapper>()
