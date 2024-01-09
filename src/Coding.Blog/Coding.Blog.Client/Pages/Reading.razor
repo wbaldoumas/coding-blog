@@ -28,8 +28,8 @@
                 <p>
                     Below are some reading recommendations based on books that I've read and enjoyed. Most are programming-language and technology-agnostic and instead focus on building up the fundamentals needed for a successful career as a software engineer.
                 </p>
-                <p>
-                    <em>Last updated: @Books.Max(book => book.DatePublished).ToShortDateString()</em>
+                <p class="text-light">
+                    Last updated: @Books.Max(book => book.DatePublished).ToPreformattedString()
                 </p>
             </div>
 
