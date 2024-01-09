@@ -50,19 +50,7 @@ internal static class ServiceCollectionExtensions
             .AddInteractiveWebAssemblyComponents();
 
         services.AddHealthChecks();
-
         services.AddGrpc();
-
-        services.AddSignalR(hubOptions =>
-        {
-            hubOptions.MaximumReceiveMessageSize = 1024000;
-            hubOptions.KeepAliveInterval = TimeSpan.FromSeconds(1);
-            hubOptions.EnableDetailedErrors = true;
-            hubOptions.HandshakeTimeout = TimeSpan.FromSeconds(30);
-            hubOptions.ClientTimeoutInterval = TimeSpan.FromMinutes(30);
-            hubOptions.StreamBufferCapacity = 20;
-            hubOptions.StatefulReconnectBufferSize = 1024000;
-        });
 
         return services;
     }
