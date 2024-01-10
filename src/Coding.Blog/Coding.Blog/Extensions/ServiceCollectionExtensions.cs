@@ -52,6 +52,19 @@ internal static class ServiceCollectionExtensions
         services.AddHealthChecks();
         services.AddGrpc();
 
+        var signalROptions = configuration.GetSection(SignalROptions.Key).Get<SignalROptions>();
+
+        services.AddSignalR(hubOptions =>
+        {
+            hubOptions.MaximumReceiveMessageSize = signalROptions!.MaximumReceiveMessageSize;
+            hubOptions.KeepAliveInterval = signalROptions.KeepAliveInterval;
+            hubOptions.EnableDetailedErrors = signalROptions.EnableDetailedErrors;
+            hubOptions.HandshakeTimeout = signalROptions.HandshakeTimeout;
+            hubOptions.ClientTimeoutInterval = signalROptions.ClientTimeoutInterval;
+            hubOptions.StreamBufferCapacity = signalROptions.StreamBufferCapacity;
+            hubOptions.StatefulReconnectBufferSize = signalROptions.StatefulReconnectBufferSize;
+        });
+
         return services;
     }
 
@@ -138,6 +151,11 @@ internal static class ServiceCollectionExtensions
 
         services.AddOptions<QuartzOptions>()
             .Bind(configuration.GetSection(QuartzOptions.Key))
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
+
+        services.AddOptions<SignalROptions>()
+            .Bind(configuration.GetSection(SignalROptions.Key))
             .ValidateDataAnnotations()
             .ValidateOnStart();
 
