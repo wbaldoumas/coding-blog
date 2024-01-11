@@ -8,7 +8,7 @@ public sealed record Post(
     TimeSpan ReadingTime,
     DateTime DatePublished,
     IEnumerable<string> Tags,
-    Hero Hero,
+    Image Image,
     Post? Next = null,
     Post? Previous = null
 );

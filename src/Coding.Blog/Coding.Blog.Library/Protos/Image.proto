@@ -1,0 +1,8 @@
+﻿syntax = "proto3"; 
+
+option csharp_namespace = "Coding.Blog.Library.Protos";
+
+message Image {
+	string url = 1;
+	string imgixUrl = 2;
+}

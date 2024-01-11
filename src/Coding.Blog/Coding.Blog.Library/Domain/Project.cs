@@ -3,7 +3,7 @@
 public sealed record Project(
     string Title,
     string Description,
-    string ImageUrl,
+    Image Image,
     string ProjectUrl,
     int Rank,
     IEnumerable<string> Tags

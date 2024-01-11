@@ -9,7 +9,11 @@ public sealed class CosmicProjectToProtoProjectMapper : BaseMapper<CosmicProject
     {
         Title = source.Title,
         Description = source.Metadata.Description,
-        ImageUrl = source.Metadata.Hero.Url,
+        Image = new Image
+        {
+            Url = source.Metadata.Image.Url,
+            ImgixUrl = source.Metadata.Image.ImgixUrl
+        },
         ProjectUrl = source.Metadata.GitHubUrl,
         Rank = source.Metadata.Rank,
         Tags =

@@ -8,7 +8,7 @@ public sealed class CosmicBookToBookMapper : BaseMapper<CosmicBook, Book>
     public override Book Map(CosmicBook source) => new(
         source.Title,
         source.Content,
-        source.Metadata.Cover.Url,
+        new Image(source.Metadata.Image.Url, source.Metadata.Image.ImgixUrl),
         source.Metadata.PurchaseUrl,
         source.DatePublished
     );

@@ -21,10 +21,10 @@ public sealed class CosmicPostToProtoPostMapper(IReadTimeEstimator readTimeEstim
                 ? source.Metadata.Tags.Split(",").Select(tag => tag.Trim())
                 : new List<string>()
         },
-        Hero = new Hero
+        Image = new Image
         {
-            Url = source.Metadata.Hero.Url,
-            ImgixUrl = source.Metadata.Hero.ImgixUrl
+            Url = source.Metadata.Image.Url,
+            ImgixUrl = source.Metadata.Image.ImgixUrl
         }
     };
 }
