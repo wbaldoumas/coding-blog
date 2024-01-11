@@ -10,7 +10,7 @@ public sealed class CosmicProjectToProjectMapper : BaseMapper<CosmicProject, Pro
         return new Project(
             source.Title,
             source.Metadata.Description,
-            source.Metadata.Hero.Url,
+            new Image(source.Metadata.Image.Url, source.Metadata.Image.ImgixUrl),
             source.Metadata.GitHubUrl,
             source.Metadata.Rank,
             source.Metadata.Tags.Trim().Length > 0

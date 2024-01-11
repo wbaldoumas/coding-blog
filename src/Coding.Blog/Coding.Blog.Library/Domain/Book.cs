@@ -3,7 +3,7 @@
 public sealed record Book(
     string Title,
     string Content,
-    string CoverImageUrl,
+    Image Image,
     string PurchaseUrl,
     DateTime DatePublished
 );

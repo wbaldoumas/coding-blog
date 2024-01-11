@@ -10,7 +10,11 @@ public sealed class CosmicBookToProtoBookMapper : BaseMapper<CosmicBook, Book>
     {
         Title = source.Title,
         Content = source.Content,
-        CoverImageUrl = source.Metadata.Cover.Url,
+        Image = new Image
+        {
+            Url = source.Metadata.Image.Url,
+            ImgixUrl = source.Metadata.Image.ImgixUrl
+        },
         PurchaseUrl = source.Metadata.PurchaseUrl,
         DatePublished = Timestamp.FromDateTime(source.DatePublished)
     };

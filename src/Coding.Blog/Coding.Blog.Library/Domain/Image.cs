@@ -1,6 +1,6 @@
 ﻿namespace Coding.Blog.Library.Domain;
 
-public sealed record Hero(
+public sealed record Image(
     string Url,
     string ImgixUrl
 );

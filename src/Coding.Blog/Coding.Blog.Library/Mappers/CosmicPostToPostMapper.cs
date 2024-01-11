@@ -16,9 +16,6 @@ public sealed class CosmicPostToPostMapper(IReadTimeEstimator readTimeEstimator)
         source.Metadata.Tags.Trim().Length > 0
             ? source.Metadata.Tags.Split(",").Select(tag => tag.Trim())
             : new List<string>(),
-        new Hero(
-            source.Metadata.Hero.Url,
-            source.Metadata.Hero.ImgixUrl
-        )
+        new Image(source.Metadata.Image.Url, source.Metadata.Image.ImgixUrl)
     );
 }

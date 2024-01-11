@@ -13,6 +13,6 @@ public sealed class ProtoPostToPostMapper : BaseMapper<ProtoPost, Post>
         source.ReadingTime.ToTimeSpan(),
         source.DatePublished.ToDateTime(),
         source.Tags,
-        new Hero(source.Hero.Url, source.Hero.ImgixUrl)
+        new Image(source.Image.Url, source.Image.ImgixUrl)
     );
 }

@@ -33,6 +33,14 @@
     <Protobuf Include="Protos\Books.proto" />
     <Protobuf Include="Protos\Posts.proto" />
     <Protobuf Include="Protos\Projects.proto" />
+    <Protobuf Include="Protos\Image.proto" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Protos\Image.proto" />
+    <None Remove="Protos\Posts.proto" />
+    <None Remove="Protos\Projects.proto" />
+    <None Remove="Protos\Books.proto" />
+  </ItemGroup>
+  
 </Project>

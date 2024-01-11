@@ -2,6 +2,8 @@
 
 option csharp_namespace = "Coding.Blog.Library.Protos";
 
+import "Protos/Image.proto";
+
 service Projects { 
 	rpc GetProjects (ProjectsRequest) returns (ProjectsReply); 
 } 
@@ -15,7 +17,7 @@ message ProjectsReply {
 message Project {
 	string title = 1;
 	string description = 2;
-	string imageUrl = 3;
+	Image image = 3;
 	string projectUrl = 4;
 	int32 rank = 5;
 	repeated string tags = 6;
