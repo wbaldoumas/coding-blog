@@ -171,9 +171,9 @@ internal static class ServiceCollectionExtensions
         services.AddQuartz(serviceCollectionQuartzConfigurator =>
         {
             serviceCollectionQuartzConfigurator
-                .ConfigureJob<CacheWarmingJob<CosmicPosts>>(quartzOptions!.PostsWarmingJob)
-                .ConfigureJob<CacheWarmingJob<CosmicBooks>>(quartzOptions.BooksWarmingJob)
-                .ConfigureJob<CacheWarmingJob<CosmicProjects>>(quartzOptions.ProjectsWarmingJob);
+                .ConfigureJob<CacheWarmingJob<CosmicPost>>(quartzOptions!.PostsWarmingJob)
+                .ConfigureJob<CacheWarmingJob<CosmicBook>>(quartzOptions.BooksWarmingJob)
+                .ConfigureJob<CacheWarmingJob<CosmicProject>>(quartzOptions.ProjectsWarmingJob);
         });
 
         return services.AddQuartzHostedService();
