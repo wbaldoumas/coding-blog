@@ -22,7 +22,7 @@
         }
         else
         {
-            @foreach (var project in _projects)
+            @foreach (var project in _projects.OrderBy(project => project.Rank))
             {
                 <div class="card border-0 mb-3 shadow">
                     <div class="row g-0">

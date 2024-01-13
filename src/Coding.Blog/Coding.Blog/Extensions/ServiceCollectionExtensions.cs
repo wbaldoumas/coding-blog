@@ -77,9 +77,9 @@ internal static class ServiceCollectionExtensions
         .AddSingleton<IMapper<CosmicProject, ProtoProject>, CosmicProjectToProtoProjectMapper>();
 
     private static IServiceCollection AddCosmicClients(this IServiceCollection services) => services
-        .AddCosmicClient<CosmicPosts>()
-        .AddCosmicClient<CosmicBooks>()
-        .AddCosmicClient<CosmicProjects>();
+        .AddCosmicClient<CosmicPost>()
+        .AddCosmicClient<CosmicBook>()
+        .AddCosmicClient<CosmicProject>();
 
     private static IServiceCollection AddCosmicClient<T>(this IServiceCollection services)
     {
@@ -88,7 +88,7 @@ internal static class ServiceCollectionExtensions
             {
                 var resilienceOptions = serviceProvider.GetRequiredService<IOptions<ResilienceOptions>>();
 
-                return ResiliencePolicyBuilder.Build<T>(
+                return ResiliencePolicyBuilder.Build<IEnumerable<T>>(
                     TimeSpan.FromMilliseconds(resilienceOptions.Value.MedianFirstRetryDelayMilliseconds),
                     resilienceOptions.Value.RetryCount,
                     TimeSpan.FromMilliseconds(resilienceOptions.Value.TimeToLiveMilliseconds)
@@ -98,9 +98,9 @@ internal static class ServiceCollectionExtensions
     }
 
     private static IServiceCollection AddDomainServices(this IServiceCollection services) => services
-        .AddSingleton<IPostsService, PostsService>()
-        .AddSingleton<IBooksService, BooksService>()
-        .AddSingleton<IProjectsService, ProjectsService>()
+        .AddSingleton<IBlogService<IEnumerable<Post>>, BlogService<CosmicPost, Post>>()
+        .AddSingleton<IBlogService<IEnumerable<Book>>, BlogService<CosmicBook, Book>>()
+        .AddSingleton<IBlogService<IEnumerable<Project>>, BlogService<CosmicProject, Project>>()
         .AddSingleton<IPersistentService<IDictionary<string, Post>>, PersistentPostsService>()
         .AddSingleton<IPersistentService<IList<Book>>, PersistentBooksService>()
         .AddSingleton<IPersistentService<IList<Project>>, PersistentProjectsService>();
@@ -171,9 +171,9 @@ internal static class ServiceCollectionExtensions
         services.AddQuartz(serviceCollectionQuartzConfigurator =>
         {
             serviceCollectionQuartzConfigurator
-                .ConfigureJob<PostsWarmingJob>(quartzOptions!.PostsWarmingJob)
-                .ConfigureJob<BooksWarmingJob>(quartzOptions.BooksWarmingJob)
-                .ConfigureJob<ProjectsWarmingJob>(quartzOptions.ProjectsWarmingJob);
+                .ConfigureJob<CacheWarmingJob<CosmicPost>>(quartzOptions!.PostsWarmingJob)
+                .ConfigureJob<CacheWarmingJob<CosmicBook>>(quartzOptions.BooksWarmingJob)
+                .ConfigureJob<CacheWarmingJob<CosmicProject>>(quartzOptions.ProjectsWarmingJob);
         });
 
         return services.AddQuartzHostedService();
@@ -184,7 +184,7 @@ internal static class ServiceCollectionExtensions
         QuartzJobOptions jobOptions)
         where T : IJob
     {
-        var jobKey = new JobKey(typeof(T).Name);
+        var jobKey = new JobKey(jobOptions.JobKey);
 
         serviceCollectionQuartzConfigurator.AddJob<T>(jobKey);
 

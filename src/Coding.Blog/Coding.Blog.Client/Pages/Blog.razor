@@ -67,7 +67,9 @@
     {
         _persistingComponentStateSubscription = ApplicationState.RegisterOnPersisting(PersistData);
 
-        Posts = await PersistentPostsService.GetAsync(ApplicationState, PostsKey);
+        var posts = await PersistentPostsService.GetAsync(ApplicationState, PostsKey);
+
+        Posts = PostLinker.Link(posts?.Values ?? new List<Post>()).ToDictionary(post => post.Slug, post => post, StringComparer.Ordinal);
 
         if (!string.IsNullOrWhiteSpace(Search))
         {

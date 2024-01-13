@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace Coding.Blog.Library.Services;
 
-public sealed class PersistentProjectsService(IProjectsService projectsService) : IPersistentService<IList<Project>>
+public sealed class PersistentProjectsService(IBlogService<IEnumerable<Project>> projectsService) : IPersistentService<IList<Project>>
 {
     public async Task<IList<Project>> GetAsync(PersistentComponentState applicationState, string stateKey)
     {

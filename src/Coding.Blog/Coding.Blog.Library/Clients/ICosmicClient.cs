@@ -10,5 +10,5 @@ public interface ICosmicClient<T>
     ///     Get the <see cref="T"/> object from the Cosmic API.
     /// </summary>
     /// <returns>A <see cref="Task{T}"/> to await, whose result is a <see cref="T"/></returns>
-    Task<T> GetAsync();
+    Task<IEnumerable<T>> GetAsync();
 }
