@@ -47,9 +47,9 @@ internal static class WebApplicationExtensions
         webApplication.UseStaticFiles();
         webApplication.UseAntiforgery();
         webApplication.UseGrpcWeb();
-        webApplication.MapGrpcService<ProtoPostsService>().EnableGrpcWeb();
-        webApplication.MapGrpcService<ProtoBooksService>().EnableGrpcWeb();
-        webApplication.MapGrpcService<ProtoProjectsService>().EnableGrpcWeb();
+        webApplication.MapGrpcService<PostsService>().EnableGrpcWeb();
+        webApplication.MapGrpcService<BooksService>().EnableGrpcWeb();
+        webApplication.MapGrpcService<ProjectsService>().EnableGrpcWeb();
 
         webApplication.MapRazorComponents<App>()
             .AddInteractiveServerRenderMode()

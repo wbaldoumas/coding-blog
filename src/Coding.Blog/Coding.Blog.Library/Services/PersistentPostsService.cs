@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace Coding.Blog.Library.Services;
 
-public sealed class PersistentPostsService(IPostsService postsService) : IPersistentService<IDictionary<string, Post>>
+public sealed class PersistentPostsService(IBlogService<IEnumerable<Post>> postsService) : IPersistentService<IDictionary<string, Post>>
 {
     public async Task<IDictionary<string, Post>> GetAsync(PersistentComponentState applicationState, string stateKey)
     {

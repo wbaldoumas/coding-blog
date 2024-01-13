@@ -1,4 +1,5 @@
 ﻿using Coding.Blog.Library.Options;
+using Coding.Blog.Library.Records;
 using Flurl;
 using Flurl.Http;
 using Microsoft.Extensions.Logging;
@@ -10,10 +11,10 @@ namespace Coding.Blog.Library.Clients;
 public sealed class CosmicClient<T>(
     IOptions<CosmicOptions> options,
     ILogger<T> logger,
-    IAsyncPolicy<T> resiliencePolicy
+    IAsyncPolicy<IEnumerable<T>> resiliencePolicy
 ) : ICosmicClient<T>
 {
-    public async Task<T> GetAsync()
+    public async Task<IEnumerable<T>> GetAsync()
     {
         var typeName = typeof(T).FullName;
         var (type, props) = CosmicRequestRegistry.Requests[typeName!];
@@ -21,18 +22,23 @@ public sealed class CosmicClient<T>(
 
         try
         {
-            return await resiliencePolicy.ExecuteAsync(
-                _ => baseUrl
-                    .SetQueryParam("query", $"{{\"type\":\"{type}\"}}")
-                    .SetQueryParam("read_key", options.Value.ReadKey)
-                    .SetQueryParam("props", props)
-                    .GetJsonAsync<T>(),
+            return await resiliencePolicy.ExecuteAsync(async _ =>
+                {
+                    var cosmicCollection = await baseUrl
+                        .SetQueryParam("query", $"{{\"type\":\"{type}\"}}")
+                        .SetQueryParam("read_key", options.Value.ReadKey)
+                        .SetQueryParam("props", props)
+                        .GetJsonAsync<CosmicCollection<T>>()
+                        .ConfigureAwait(false);
+
+                    return cosmicCollection.Objects;
+                },
                 new Context(typeName)
             ).ConfigureAwait(false);
         }
         catch (Exception exception)
         {
-            logger.LogError($"Failed to retrieve {typeName} from Cosmic API: {exception.Message}");
+            logger.LogError($"Failed to retrieve {typeName}s from Cosmic API: {exception.Message}");
 
             throw;
         }

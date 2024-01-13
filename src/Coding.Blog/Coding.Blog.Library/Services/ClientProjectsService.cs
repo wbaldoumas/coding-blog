@@ -8,7 +8,7 @@ namespace Coding.Blog.Library.Services;
 public sealed class ClientProjectsService(
     Projects.ProjectsClient projectsClient,
     IMapper<ProtoProject, Project> projectMapper
-) : IProjectsService
+) : IBlogService<IEnumerable<Project>>
 {
     public async Task<IEnumerable<Project>> GetAsync()
     {

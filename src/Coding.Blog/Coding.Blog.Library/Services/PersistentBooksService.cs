@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace Coding.Blog.Library.Services;
 
-public sealed class PersistentBooksService(IBooksService booksService) : IPersistentService<IList<Book>>
+public sealed class PersistentBooksService(IBlogService<IEnumerable<Book>> booksService) : IPersistentService<IList<Book>>
 {
     public async Task<IList<Book>> GetAsync(PersistentComponentState applicationState, string stateKey)
     {

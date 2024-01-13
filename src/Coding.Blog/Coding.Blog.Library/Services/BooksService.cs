@@ -1,19 +1,24 @@
 ﻿using Coding.Blog.Library.Clients;
-using Coding.Blog.Library.Domain;
 using Coding.Blog.Library.Mappers;
+using Coding.Blog.Library.Protos;
 using Coding.Blog.Library.Records;
+using Grpc.Core;
 
 namespace Coding.Blog.Library.Services;
 
 public sealed class BooksService(
-    ICosmicClient<CosmicBooks> booksClient,
-    IMapper<CosmicBook, Book> booksMapper
-) : IBooksService
+    ICosmicClient<CosmicBook> booksClient,
+    IMapper<CosmicBook, Book> bookMapper
+) : Books.BooksBase
 {
-    public async Task<IEnumerable<Book>> GetAsync()
+    public override async Task<BooksReply> GetBooks(BooksRequest request, ServerCallContext context)
     {
         var cosmicBooks = await booksClient.GetAsync().ConfigureAwait(false);
+        var books = bookMapper.Map(cosmicBooks);
 
-        return booksMapper.Map(cosmicBooks.Books);
+        return new BooksReply
+        {
+            Books = { books }
+        };
     }
 }

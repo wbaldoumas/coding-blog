@@ -130,7 +130,9 @@
 
     private async Task RefreshPostAsync()
     {
-        Posts = await PersistentPostsService.GetAsync(ApplicationState, PostsKey);
+        var posts = await PersistentPostsService.GetAsync(ApplicationState, PostsKey);
+
+        Posts = PostLinker.Link(posts?.Values ?? new List<Post>()).ToDictionary(post => post.Slug, post => post, StringComparer.Ordinal);
 
         Posts.TryGetValue(Slug, out _selectedPost);
     }

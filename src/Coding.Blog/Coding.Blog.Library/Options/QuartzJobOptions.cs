@@ -4,6 +4,9 @@ namespace Coding.Blog.Library.Options;
 
 public sealed record QuartzJobOptions
 {
+    [Required]
+    public string JobKey { get; init; } = string.Empty;
+
     [Range(60, 86400, ErrorMessage = "Value for {0} must be between {1} and {2}.")]
     public int IntervalSeconds { get; init; }
 }

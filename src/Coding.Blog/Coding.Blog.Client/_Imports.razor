@@ -15,6 +15,7 @@
 @using Coding.Blog.Library.Domain
 @using Coding.Blog.Library.State
 @using System.Web
+@using Coding.Blog.Library.Utilities
 
 @inject IPersistentService<IDictionary<string, Post>> PersistentPostsService
 @inject IPersistentService<IList<Book>> PersistentBooksService;
@@ -23,3 +24,4 @@
 @inject IJSRuntime JavaScript
 @inject MarkdownPipeline MarkdownPipeline
 @inject NavigationManager NavigationManager
+@inject IPostLinker PostLinker
