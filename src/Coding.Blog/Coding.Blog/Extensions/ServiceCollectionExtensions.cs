@@ -39,7 +39,7 @@ internal static class ServiceCollectionExtensions
             .AddApplicationLifetimeService(configuration)
             .AddQuartzJobs(configuration)
             .AddMappers()
-            .AddCosmicClients()
+            .AddClients()
             .AddDomainServices()
             .AddUtilities()
             .AddBlazorise()
@@ -76,7 +76,7 @@ internal static class ServiceCollectionExtensions
         .AddSingleton<IMapper<CosmicProject, Project>, CosmicProjectToProjectMapper>()
         .AddSingleton<IMapper<CosmicProject, ProtoProject>, CosmicProjectToProtoProjectMapper>();
 
-    private static IServiceCollection AddCosmicClients(this IServiceCollection services) => services
+    private static IServiceCollection AddClients(this IServiceCollection services) => services
         .AddCosmicClient<CosmicPost>()
         .AddCosmicClient<CosmicBook>()
         .AddCosmicClient<CosmicProject>();
@@ -98,9 +98,9 @@ internal static class ServiceCollectionExtensions
     }
 
     private static IServiceCollection AddDomainServices(this IServiceCollection services) => services
-        .AddSingleton<IBlogService<IEnumerable<Post>>, BlogService<CosmicPost, Post>>()
-        .AddSingleton<IBlogService<IEnumerable<Book>>, BlogService<CosmicBook, Book>>()
-        .AddSingleton<IBlogService<IEnumerable<Project>>, BlogService<CosmicProject, Project>>()
+        .AddSingleton<IBlogService<Post>, BlogService<CosmicPost, Post>>()
+        .AddSingleton<IBlogService<Book>, BlogService<CosmicBook, Book>>()
+        .AddSingleton<IBlogService<Project>, BlogService<CosmicProject, Project>>()
         .AddSingleton<IApplicationStateService<Post>, ApplicationStateService<Post>>()
         .AddSingleton<IApplicationStateService<Book>, ApplicationStateService<Book>>()
         .AddSingleton<IApplicationStateService<Project>, ApplicationStateService<Project>>();

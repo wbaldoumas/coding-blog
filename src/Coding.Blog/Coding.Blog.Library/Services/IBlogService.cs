@@ -1,6 +1,10 @@
 ﻿namespace Coding.Blog.Library.Services;
 
-public interface IBlogService<T>
+/// <summary>
+///     A generic interface representing a service which can retrieve domain objects for the blog app
+/// </summary>
+/// <typeparam name="TDomainObject">The type of the domain object to retrieve.</typeparam>
+public interface IBlogService<TDomainObject>
 {
-    Task<T> GetAsync();
+    Task<IEnumerable<TDomainObject>> GetAsync();
 }
