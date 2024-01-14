@@ -1,4 +1,5 @@
-﻿using Coding.Blog.Library.Mappers;
+﻿using Coding.Blog.Library.Adapters;
+using Coding.Blog.Library.Mappers;
 using Coding.Blog.Library.Options;
 using Coding.Blog.Library.Protos;
 using Coding.Blog.Library.Services;
@@ -34,9 +35,12 @@ internal static class ServiceCollectionExtensions
         .AddSingleton<IMapper<ProtoBook, Book>, ProtoBookToBookMapper>()
         .AddSingleton<IMapper<ProtoProject, Project>, ProtoProjectToProjectMapper>()
         .AddSingleton<IPostLinker, PostLinker>()
-        .AddSingleton<IBlogService<IEnumerable<Post>>, ClientPostsService>()
-        .AddSingleton<IBlogService<IEnumerable<Project>>, ClientProjectsService>()
-        .AddSingleton<IBlogService<IEnumerable<Book>>, ClientBooksService>()
+        .AddSingleton<IProtoClientAdapter<ProtoPost>, PostsClientAdapter>()
+        .AddSingleton<IProtoClientAdapter<ProtoBook>, BooksClientAdapter>()
+        .AddSingleton<IProtoClientAdapter<ProtoProject>, ProjectsClientAdapter>()
+        .AddSingleton<IBlogService<Post>, ClientBlogService<ProtoPost, Post>>()
+        .AddSingleton<IBlogService<Book>, ClientBlogService<ProtoBook, Book>>()
+        .AddSingleton<IBlogService<Project>, ClientBlogService<ProtoProject, Project>>()
         .AddSingleton<IApplicationStateService<Post>, ApplicationStateService<Post>>()
         .AddSingleton<IApplicationStateService<Book>, ApplicationStateService<Book>>()
         .AddSingleton<IApplicationStateService<Project>, ApplicationStateService<Project>>()

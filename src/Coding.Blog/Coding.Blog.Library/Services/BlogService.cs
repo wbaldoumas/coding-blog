@@ -6,7 +6,7 @@ namespace Coding.Blog.Library.Services;
 public sealed class BlogService<TCosmicObject, TDomainObject>(
     ICosmicClient<TCosmicObject> client,
     IMapper<TCosmicObject, TDomainObject> mapper
-) : IBlogService<IEnumerable<TDomainObject>>
+) : IBlogService<TDomainObject>
 {
     public async Task<IEnumerable<TDomainObject>> GetAsync()
     {

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace Coding.Blog.Library.Services;
 
-public sealed class ApplicationStateService<T>(IBlogService<IEnumerable<T>> blogService) : IApplicationStateService<T>
+public sealed class ApplicationStateService<T>(IBlogService<T> blogService) : IApplicationStateService<T>
 {
     public async Task<IList<T>> GetAsync(PersistentComponentState persistentComponentState, string key)
     {
