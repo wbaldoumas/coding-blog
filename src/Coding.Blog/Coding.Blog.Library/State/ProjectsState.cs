@@ -2,7 +2,7 @@
 
 namespace Coding.Blog.Library.State;
 
-internal static class ProjectsState
+public static class ProjectsState
 {
     public const string Key = "Projects";
 

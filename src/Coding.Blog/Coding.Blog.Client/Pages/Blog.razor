@@ -46,9 +46,7 @@
 
     private string _search = string.Empty;
 
-    private const string PostsKey = "Posts";
-
-    private IList<Post>? Posts { get; set; }
+    private IEnumerable<Post>? Posts { get; set; }
 
     private PersistingComponentStateSubscription _persistingComponentStateSubscription;
 
@@ -67,7 +65,7 @@
     {
         _persistingComponentStateSubscription = ApplicationState.RegisterOnPersisting(PersistData);
 
-        var posts = await PostApplicationStateService.GetAsync(ApplicationState, PostsKey);
+        var posts = await PostApplicationStateService.GetAsync(ApplicationState, PostsState.Key);
 
         Posts = PostLinker.Link(posts).ToList();
 
@@ -100,7 +98,7 @@
 
     private Task PersistData()
     {
-        ApplicationState.PersistAsJson(PostsKey, Posts);
+        ApplicationState.PersistAsJson(PostsState.Key, Posts);
 
         return Task.CompletedTask;
     }

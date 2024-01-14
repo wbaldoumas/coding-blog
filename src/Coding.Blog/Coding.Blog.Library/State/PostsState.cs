@@ -2,9 +2,9 @@
 
 namespace Coding.Blog.Library.State;
 
-internal static class PostsState
+public static class PostsState
 {
     public const string Key = "Posts";
 
-    public static IList<Post> Posts { get; set; } = new List<Post>();
+    public static IEnumerable<Post> Posts { get; set; } = new List<Post>();
 }

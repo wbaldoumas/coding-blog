@@ -48,9 +48,7 @@
 </div>
 
 @code {
-    private IList<Project>? _projects;
-
-    private const string ProjectsKey = "Projects";
+    private IEnumerable<Project>? _projects;
 
     private PersistingComponentStateSubscription _persistingComponentStateSubscription;
 
@@ -58,14 +56,14 @@
     {
         _persistingComponentStateSubscription = ApplicationState.RegisterOnPersisting(PersistData);
 
-        _projects = await ProjectApplicationStateService.GetAsync(ApplicationState, ProjectsKey);
+        _projects = await ProjectApplicationStateService.GetAsync(ApplicationState, ProjectsState.Key);
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender) => await JavaScript.InvokeVoidAsync("resetScrollPosition");
 
     private Task PersistData()
     {
-        ApplicationState.PersistAsJson(ProjectsKey, _projects);
+        ApplicationState.PersistAsJson(ProjectsState.Key, _projects);
 
         return Task.CompletedTask;
     }
