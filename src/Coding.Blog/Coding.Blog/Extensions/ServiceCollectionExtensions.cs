@@ -101,9 +101,9 @@ internal static class ServiceCollectionExtensions
         .AddSingleton<IBlogService<IEnumerable<Post>>, BlogService<CosmicPost, Post>>()
         .AddSingleton<IBlogService<IEnumerable<Book>>, BlogService<CosmicBook, Book>>()
         .AddSingleton<IBlogService<IEnumerable<Project>>, BlogService<CosmicProject, Project>>()
-        .AddSingleton<IPersistentService<IDictionary<string, Post>>, PersistentPostsService>()
-        .AddSingleton<IPersistentService<IList<Book>>, PersistentBooksService>()
-        .AddSingleton<IPersistentService<IList<Project>>, PersistentProjectsService>();
+        .AddSingleton<IApplicationStateService<Post>, ApplicationStateService<Post>>()
+        .AddSingleton<IApplicationStateService<Book>, ApplicationStateService<Book>>()
+        .AddSingleton<IApplicationStateService<Project>, ApplicationStateService<Project>>();
 
     private static IServiceCollection AddUtilities(this IServiceCollection services) => services
         .AddSingleton(_ => new MarkdownPipelineBuilder()

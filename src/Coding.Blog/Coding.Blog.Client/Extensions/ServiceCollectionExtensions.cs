@@ -37,9 +37,9 @@ internal static class ServiceCollectionExtensions
         .AddSingleton<IBlogService<IEnumerable<Post>>, ClientPostsService>()
         .AddSingleton<IBlogService<IEnumerable<Project>>, ClientProjectsService>()
         .AddSingleton<IBlogService<IEnumerable<Book>>, ClientBooksService>()
-        .AddSingleton<IPersistentService<IDictionary<string, Post>>, PersistentPostsService>()
-        .AddSingleton<IPersistentService<IList<Book>>, PersistentBooksService>()
-        .AddSingleton<IPersistentService<IList<Project>>, PersistentProjectsService>()
+        .AddSingleton<IApplicationStateService<Post>, ApplicationStateService<Post>>()
+        .AddSingleton<IApplicationStateService<Book>, ApplicationStateService<Book>>()
+        .AddSingleton<IApplicationStateService<Project>, ApplicationStateService<Project>>()
         .AddGrpc(configuration);
 
     private static IServiceCollection AddGrpc(this IServiceCollection services, IConfiguration configuration)

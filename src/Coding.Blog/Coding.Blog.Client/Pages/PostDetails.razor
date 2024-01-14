@@ -113,7 +113,7 @@
 
     private PersistingComponentStateSubscription _persistingComponentStateSubscription;
 
-    private IDictionary<string, Post>? Posts { get; set; }
+    private IList<Post>? Posts { get; set; }
 
     private Post? _selectedPost;
 
@@ -130,11 +130,11 @@
 
     private async Task RefreshPostAsync()
     {
-        var posts = await PersistentPostsService.GetAsync(ApplicationState, PostsKey);
+        var posts = await PostApplicationStateService.GetAsync(ApplicationState, PostsKey);
 
-        Posts = PostLinker.Link(posts?.Values ?? new List<Post>()).ToDictionary(post => post.Slug, post => post, StringComparer.Ordinal);
+        Posts = PostLinker.Link(posts).ToList();
 
-        Posts.TryGetValue(Slug, out _selectedPost);
+        _selectedPost = Posts.FirstOrDefault(post => post.Slug == Slug);
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender) => await JavaScript.InvokeVoidAsync("resetScrollPosition");

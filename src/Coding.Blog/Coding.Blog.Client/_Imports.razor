@@ -17,9 +17,9 @@
 @using System.Web
 @using Coding.Blog.Library.Utilities
 
-@inject IPersistentService<IDictionary<string, Post>> PersistentPostsService
-@inject IPersistentService<IList<Book>> PersistentBooksService;
-@inject IPersistentService<IList<Project>> PersistentProjectsService;
+@inject IApplicationStateService<Post> PostApplicationStateService
+@inject IApplicationStateService<Book> BookApplicationStateService
+@inject IApplicationStateService<Project> ProjectApplicationStateService
 @inject PersistentComponentState ApplicationState
 @inject IJSRuntime JavaScript
 @inject MarkdownPipeline MarkdownPipeline

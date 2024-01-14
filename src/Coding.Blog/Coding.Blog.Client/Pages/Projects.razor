@@ -58,7 +58,7 @@
     {
         _persistingComponentStateSubscription = ApplicationState.RegisterOnPersisting(PersistData);
 
-        _projects = await PersistentProjectsService.GetAsync(ApplicationState, ProjectsKey);
+        _projects = await ProjectApplicationStateService.GetAsync(ApplicationState, ProjectsKey);
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender) => await JavaScript.InvokeVoidAsync("resetScrollPosition");

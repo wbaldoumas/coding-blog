@@ -19,15 +19,15 @@
             <input type="search" class="form-control rounded" placeholder="Search..." aria-label="search" aria-describedby="search-button" value="@_search" @oninput="HandleSearchInput">
         </div>
         <div class="row g-3 d-flex align-items-stretch">
-            @foreach (var (slug, post) in GetSearchedPosts(Posts))
+            @foreach (var post in GetSearchedPosts(Posts))
             {
                 <div class="col-12 col-lg-4">
                     <div class="card rounded border-0 h-100 shadow">
-                        <a class="card-link" href="@($"post/{slug}")">
+                        <a class="card-link" href="@($"post/{post.Slug}")">
                             <img src=@post.Image.ImgixUrl class="card-img-top rounded" alt="hero" />
                         </a>
                         <div class="card-body rounded d-flex flex-column">
-                            <a class="card-link" href="@($"post/{slug}")">
+                            <a class="card-link" href="@($"post/{post.Slug}")">
                             <h5 class="card-title">@post.Title</h5>
                             </a>
                             <h6 class="card-subtitle text-light">@post.DatePublished.ToPreformattedString() · @post.ReadingTime.Minutes minute read</h6>
@@ -48,7 +48,7 @@
 
     private const string PostsKey = "Posts";
 
-    private IDictionary<string, Post>? Posts { get; set; }
+    private IList<Post>? Posts { get; set; }
 
     private PersistingComponentStateSubscription _persistingComponentStateSubscription;
 
@@ -67,9 +67,9 @@
     {
         _persistingComponentStateSubscription = ApplicationState.RegisterOnPersisting(PersistData);
 
-        var posts = await PersistentPostsService.GetAsync(ApplicationState, PostsKey);
+        var posts = await PostApplicationStateService.GetAsync(ApplicationState, PostsKey);
 
-        Posts = PostLinker.Link(posts?.Values ?? new List<Post>()).ToDictionary(post => post.Slug, post => post, StringComparer.Ordinal);
+        Posts = PostLinker.Link(posts).ToList();
 
         if (!string.IsNullOrWhiteSpace(Search))
         {
@@ -86,18 +86,16 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender) => await JavaScript.InvokeVoidAsync("resetScrollPosition");
 
-    private IDictionary<string, Post> GetSearchedPosts(IDictionary<string, Post> posts)
+    private IEnumerable<Post> GetSearchedPosts(IEnumerable<Post> posts)
     {
         return string.IsNullOrEmpty(_search)
             ? posts
-            : posts.Where(postBySlug =>
+            : posts.Where(post =>
             {
-                var (_, post) = postBySlug;
-
                 return post.Title.Contains(_search, StringComparison.OrdinalIgnoreCase) ||
                        post.Tags.Any(tag => tag.Contains(_search, StringComparison.OrdinalIgnoreCase)) ||
                        post.Content.Contains(_search, StringComparison.OrdinalIgnoreCase);
-            }).ToDictionary();
+            });
     }
 
     private Task PersistData()
