@@ -20,5 +20,5 @@ message Project {
 	Image image = 3;
 	string projectUrl = 4;
 	int32 rank = 5;
-	repeated string tags = 6;
+	string tags = 6;
 }

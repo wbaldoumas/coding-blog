@@ -15,12 +15,7 @@ public sealed class CosmicPostToProtoPostMapper(IReadTimeEstimator readTimeEstim
         Content = source.Metadata.Markdown,
         ReadingTime = Duration.FromTimeSpan(readTimeEstimator.Estimate(source.Metadata.Markdown)),
         DatePublished = Timestamp.FromDateTime(source.DatePublished),
-        Tags =
-        {
-            source.Metadata.Tags.Trim().Length > 0
-                ? source.Metadata.Tags.Split(",").Select(tag => tag.Trim())
-                : new List<string>()
-        },
+        Tags = source.Metadata.Tags,
         Image = new Image
         {
             Url = source.Metadata.Image.Url,

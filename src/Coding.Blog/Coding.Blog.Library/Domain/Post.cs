@@ -1,4 +1,6 @@
-﻿namespace Coding.Blog.Library.Domain;
+﻿using Coding.Blog.Library.Extensions;
+
+namespace Coding.Blog.Library.Domain;
 
 public sealed record Post(
     string Id,
@@ -7,8 +9,11 @@ public sealed record Post(
     string Content,
     TimeSpan ReadingTime,
     DateTime DatePublished,
-    IEnumerable<string> Tags,
+    string Tags,
     Image Image,
     Post? Next = null,
     Post? Previous = null
-);
+)
+{
+    public Lazy<IEnumerable<string>> DisplayTags => new(Tags.ToDisplayTags);
+}

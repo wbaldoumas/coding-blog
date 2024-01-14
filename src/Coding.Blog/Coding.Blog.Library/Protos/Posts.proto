@@ -21,7 +21,7 @@ message Post {
 	string slug = 2;
 	string title = 3;
 	string content = 4;
-	repeated string tags = 5;
+	string tags = 5;
 	Image image = 6;
 	google.protobuf.Timestamp datePublished = 7;
 	Post previous = 8;

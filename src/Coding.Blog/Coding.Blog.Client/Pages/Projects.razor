@@ -33,7 +33,7 @@
                                 <h5 class="card-title">@project.Title</h5>
                                 <p class="card-text">@project.Description.ToMarkupString(MarkdownPipeline)</p>
                                 <p class="card-text">
-                                    <TagsDisplay Tags=@project.Tags/>
+                                    <TagsDisplay Tags=@project.DisplayTags.Value/>
                                 </p>
                             </div>
                             <div class="mt-auto p-3">

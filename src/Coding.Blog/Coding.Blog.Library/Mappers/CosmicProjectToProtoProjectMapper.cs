@@ -16,11 +16,6 @@ public sealed class CosmicProjectToProtoProjectMapper : BaseMapper<CosmicProject
         },
         ProjectUrl = source.Metadata.GitHubUrl,
         Rank = source.Metadata.Rank,
-        Tags =
-        {
-            source.Metadata.Tags.Trim().Length > 0
-                ? source.Metadata.Tags.Split(",").Select(tag => tag.Trim())
-                : new List<string>()
-        }
+        Tags = source.Metadata.Tags
     };
 }
