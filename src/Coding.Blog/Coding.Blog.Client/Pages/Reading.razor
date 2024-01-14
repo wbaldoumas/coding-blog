@@ -57,22 +57,20 @@
 
     private IEnumerable<Book>? Books { get; set; }
 
-    private const string BooksKey = "Books";
-
     private PersistingComponentStateSubscription _persistingComponentStateSubscription;
 
     protected override async Task OnInitializedAsync()
     {
         _persistingComponentStateSubscription = ApplicationState.RegisterOnPersisting(PersistData);
 
-        Books = await PersistentBooksService.GetAsync(ApplicationState, BooksKey);
+        Books = await BookApplicationStateService.GetAsync(ApplicationState, BooksState.Key);
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender) => await JavaScript.InvokeVoidAsync("resetScrollPosition");
 
     private Task PersistData()
     {
-        ApplicationState.PersistAsJson(BooksKey, Books);
+        ApplicationState.PersistAsJson(BooksState.Key, Books);
 
         return Task.CompletedTask;
     }

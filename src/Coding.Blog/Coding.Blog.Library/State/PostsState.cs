@@ -2,7 +2,9 @@
 
 namespace Coding.Blog.Library.State;
 
-internal static class PostsState
+public static class PostsState
 {
-    public static IDictionary<string, Post> Posts { get; set; } = new Dictionary<string, Post>(StringComparer.Ordinal);
+    public const string Key = "Posts";
+
+    public static IEnumerable<Post> Posts { get; set; } = new List<Post>();
 }
