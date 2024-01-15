@@ -15,7 +15,6 @@ pre {
     border-color: #00bc8c !important;
 }
 
-
 h1:focus {
     outline: none;
 }
@@ -42,6 +41,10 @@ h1:focus {
 
 .validation-message {
     color: red;
+}
+
+.multi-line-link {
+    display: inline-block;
 }
 
 #blazor-error-ui {

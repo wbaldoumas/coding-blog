@@ -58,7 +58,7 @@
 
         var path = string.IsNullOrEmpty(_search) ? "/" : $"/search/{HttpUtility.UrlEncode(_search)}";
 
-        JavaScript.InvokeVoidAsync("ChangeUrl", path);
+        JSInteropService.ChangeUrlAsync(path);
     }
 
     protected override async Task OnInitializedAsync()
@@ -82,7 +82,7 @@
         return Task.CompletedTask;
     }
 
-    protected override async Task OnAfterRenderAsync(bool firstRender) => await JavaScript.InvokeVoidAsync("resetScrollPosition");
+    protected override async Task OnAfterRenderAsync(bool firstRender) => await JSInteropService.ResetScrollPositionAsync();
 
     private IEnumerable<Post> GetSearchedPosts(IEnumerable<Post> posts)
     {

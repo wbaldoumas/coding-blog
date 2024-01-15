@@ -15,13 +15,14 @@
 @using Coding.Blog.Library.Domain
 @using Coding.Blog.Library.State
 @using System.Web
+@using Coding.Blog.Client.Services
 @using Coding.Blog.Library.Utilities
 
 @inject IApplicationStateService<Post> PostApplicationStateService
 @inject IApplicationStateService<Book> BookApplicationStateService
 @inject IApplicationStateService<Project> ProjectApplicationStateService
 @inject PersistentComponentState ApplicationState
-@inject IJSRuntime JavaScript
 @inject MarkdownPipeline MarkdownPipeline
 @inject NavigationManager NavigationManager
 @inject IPostLinker PostLinker
+@inject IJSInteropService JSInteropService

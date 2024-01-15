@@ -66,7 +66,7 @@
         Books = await BookApplicationStateService.GetAsync(ApplicationState, BooksState.Key);
     }
 
-    protected override async Task OnAfterRenderAsync(bool firstRender) => await JavaScript.InvokeVoidAsync("resetScrollPosition");
+    protected override async Task OnAfterRenderAsync(bool firstRender) => await JSInteropService.ResetScrollPositionAsync();
 
     private Task PersistData()
     {
