@@ -1,4 +1,5 @@
-﻿using Coding.Blog.Library.Clients;
+﻿using Coding.Blog.Client.Services;
+using Coding.Blog.Library.Clients;
 using Coding.Blog.Library.Options;
 using Coding.Blog.Library.Protos;
 using Coding.Blog.Library.Services;
@@ -43,6 +44,7 @@ internal static class ServiceCollectionExtensions
         .AddSingleton<IApplicationStateService<Post>, ApplicationStateService<Post>>()
         .AddSingleton<IApplicationStateService<Book>, ApplicationStateService<Book>>()
         .AddSingleton<IApplicationStateService<Project>, ApplicationStateService<Project>>()
+        .AddSingleton<IJSInteropService, JSInteropService>()
         .AddGrpc(configuration);
 
     private static IServiceCollection AddGrpc(this IServiceCollection services, IConfiguration configuration)

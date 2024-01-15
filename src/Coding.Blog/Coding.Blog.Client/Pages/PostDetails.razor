@@ -57,25 +57,20 @@
                     <div class="col col-auto">
                         @if (_selectedPost.Next is not null)
                         {
-                            <h6 class="text-light">Next</h6>
-                            <a href="@($"post/{_selectedPost.Next.Slug}")">
-                                <h5>@_selectedPost.Next.Title</h5>
+                            <a class="text-decoration-none multi-line-link" href="@($"post/{_selectedPost.Next.Slug}")">
+                                <h6 class="text-light"><i class="fa-solid fa-arrow-left"></i> Next</h6>
+                                <h5> @_selectedPost.Next.Title</h5>
                             </a>
                         }
                     </div>
                     <div class="col col-auto">
                         @if (_selectedPost.Previous is not null)
                         {
-                            <h6 class="text-light text-end">Previous</h6>
-                            <a href="@($"post/{_selectedPost.Previous.Slug}")">
+                            <a class="text-decoration-none multi-line-link" href="@($"post/{_selectedPost.Previous.Slug}")">
+                                <h6 class="text-light text-end">Previous <i class="fa-solid fa-arrow-right"></i></h6>
                                 <h5>@_selectedPost.Previous.Title</h5>
                             </a>
                         }
-                    </div>
-                </div>
-                <div class="row justify-content-center mt-3">
-                    <div class="col col-auto">
-                        <button class="btn btn-secondary btn-lg" @onclick="NavigateToMain">Back</button>
                     </div>
                 </div>
                 <div class="row justify-content-center mt-3">
@@ -135,9 +130,7 @@
         _selectedPost = Posts.FirstOrDefault(post => post.Slug == Slug);
     }
 
-    protected override async Task OnAfterRenderAsync(bool firstRender) => await JavaScript.InvokeVoidAsync("resetScrollPosition");
-
-    private void NavigateToMain() => NavigationManager.NavigateTo("");
+    protected override async Task OnAfterRenderAsync(bool firstRender) => await JSInteropService.ResetScrollPositionAsync();
 
     private Task PersistData()
     {

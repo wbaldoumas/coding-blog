@@ -1,5 +1,6 @@
 ﻿using Blazorise;
 using Blazorise.Icons.FontAwesome;
+using Coding.Blog.Client.Services;
 using Coding.Blog.Library.Clients;
 using Coding.Blog.Library.DataTransfer;
 using Coding.Blog.Library.Jobs;
@@ -34,7 +35,7 @@ internal static class ServiceCollectionExtensions
             .AddApplicationLifetimeService(configuration)
             .AddQuartzJobs(configuration)
             .AddCosmicClients()
-            .AddDomainServices()
+            .AddServices()
             .AddUtilities()
             .AddBlazorise()
             .AddEmptyProviders()
@@ -83,10 +84,11 @@ internal static class ServiceCollectionExtensions
             .AddSingleton<ICosmicClient<T>, CosmicClient<T>>();
     }
 
-    private static IServiceCollection AddDomainServices(this IServiceCollection services) => services
+    private static IServiceCollection AddServices(this IServiceCollection services) => services
         .AddSingleton<IBlogService<Post>, BlogService<CosmicPost, Post>>()
         .AddSingleton<IBlogService<Book>, BlogService<CosmicBook, Book>>()
         .AddSingleton<IBlogService<Project>, BlogService<CosmicProject, Project>>()
+        .AddScoped<IJSInteropService, JSInteropService>()
         .AddSingleton<IApplicationStateService<Post>, ApplicationStateService<Post>>()
         .AddSingleton<IApplicationStateService<Book>, ApplicationStateService<Book>>()
         .AddSingleton<IApplicationStateService<Project>, ApplicationStateService<Project>>();
