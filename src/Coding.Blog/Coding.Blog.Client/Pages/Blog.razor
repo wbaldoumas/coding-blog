@@ -32,7 +32,7 @@
                             </a>
                             <h6 class="card-subtitle text-light">@post.DatePublished.ToPreformattedString() · @post.ReadingTime.Minutes minute read</h6>
                             <p class="card-text mt-2">
-                                <TagsDisplay Tags=@post.Tags></TagsDisplay>
+                                <TagsDisplay Tags=@post.DisplayTags.Value></TagsDisplay>
                             </p>
                         </div>
                     </div>
@@ -91,7 +91,7 @@
             : posts.Where(post =>
             {
                 return post.Title.Contains(_search, StringComparison.OrdinalIgnoreCase) ||
-                       post.Tags.Any(tag => tag.Contains(_search, StringComparison.OrdinalIgnoreCase)) ||
+                       post.DisplayTags.Value.Any(tag => tag.Contains(_search, StringComparison.OrdinalIgnoreCase)) ||
                        post.Content.Contains(_search, StringComparison.OrdinalIgnoreCase);
             });
     }

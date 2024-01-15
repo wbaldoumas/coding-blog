@@ -2,7 +2,6 @@
 using Blazorise.Icons.FontAwesome;
 using Coding.Blog.Library.Clients;
 using Coding.Blog.Library.Jobs;
-using Coding.Blog.Library.Mappers;
 using Coding.Blog.Library.Options;
 using Coding.Blog.Library.Records;
 using Coding.Blog.Library.Resilience;
@@ -17,9 +16,6 @@ using Quartz;
 using Book = Coding.Blog.Library.Domain.Book;
 using Post = Coding.Blog.Library.Domain.Post;
 using Project = Coding.Blog.Library.Domain.Project;
-using ProtoBook = Coding.Blog.Library.Protos.Book;
-using ProtoPost = Coding.Blog.Library.Protos.Post;
-using ProtoProject = Coding.Blog.Library.Protos.Project;
 using QuartzOptions = Coding.Blog.Library.Options.QuartzOptions;
 
 namespace Coding.Blog.Extensions;
@@ -38,8 +34,7 @@ internal static class ServiceCollectionExtensions
             .AddOptions(configuration)
             .AddApplicationLifetimeService(configuration)
             .AddQuartzJobs(configuration)
-            .AddMappers()
-            .AddClients()
+            .AddCosmicClients()
             .AddDomainServices()
             .AddUtilities()
             .AddBlazorise()
@@ -68,15 +63,7 @@ internal static class ServiceCollectionExtensions
         return services;
     }
 
-    private static IServiceCollection AddMappers(this IServiceCollection services) => services
-        .AddSingleton<IMapper<CosmicPost, Post>, CosmicPostToPostMapper>()
-        .AddSingleton<IMapper<CosmicPost, ProtoPost>, CosmicPostToProtoPostMapper>()
-        .AddSingleton<IMapper<CosmicBook, Book>, CosmicBookToBookMapper>()
-        .AddSingleton<IMapper<CosmicBook, ProtoBook>, CosmicBookToProtoBookMapper>()
-        .AddSingleton<IMapper<CosmicProject, Project>, CosmicProjectToProjectMapper>()
-        .AddSingleton<IMapper<CosmicProject, ProtoProject>, CosmicProjectToProtoProjectMapper>();
-
-    private static IServiceCollection AddClients(this IServiceCollection services) => services
+    private static IServiceCollection AddCosmicClients(this IServiceCollection services) => services
         .AddCosmicClient<CosmicPost>()
         .AddCosmicClient<CosmicBook>()
         .AddCosmicClient<CosmicProject>();
@@ -115,6 +102,7 @@ internal static class ServiceCollectionExtensions
             .Build())
         .AddSingleton<IStringSanitizer, StringSanitizer>()
         .AddSingleton<IPostLinker, PostLinker>()
+        .AddSingleton<IMapper, Mapper>()
         .AddSingleton<IReadTimeEstimator, ReadTimeEstimator>();
 
     private static IServiceCollection AddApplicationLifetimeService(

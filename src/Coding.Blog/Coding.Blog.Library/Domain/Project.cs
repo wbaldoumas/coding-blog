@@ -1,4 +1,6 @@
-﻿namespace Coding.Blog.Library.Domain;
+﻿using Coding.Blog.Library.Extensions;
+
+namespace Coding.Blog.Library.Domain;
 
 public sealed record Project(
     string Title,
@@ -6,5 +8,8 @@ public sealed record Project(
     Image Image,
     string ProjectUrl,
     int Rank,
-    IEnumerable<string> Tags
-);
+    string Tags
+)
+{
+    public Lazy<IEnumerable<string>> DisplayTags => new(Tags.ToDisplayTags);
+}
