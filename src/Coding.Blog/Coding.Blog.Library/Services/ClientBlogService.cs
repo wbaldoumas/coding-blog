@@ -1,17 +1,14 @@
 ﻿using Coding.Blog.Library.Adapters;
-using Coding.Blog.Library.Mappers;
+using Coding.Blog.Library.Utilities;
 
 namespace Coding.Blog.Library.Services;
 
-public sealed class ClientBlogService<TProtoObject, TDomainObject>(
-    IProtoClientAdapter<TProtoObject> protoClient,
-    IMapper<TProtoObject, TDomainObject> mapper
-) : IBlogService<TDomainObject>
+public sealed class ClientBlogService<TProtoObject, TDomainObject>(IProtoClientAdapter<TProtoObject> client, IMapper mapper) : IBlogService<TDomainObject>
 {
     public async Task<IEnumerable<TDomainObject>> GetAsync()
     {
-        var protoObjects = await protoClient.GetAsync().ConfigureAwait(false);
+        var protoObjects = await client.GetAsync().ConfigureAwait(false);
 
-        return mapper.Map(protoObjects);
+        return mapper.Map<TProtoObject, TDomainObject>(protoObjects);
     }
 }

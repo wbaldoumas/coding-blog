@@ -1,5 +1,4 @@
 ﻿using Coding.Blog.Library.Adapters;
-using Coding.Blog.Library.Mappers;
 using Coding.Blog.Library.Options;
 using Coding.Blog.Library.Protos;
 using Coding.Blog.Library.Services;
@@ -31,10 +30,10 @@ internal static class ServiceCollectionExtensions
                 SyntaxHighlighting.Dark,
                 new List<ILanguage> { new CSharpOverride() })
             .Build())
-        .AddSingleton<IMapper<ProtoPost, Post>, ProtoPostToPostMapper>()
-        .AddSingleton<IMapper<ProtoBook, Book>, ProtoBookToBookMapper>()
-        .AddSingleton<IMapper<ProtoProject, Project>, ProtoProjectToProjectMapper>()
+        .AddSingleton<IMapper, Mapper>()
         .AddSingleton<IPostLinker, PostLinker>()
+        .AddSingleton<IStringSanitizer, StringSanitizer>()
+        .AddSingleton<IReadTimeEstimator, ReadTimeEstimator>()
         .AddSingleton<IProtoClientAdapter<ProtoPost>, PostsClientAdapter>()
         .AddSingleton<IProtoClientAdapter<ProtoBook>, BooksClientAdapter>()
         .AddSingleton<IProtoClientAdapter<ProtoProject>, ProjectsClientAdapter>()

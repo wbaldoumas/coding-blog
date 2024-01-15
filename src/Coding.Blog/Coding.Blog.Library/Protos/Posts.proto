@@ -24,7 +24,5 @@ message Post {
 	string tags = 5;
 	Image image = 6;
 	google.protobuf.Timestamp datePublished = 7;
-	Post previous = 8;
-	Post next = 9;
 	google.protobuf.Duration readingTime = 10;
 }
