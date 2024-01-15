@@ -1,10 +1,9 @@
 ﻿using Blazorise;
 using Blazorise.Icons.FontAwesome;
 using Coding.Blog.Library.Clients;
+using Coding.Blog.Library.DataTransfer;
 using Coding.Blog.Library.Jobs;
 using Coding.Blog.Library.Options;
-using Coding.Blog.Library.Records;
-using Coding.Blog.Library.Resilience;
 using Coding.Blog.Library.Services;
 using Coding.Blog.Library.Utilities;
 using ColorCode;

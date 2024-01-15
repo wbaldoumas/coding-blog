@@ -1,5 +1,5 @@
-﻿using Coding.Blog.Library.Options;
-using Coding.Blog.Library.Records;
+﻿using Coding.Blog.Library.DataTransfer;
+using Coding.Blog.Library.Options;
 using Flurl;
 using Flurl.Http;
 using Microsoft.Extensions.Logging;

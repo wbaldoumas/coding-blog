@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Coding.Blog.Library.Records;
+namespace Coding.Blog.Library.DataTransfer;
 
 public sealed record CosmicProject(
     [property: JsonPropertyName("title")] string Title,

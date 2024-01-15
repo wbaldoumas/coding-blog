@@ -1,5 +1,5 @@
-﻿using Coding.Blog.Library.Protos;
-using Coding.Blog.Library.Records;
+﻿using Coding.Blog.Library.DataTransfer;
+using Coding.Blog.Library.Protos;
 using Coding.Blog.Library.Utilities;
 using FluentAssertions;
 using Google.Protobuf.WellKnownTypes;
