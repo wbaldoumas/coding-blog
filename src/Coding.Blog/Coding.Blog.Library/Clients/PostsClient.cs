@@ -1,8 +1,8 @@
 ﻿using Coding.Blog.Library.Protos;
 
-namespace Coding.Blog.Library.Adapters;
+namespace Coding.Blog.Library.Clients;
 
-public sealed class PostsClientAdapter(Posts.PostsClient postsClient) : IProtoClientAdapter<Post>
+public sealed class PostsClient(Posts.PostsClient postsClient) : IProtoClient<Post>
 {
     public async Task<IEnumerable<Post>> GetAsync()
     {

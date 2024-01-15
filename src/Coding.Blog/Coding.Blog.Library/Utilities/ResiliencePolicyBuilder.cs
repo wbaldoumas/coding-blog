@@ -4,7 +4,7 @@ using Polly;
 using Polly.Caching.Memory;
 using Polly.Contrib.WaitAndRetry;
 
-namespace Coding.Blog.Library.Resilience;
+namespace Coding.Blog.Library.Utilities;
 
 /// <summary>
 ///     Bundles the common resilience policies that I'd like to have in place at the

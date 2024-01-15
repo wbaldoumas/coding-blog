@@ -1,4 +1,4 @@
-﻿using Coding.Blog.Library.Records;
+﻿using Coding.Blog.Library.DataTransfer;
 
 namespace Coding.Blog.Library.Clients;
 

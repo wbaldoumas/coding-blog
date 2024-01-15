@@ -1,4 +1,4 @@
-﻿using Coding.Blog.Library.Records;
+﻿using Coding.Blog.Library.DataTransfer;
 using Google.Protobuf.WellKnownTypes;
 using Riok.Mapperly.Abstractions;
 using Book = Coding.Blog.Library.Domain.Book;

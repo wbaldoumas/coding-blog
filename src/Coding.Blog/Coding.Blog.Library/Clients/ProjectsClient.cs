@@ -1,8 +1,8 @@
 ﻿using Coding.Blog.Library.Protos;
 
-namespace Coding.Blog.Library.Adapters;
+namespace Coding.Blog.Library.Clients;
 
-public sealed class ProjectsClientAdapter(Projects.ProjectsClient projectsClient) : IProtoClientAdapter<Project>
+public sealed class ProjectsClient(Projects.ProjectsClient projectsClient) : IProtoClient<Project>
 {
     public async Task<IEnumerable<Project>> GetAsync()
     {

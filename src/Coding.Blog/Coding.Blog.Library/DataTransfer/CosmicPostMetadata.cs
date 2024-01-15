@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Coding.Blog.Library.Records;
+namespace Coding.Blog.Library.DataTransfer;
 
 public sealed record CosmicPostMetadata(
     [property: JsonPropertyName("hero")] CosmicImage Image,

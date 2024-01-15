@@ -1,8 +1,8 @@
 ﻿using Coding.Blog.Library.Protos;
 
-namespace Coding.Blog.Library.Adapters;
+namespace Coding.Blog.Library.Clients;
 
-public sealed class BooksClientAdapter(Books.BooksClient booksClient) : IProtoClientAdapter<Book>
+public sealed class BooksClient(Books.BooksClient booksClient) : IProtoClient<Book>
 {
     public async Task<IEnumerable<Book>> GetAsync()
     {

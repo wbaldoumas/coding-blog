@@ -1,4 +1,4 @@
-﻿using Coding.Blog.Library.Adapters;
+﻿using Coding.Blog.Library.Clients;
 using Coding.Blog.Library.Options;
 using Coding.Blog.Library.Protos;
 using Coding.Blog.Library.Services;
@@ -34,9 +34,9 @@ internal static class ServiceCollectionExtensions
         .AddSingleton<IPostLinker, PostLinker>()
         .AddSingleton<IStringSanitizer, StringSanitizer>()
         .AddSingleton<IReadTimeEstimator, ReadTimeEstimator>()
-        .AddSingleton<IProtoClientAdapter<ProtoPost>, PostsClientAdapter>()
-        .AddSingleton<IProtoClientAdapter<ProtoBook>, BooksClientAdapter>()
-        .AddSingleton<IProtoClientAdapter<ProtoProject>, ProjectsClientAdapter>()
+        .AddSingleton<IProtoClient<ProtoPost>, PostsClient>()
+        .AddSingleton<IProtoClient<ProtoBook>, BooksClient>()
+        .AddSingleton<IProtoClient<ProtoProject>, ProjectsClient>()
         .AddSingleton<IBlogService<Post>, ClientBlogService<ProtoPost, Post>>()
         .AddSingleton<IBlogService<Book>, ClientBlogService<ProtoBook, Book>>()
         .AddSingleton<IBlogService<Project>, ClientBlogService<ProtoProject, Project>>()
