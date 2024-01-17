@@ -73,7 +73,25 @@ public sealed class CSharpOverride : ILanguage
                     { 1, ScopeName.PreprocessorKeyword }
                 }),
             new(
-                @"\b(public|protected|internal|private|sealed)?\s*(abstract\s+)?(static\s+)?(class)\s+([A-Za-z_][A-Za-z0-9_]*)",
+                @"\b(public|protected|internal|private)?\s*(delegate)\s+(void|int|string|bool|double|float|decimal|char|long|byte|sbyte|short|ushort|uint|ulong|object|dynamic)\s+([A-Za-z_][A-Za-z0-9_]*)\b",
+                new Dictionary<int, string>
+                {
+                    { 1, ScopeName.Keyword },
+                    { 2, ScopeName.Keyword },
+                    { 3, ScopeName.Keyword },
+                    { 4, ScopeName.ClassName }
+                }),
+            new(
+                @"\b(public|protected|internal|private)?\s*(delegate)\s+([A-Za-z_][A-Za-z0-9_]*(?!\b(void|int|string|bool|double|float|decimal|char|long|byte|sbyte|short|ushort|uint|ulong|object|dynamic)\b))\s+([A-Za-z_][A-Za-z0-9_]*)",
+                new Dictionary<int, string>
+                {
+                    { 1, ScopeName.Keyword },
+                    { 2, ScopeName.Keyword },
+                    { 3, ScopeName.ClassName },
+                    { 5, ScopeName.ClassName }
+                }),
+            new(
+                @"\b(public|protected|internal|private|sealed)?\s*(abstract\s+)?(static\s+)?(class|record|struct)\s+([A-Za-z_][A-Za-z0-9_]*)",
                 new Dictionary<int, string>
                 {
                     { 1, ScopeName.Keyword },
@@ -81,6 +99,111 @@ public sealed class CSharpOverride : ILanguage
                     { 3, ScopeName.Keyword },
                     { 4, ScopeName.Keyword },
                     { 5, ScopeName.ClassName }
+                }),
+            new(
+                @"\b(new)\s+([A-Za-z_][A-Za-z0-9_]*)(?:<(\b(?:int|string|bool|double|float|decimal|char|long|byte|sbyte|short|ushort|uint|ulong|object|dynamic)\b),\s*([A-Za-z_][A-Za-z0-9_]*),\s*([A-Za-z_][A-Za-z0-9_]*))?>",
+                new Dictionary<int, string>
+                {
+                    { 1, ScopeName.Keyword },
+                    { 2, ScopeName.ClassName },
+                    { 3, ScopeName.Keyword },
+                    { 4, ScopeName.ClassName },
+                    { 5, ScopeName.Keyword }
+                }),
+            new(
+                @"\b(new)\s+([A-Za-z_][A-Za-z0-9_]*)(?:<([A-Za-z_][A-Za-z0-9_]*),\s*(\b(?:int|string|bool|double|float|decimal|char|long|byte|sbyte|short|ushort|uint|ulong|object|dynamic)\b),\s*([A-Za-z_][A-Za-z0-9_]*))?>",
+                new Dictionary<int, string>
+                {
+                    { 1, ScopeName.Keyword },
+                    { 2, ScopeName.ClassName },
+                    { 3, ScopeName.ClassName },
+                    { 4, ScopeName.Keyword },
+                    { 5, ScopeName.ClassName }
+                }),
+
+            new(
+                @"\b(new)\s+([A-Za-z_][A-Za-z0-9_]*)(?:<([A-Za-z_][A-Za-z0-9_]*),\s*(\b(?:int|string|bool|double|float|decimal|char|long|byte|sbyte|short|ushort|uint|ulong|object|dynamic)\b))?>",
+                new Dictionary<int, string>
+                {
+                    { 1, ScopeName.Keyword },
+                    { 2, ScopeName.ClassName },
+                    { 3, ScopeName.ClassName },
+                    { 4, ScopeName.Keyword }
+                }),
+            new(
+                @"\b(new)\s+([A-Za-z_][A-Za-z0-9_]*)(?:<(\b(?:int|string|bool|double|float|decimal|char|long|byte|sbyte|short|ushort|uint|ulong|object|dynamic)\b),\s*([A-Za-z_][A-Za-z0-9_]*))?>",
+                new Dictionary<int, string>
+                {
+                    { 1, ScopeName.Keyword },
+                    { 2, ScopeName.ClassName },
+                    { 3, ScopeName.Keyword },
+                    { 4, ScopeName.ClassName }
+                }),
+            new(
+                @"\b(new)\s+([A-Za-z_][A-Za-z0-9_]*)(?=\s*<)(?:<\s*(void|int|string|bool|double|float|decimal|char|long|byte|sbyte|short|ushort|uint|ulong|object|dynamic)\b)",
+                new Dictionary<int, string>
+                {
+                    { 1, ScopeName.Keyword },
+                    { 2, ScopeName.ClassName },
+                    { 3, ScopeName.Keyword }
+                }),
+
+            new(
+                @"\b(new)\s+([A-Za-z_][A-Za-z0-9_]*)(?=\s*<)(?:<\s*([A-Za-z_][A-Za-z0-9_]*),\s*([A-Za-z_][A-Za-z0-9_]*),\s*([A-Za-z_][A-Za-z0-9_]*),\s*([A-Za-z_][A-Za-z0-9_]*),\s*([A-Za-z_][A-Za-z0-9_]*))",
+                new Dictionary<int, string>
+                {
+                    { 1, ScopeName.Keyword },
+                    { 2, ScopeName.ClassName },
+                    { 3, ScopeName.ClassName },
+                    { 4, ScopeName.ClassName },
+                    { 5, ScopeName.ClassName },
+                    { 6, ScopeName.ClassName },
+                    { 7, ScopeName.ClassName }
+                }),
+            new(
+                @"\b(new)\s+([A-Za-z_][A-Za-z0-9_]*)(?=\s*<)(?:<\s*([A-Za-z_][A-Za-z0-9_]*),\s*([A-Za-z_][A-Za-z0-9_]*),\s*([A-Za-z_][A-Za-z0-9_]*),\s*([A-Za-z_][A-Za-z0-9_]*))",
+                new Dictionary<int, string>
+                {
+                    { 1, ScopeName.Keyword },
+                    { 2, ScopeName.ClassName },
+                    { 3, ScopeName.ClassName },
+                    { 4, ScopeName.ClassName },
+                    { 5, ScopeName.ClassName },
+                    { 6, ScopeName.ClassName }
+                }),
+            new(
+                @"\b(new)\s+([A-Za-z_][A-Za-z0-9_]*)(?=\s*<)(?:<\s*([A-Za-z_][A-Za-z0-9_]*),\s*([A-Za-z_][A-Za-z0-9_]*),\s*([A-Za-z_][A-Za-z0-9_]*))",
+                new Dictionary<int, string>
+                {
+                    { 1, ScopeName.Keyword },
+                    { 2, ScopeName.ClassName },
+                    { 3, ScopeName.ClassName },
+                    { 4, ScopeName.ClassName },
+                    { 5, ScopeName.ClassName }
+                }),
+            new(
+                @"\b(new)\s+([A-Za-z_][A-Za-z0-9_]*)(?=\s*<)(?:<\s*([A-Za-z_][A-Za-z0-9_]*),\s*([A-Za-z_][A-Za-z0-9_]*))",
+                new Dictionary<int, string>
+                {
+                    { 1, ScopeName.Keyword },
+                    { 2, ScopeName.ClassName },
+                    { 3, ScopeName.ClassName },
+                    { 4, ScopeName.ClassName }
+                }),
+            new(
+                @"\b(new)\s+([A-Za-z_][A-Za-z0-9_]*)(?=\s*<)(?:<\s*([A-Za-z_][A-Za-z0-9_]*))",
+                new Dictionary<int, string>
+                {
+                    { 1, ScopeName.Keyword },
+                    { 2, ScopeName.ClassName },
+                    { 3, ScopeName.ClassName }
+                }),
+            new(
+                @"new\s+([A-Za-z_][A-Za-z0-9_]*)",
+                new Dictionary<int, string>
+                {
+                    { 0, ScopeName.Keyword },
+                    { 1, ScopeName.ClassName }
                 }),
             new(
                 @"\b(break|case|catch|continue|do|else|finally|for|foreach|goto|if|in|return|switch|throw|try|while|yield)\b",
