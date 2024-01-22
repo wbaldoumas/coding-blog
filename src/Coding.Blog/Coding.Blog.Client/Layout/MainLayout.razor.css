@@ -52,10 +52,12 @@ main {
     }
 
     .sidebar {
-        width: 250px;
+        width: 225px;
+        min-width: 225px;
         height: 100vh;
         position: sticky;
         top: 0;
+        overflow-y: auto;
     }
 
     .top-row {
