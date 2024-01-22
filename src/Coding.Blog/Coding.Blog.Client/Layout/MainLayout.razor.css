@@ -54,7 +54,7 @@ main {
     .sidebar {
         width: 225px;
         min-width: 225px;
-        height: 100vh;
+        height: 100%;
         position: sticky;
         top: 0;
         overflow-y: auto;
