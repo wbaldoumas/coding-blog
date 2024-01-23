@@ -9,8 +9,7 @@ main {
 }
 
 .sidebar {
-    background-image: linear-gradient(180deg, #006148 0, #303030 100%);
-    height: 100%;
+    background-image: linear-gradient(180deg, #006148 0, #222222 100%);
 }
 
 .top-row {
@@ -55,10 +54,9 @@ main {
     .sidebar {
         width: 225px;
         min-width: 225px;
-        height: 100%;
+        height: 100vh;
         position: sticky;
         top: 0;
-        overflow-y: auto;
     }
 
     .top-row {

@@ -48,7 +48,7 @@
     text-overflow: ellipsis;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 640.98px) {
     .card {
         flex-direction: column;
     }
@@ -70,15 +70,5 @@
     .card .col-md-8 {
         flex: 0 0 auto;
         max-width: 100%;
-    }
-}
-
-@media (max-width: 640.98px) {
-    .container {
-        padding: 0.75rem;
-    }
-
-    .card-body {
-        padding: 10px;
     }
 }

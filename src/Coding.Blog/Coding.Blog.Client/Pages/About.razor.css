@@ -32,10 +32,6 @@
 }
 
 @media (max-width: 640.98px) {
-    .container {
-        padding: 0.75rem;
-    }
-
     .card {
         padding: 10px;
     }
