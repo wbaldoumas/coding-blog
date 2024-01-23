@@ -23,27 +23,32 @@
         }
         else
         {
-            @foreach (var project in _projects.OrderBy(project => project.Rank))
-            {
-                <div class="card border-0 mb-3 shadow">
-                    <div class="row g-0">
-                        <div class="col-md-4 d-flex image-wrapper" style="background-image: url('@project.Image.ImgixUrl');">
-                        </div>
-                        <div class="col-md-8 d-flex flex-column">
-                            <div class="card-body">
-                                <h5 class="card-title">@project.Title</h5>
-                                <p class="card-text">@project.Description.ToMarkupString(MarkdownPipeline)</p>
-                                <p class="card-text">
-                                    <TagsDisplay Tags=@project.DisplayTags.Value/>
-                                </p>
-                            </div>
-                            <div class="mt-auto p-3">
-                                <a href="@project.ProjectUrl" target="_blank" rel="noreferrer noopener" class="btn btn-success w-100"><i class="fab fa-github"></i> View on GitHub</a>
+            <div class="row">
+                @foreach (var project in _projects.OrderBy(project => project.Rank))
+                {
+                    <div class="col-12">
+                        <div class="card mb-3 border-0 shadow">
+                            <div class="row g-0">
+                                <div class="col-md-4 d-flex align-items-center card-img-container">
+                                    <img src="@project.Image.ImgixUrl" class="card-img-top" alt="@project.Title">
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body rounded">
+                                        <h5 class="card-title">@project.Title</h5>
+                                        <p class="card-text">@project.Description.ToMarkupString(MarkdownPipeline)</p>
+                                        <p class="card-text">
+                                            <TagsDisplay Tags=@project.DisplayTags.Value/>
+                                        </p>
+                                    </div>
+                                    <div class="mt-auto p-3">
+                                        <a href="@project.ProjectUrl" target="_blank" rel="noreferrer noopener" class="btn btn-success w-100"><i class="fab fa-github"></i> View on GitHub</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            }
+                }
+            </div>
         }
     }
 </div>
