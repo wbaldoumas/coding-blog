@@ -1,5 +1,5 @@
 ﻿@page "/"
-@page "/search/{Search}"
+@page "/search"
 @implements IDisposable
 @rendermode InteractiveAuto
 
@@ -17,7 +17,7 @@
     else
     {
         <div class="text-center mb-3">
-            <input type="search" class="form-control rounded" placeholder="Search..." aria-label="search" aria-describedby="search-button" value="@_search" @oninput="HandleSearchInput">
+            <input type="search" class="form-control rounded" placeholder="Search..." aria-label="search" aria-describedby="search-button" value="@query" @oninput="HandleSearchInput">
         </div>
         <div class="row g-3 d-flex align-items-stretch">
             @foreach (var post in GetSearchedPosts(Posts))
@@ -44,22 +44,21 @@
 </div>
 
 @code {
-
-    private string _search = string.Empty;
+    [Parameter]
+    [SupplyParameterFromQuery(Name = "q")]
+    public string query { get; set; } = string.Empty;
 
     private IEnumerable<Post>? Posts { get; set; }
 
     private PersistingComponentStateSubscription _persistingComponentStateSubscription;
 
-    [Parameter] public string? Search { get; set; }
-
     private void HandleSearchInput(ChangeEventArgs args)
     {
-        _search = args.Value?.ToString() ?? string.Empty;
+        query = args.Value?.ToString() ?? string.Empty;
 
-        var path = string.IsNullOrEmpty(_search) ? "/" : $"/search/{HttpUtility.UrlEncode(_search)}";
+        var path = string.IsNullOrEmpty(query) ? "/" : $"/search?q={HttpUtility.UrlEncode(query)}";
 
-        JSInteropService.ChangeUrlAsync(path);
+        NavigationManager.NavigateTo(path);
     }
 
     protected override async Task OnInitializedAsync()
@@ -70,30 +69,31 @@
 
         Posts = PostLinker.Link(posts).ToList();
 
-        if (!string.IsNullOrWhiteSpace(Search))
+        if (!string.IsNullOrWhiteSpace(query))
         {
-            _search = HttpUtility.UrlDecode(Search);
+            // If the user added a query string manually to the URL, redirect them to the search page.
+            if (!NavigationManager.ToBaseRelativePath(NavigationManager.Uri).StartsWith("search"))
+            {
+                var path = $"/search?q={query}";
+
+                NavigationManager.NavigateTo(path);
+            }
+
+            query = HttpUtility.UrlDecode(query);
         }
-    }
-
-    protected override Task OnParametersSetAsync()
-    {
-        _search = Search ?? string.Empty;
-
-        return Task.CompletedTask;
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender) => await JSInteropService.ResetScrollPositionAsync();
 
     private IEnumerable<Post> GetSearchedPosts(IEnumerable<Post> posts)
     {
-        return string.IsNullOrEmpty(_search)
+        return string.IsNullOrEmpty(query)
             ? posts
             : posts.Where(post =>
             {
-                return post.Title.Contains(_search, StringComparison.OrdinalIgnoreCase) ||
-                       post.DisplayTags.Value.Any(tag => tag.Contains(_search, StringComparison.OrdinalIgnoreCase)) ||
-                       post.Content.Contains(_search, StringComparison.OrdinalIgnoreCase);
+                return post.Title.Contains(query, StringComparison.OrdinalIgnoreCase) ||
+                       post.DisplayTags.Value.Any(tag => tag.Contains(query, StringComparison.OrdinalIgnoreCase)) ||
+                       post.Content.Contains(query, StringComparison.OrdinalIgnoreCase);
             });
     }
 
@@ -105,4 +105,5 @@
     }
 
     public void Dispose() => _persistingComponentStateSubscription.Dispose();
+
 }
