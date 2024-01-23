@@ -36,14 +36,15 @@ public sealed class MapperTests
         // arrange
         var cosmicBook = new CosmicBook(
             Title: "Title",
-            Content: "Content",
             DatePublished: DateTime.Now.ToUniversalTime(),
             Metadata: new CosmicBookMetadata(
                 PurchaseUrl: "PurchaseUrl",
                 Image: new CosmicImage(
                     Url: "Url",
                     ImgixUrl: "ImgixUrl"
-                )
+                ),
+                Content: "Content",
+                Author: "Author"
             )
         );
 
@@ -52,7 +53,8 @@ public sealed class MapperTests
 
         // assert
         book.Title.Should().Be(cosmicBook.Title);
-        book.Content.Should().Be(cosmicBook.Content);
+        book.Content.Should().Be(cosmicBook.Metadata.Content);
+        book.Author.Should().Be(cosmicBook.Metadata.Author);
         book.DatePublished.Should().Be(cosmicBook.DatePublished);
         book.PurchaseUrl.Should().Be(cosmicBook.Metadata.PurchaseUrl);
         book.Image.Url.Should().Be(cosmicBook.Metadata.Image.Url);
@@ -65,14 +67,15 @@ public sealed class MapperTests
         // arrange
         var cosmicBook = new CosmicBook(
             Title: "Title",
-            Content: "Content",
             DatePublished: DateTime.Now.ToUniversalTime(),
             Metadata: new CosmicBookMetadata(
                 PurchaseUrl: "PurchaseUrl",
                 Image: new CosmicImage(
                     Url: "Url",
                     ImgixUrl: "ImgixUrl"
-                )
+                ),
+                Content: "Content",
+                Author: "Author"
             )
         );
 
@@ -81,7 +84,7 @@ public sealed class MapperTests
 
         // assert
         protoBook.Title.Should().Be(cosmicBook.Title);
-        protoBook.Content.Should().Be(cosmicBook.Content);
+        protoBook.Content.Should().Be(cosmicBook.Metadata.Content);
         protoBook.DatePublished.Should().Be(cosmicBook.DatePublished.ToTimestamp());
         protoBook.PurchaseUrl.Should().Be(cosmicBook.Metadata.PurchaseUrl);
         protoBook.Image.Url.Should().Be(cosmicBook.Metadata.Image.Url);
@@ -111,6 +114,7 @@ public sealed class MapperTests
         // assert
         book.Title.Should().Be(protoBook.Title);
         book.Content.Should().Be(protoBook.Content);
+        book.Author.Should().Be(protoBook.Author);
         book.DatePublished.Should().Be(protoBook.DatePublished.ToDateTime());
         book.PurchaseUrl.Should().Be(protoBook.PurchaseUrl);
         book.Image.Url.Should().Be(protoBook.Image.Url);
@@ -126,7 +130,6 @@ public sealed class MapperTests
         _mockReadTimeEstimator.Estimate(Arg.Any<string>()).Returns(readingTime);
 
         var cosmicPost = new CosmicPost(
-            Id: "Id",
             Title: "Title",
             Slug: "Slug",
             DatePublished: DateTime.Now.ToUniversalTime(),
@@ -144,7 +147,6 @@ public sealed class MapperTests
         var post = _mapper.Map<CosmicPost, Post>(cosmicPost);
 
         // assert
-        post.Id.Should().Be(cosmicPost.Id);
         post.Title.Should().Be(cosmicPost.Title);
         post.Slug.Should().Be(cosmicPost.Slug);
         post.DatePublished.Should().Be(cosmicPost.DatePublished);
@@ -164,7 +166,6 @@ public sealed class MapperTests
         _mockReadTimeEstimator.Estimate(Arg.Any<string>()).Returns(readingTime);
 
         var cosmicPost = new CosmicPost(
-            Id: "Id",
             Title: "Title",
             Slug: "Slug",
             DatePublished: DateTime.Now.ToUniversalTime(),
@@ -182,7 +183,6 @@ public sealed class MapperTests
         var protoPost = _mapper.Map<CosmicPost, ProtoPost>(cosmicPost);
 
         // assert
-        protoPost.Id.Should().Be(cosmicPost.Id);
         protoPost.Title.Should().Be(cosmicPost.Title);
         protoPost.Slug.Should().Be(cosmicPost.Slug);
         protoPost.DatePublished.Should().Be(cosmicPost.DatePublished.ToTimestamp());
@@ -199,7 +199,6 @@ public sealed class MapperTests
         // arrange
         var protoPost = new ProtoPost
         {
-            Id = "Id",
             Title = "Title",
             Slug = "Slug",
             ReadingTime = TimeSpan.FromMinutes(1).ToDuration(),
@@ -217,7 +216,6 @@ public sealed class MapperTests
         var post = _mapper.Map<ProtoPost, Post>(protoPost);
 
         // assert
-        post.Id.Should().Be(protoPost.Id);
         post.Title.Should().Be(protoPost.Title);
         post.Slug.Should().Be(protoPost.Slug);
         post.ReadingTime.Should().Be(protoPost.ReadingTime.ToTimeSpan());

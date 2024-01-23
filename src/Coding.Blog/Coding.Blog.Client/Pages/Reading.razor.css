@@ -1,9 +1,11 @@
-﻿.card-img-top {
-    height: 100%;
-}
-
-.container {
+﻿.container {
     max-width: 960px;
     margin: 0 auto;
     padding: 2rem;
+}
+
+@media (max-width: 640.98px) {
+    .container {
+        padding: 0.75rem;
+    }
 }
