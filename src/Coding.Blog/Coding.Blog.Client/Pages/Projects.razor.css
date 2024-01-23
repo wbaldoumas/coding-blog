@@ -73,14 +73,6 @@
         padding-left: 0 !important
     }
 
-    .image-wrapper {
-        height: 100%;
-        border-top-left-radius: .25rem;
-        border-top-right-radius: .25rem;
-        border-bottom-left-radius: 0;
-        border-bottom-right-radius: 0;
-    }
-
     .card .col-md-8 {
         flex: 0 0 auto;
         max-width: 100%;
