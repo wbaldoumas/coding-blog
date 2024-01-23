@@ -35,4 +35,8 @@
     .card {
         padding: 10px;
     }
+
+    .container {
+        padding: 0.75rem;
+    }
 }

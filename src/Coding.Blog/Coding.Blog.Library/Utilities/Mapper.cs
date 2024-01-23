@@ -19,10 +19,14 @@ public partial class Mapper(IReadTimeEstimator readTimeEstimator) : IMapper
 
     [MapProperty("Metadata.PurchaseUrl", "PurchaseUrl")]
     [MapProperty("Metadata.Image", "Image")]
+    [MapProperty("Metadata.Content", "Content")]
+    [MapProperty("Metadata.Author", "Author")]
     private partial Book CosmicBookToBook(CosmicBook cosmicBook);
 
     [MapProperty("Metadata.PurchaseUrl", "PurchaseUrl")]
     [MapProperty("Metadata.Image", "Image")]
+    [MapProperty("Metadata.Content", "Content")]
+    [MapProperty("Metadata.Author", "Author")]
     private partial ProtoBook CosmicBookToProtoBook(CosmicBook cosmicBook);
 
     private partial Book ProtoBookToBook(ProtoBook protoBook);

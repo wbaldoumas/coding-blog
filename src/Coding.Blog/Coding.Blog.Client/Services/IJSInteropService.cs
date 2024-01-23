@@ -2,7 +2,5 @@
 
 public interface IJSInteropService
 {
-    ValueTask ChangeUrlAsync(string path);
-
     ValueTask ResetScrollPositionAsync();
 }

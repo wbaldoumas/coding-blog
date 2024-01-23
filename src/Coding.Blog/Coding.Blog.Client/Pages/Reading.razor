@@ -37,13 +37,12 @@
             @foreach (var book in Books)
             {
                 <div class="card rounded">
-                    <a href="@book.PurchaseUrl" target="_blank">
-                        <img src="@book.Image.ImgixUrl" loading="lazy" alt="@book.Title" class="rounded mx-auto d-block card-img-top" />
-                    </a>
                     <div class="card-body rounded">
                         <a href="@book.PurchaseUrl" class="card-link" target="_blank">
                             <h3 class="text-center card-title">@book.Title</h3>
                         </a>
+                        <h6 class="card-subtitle text-light text-center">by @book.Author</h6>
+                        <hr/>
                         <div class="card-text">
                             @book.Content.ToMarkupString(MarkdownPipeline)
                         </div>

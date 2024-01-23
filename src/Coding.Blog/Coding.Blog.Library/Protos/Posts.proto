@@ -17,12 +17,11 @@ message PostsReply {
 } 
 
 message Post {
-	string id = 1;
-	string slug = 2;
-	string title = 3;
-	string content = 4;
-	string tags = 5;
-	Image image = 6;
-	google.protobuf.Timestamp datePublished = 7;
-	google.protobuf.Duration readingTime = 10;
+	string slug = 1;
+	string title = 2;
+	string content = 3;
+	string tags = 4;
+	Image image = 5;
+	google.protobuf.Timestamp datePublished = 6;
+	google.protobuf.Duration readingTime = 7;
 }
