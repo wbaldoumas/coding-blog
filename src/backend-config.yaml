@@ -1,0 +1,7 @@
+apiVersion: cloud.google.com/v1
+kind: BackendConfig
+metadata:
+  name: coding-blog-backend-config
+spec:
+  sessionAffinity:
+    affinityType: "CLIENT_IP"

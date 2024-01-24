@@ -20,6 +20,11 @@ spec:
         ports:
           - containerPort: 8080
             protocol: TCP
+        resources:
+          limits:
+            cpu: 500m
+          requests:
+            cpu: 250m
         readinessProbe:
           httpGet:
             path: /healthz
