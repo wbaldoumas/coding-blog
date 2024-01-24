@@ -7,16 +7,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Coding.Blog", "Coding.Blog\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Coding.Blog.Client", "Coding.Blog\Coding.Blog.Client\Coding.Blog.Client.csproj", "{D7857093-E0FA-4668-A695-D016021DF733}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "K8s", "K8s", "{F1F394CD-67B8-42BE-888E-B786B77BA224}"
-	ProjectSection(SolutionItems) = preProject
-		K8s\deployment.yaml = K8s\deployment.yaml
-		K8s\ingress.yaml = K8s\ingress.yaml
-		K8s\service.yaml = K8s\service.yaml
-	EndProjectSection
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Coding.Blog.Library", "Coding.Blog\Coding.Blog.Library\Coding.Blog.Library.csproj", "{08B50183-D421-45D9-9E4A-AEFD18F0C9AA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coding.Blog.Tests", "..\tests\Coding.Blog.Tests\Coding.Blog.Tests.csproj", "{04CC7737-13B1-4758-8E0B-18191094C28D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Coding.Blog.Tests", "..\tests\Coding.Blog.Tests\Coding.Blog.Tests.csproj", "{04CC7737-13B1-4758-8E0B-18191094C28D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "k8s", "k8s", "{73B72A50-D91A-402D-8B04-472972A53488}"
+	ProjectSection(SolutionItems) = preProject
+		backend-config.yaml = backend-config.yaml
+		..\k8s\deployment.yaml = ..\k8s\deployment.yaml
+		..\k8s\ingress.yaml = ..\k8s\ingress.yaml
+		..\k8s\service.yaml = ..\k8s\service.yaml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
