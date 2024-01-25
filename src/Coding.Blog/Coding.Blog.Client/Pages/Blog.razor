@@ -1,7 +1,6 @@
 ﻿@page "/"
 @page "/search"
 @implements IDisposable
-@rendermode InteractiveAuto
 
 <PageTitle>Will Baldoumas | Blog</PageTitle>
 
@@ -10,11 +9,7 @@
 </HeadContent>
 
 <div class="container mb-3">
-    @if (Posts is null)
-    {
-        <LoadingSpinner/>
-    }
-    else
+    @if (Posts is not null)
     {
         <div class="text-center mb-3">
             <input type="search" class="form-control rounded" placeholder="Search..." aria-label="search" aria-describedby="search-button" value="@query" @oninput="HandleSearchInput">

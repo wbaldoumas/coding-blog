@@ -1,6 +1,5 @@
 ﻿@page "/post/{Slug}"
 @implements IDisposable
-@rendermode InteractiveAuto
 
 <PageTitle>Will Baldoumas | @Title</PageTitle>
 
@@ -17,11 +16,7 @@
     }
     else
     {
-        @if (_selectedPost is null)
-        {
-            <LoadingSpinner/>
-        }
-        else
+        @if (_selectedPost is not null)
         {
             <div class="row justify-content-center">
                 <div class="col col-auto">
@@ -76,7 +71,7 @@
                 </div>
                 <div class="row justify-content-center mt-3">
                     <div class="card shadow-sm rounded">
-                        <div class="card-body rounded">
+                        <div class="card-body rounded giscus-container">
                             <script src="https://giscus.app/client.js"
                                     data-repo="wbaldoumas/coding-blog"
                                     data-repo-id="MDEwOlJlcG9zaXRvcnk0MDE1MDQwMDY="
@@ -131,7 +126,11 @@
         _selectedPost = Posts.FirstOrDefault(post => post.Slug == Slug);
     }
 
-    protected override async Task OnAfterRenderAsync(bool firstRender) => await JSInteropService.ResetScrollPositionAsync();
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await JSInteropService.ResetScrollPositionAsync();
+        await JSInteropService.LoadGiscusAsync();
+    }
 
     private Task PersistData()
     {
