@@ -7,7 +7,7 @@
     <meta name="description" content="A sample of the projects which I maintain, spanning websites, libraries, and command line applications.">
 </HeadContent>
 
-<div class="container mb-3">
+<div class="container mb-5">
     @if (_projects is not null)
     {
         @if (!_projects.Any())
@@ -47,6 +47,7 @@
         }
     }
 </div>
+<BlogFooter />
 
 @code {
     private IEnumerable<Project>? _projects;
