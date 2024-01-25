@@ -1,6 +1,5 @@
 ﻿@page "/projects"
 @implements IDisposable
-@rendermode InteractiveAuto
 
 <PageTitle>Will Baldoumas | Projects</PageTitle>
 
@@ -9,11 +8,7 @@
 </HeadContent>
 
 <div class="container mb-3">
-    @if (_projects is null)
-    {
-        <LoadingSpinner/>
-    }
-    else
+    @if (_projects is not null)
     {
         @if (!_projects.Any())
         {

@@ -10,15 +10,58 @@
     <link rel="stylesheet" href="Coding.Blog.styles.css"/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.5.1/css/all.css">
     <link rel="icon" type="image/png" href="favicon.ico"/>
-    <HeadOutlet />
+    <HeadOutlet @rendermode="@InteractiveAuto" />
 </head>
 
 <body>
-    <Routes />
+    <Routes @rendermode="@InteractiveAuto" />
     <script src="_framework/blazor.web.js"></script>
     <script type="text/javascript">
         function resetScrollPosition() {
             setTimeout(function () { window.scrollTo(0, 1); }, 1);
+        }
+    </script>
+    <script type="text/javascript">
+        function removeGiscusFrame() {
+            var giscusFrame = document.querySelector('iframe.giscus-frame');
+
+            if (giscusFrame) {
+                giscusFrame.remove();
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        function addGiscusFrame() {
+            var giscusScript = document.querySelector('script.giscus-script');
+
+            if (giscusScript) {
+                giscusScript.remove();
+            }
+
+            var giscusContainer = document.querySelector('div.giscus-container');
+
+            if (giscusContainer) {
+                var giscusScript = document.createElement('script');
+
+                giscusScript.setAttribute('src', 'https://giscus.app/client.js');
+                giscusScript.setAttribute('data-repo', 'wbaldoumas/coding-blog');
+                giscusScript.setAttribute('data-repo-id', 'MDEwOlJlcG9zaXRvcnk0MDE1MDQwMDY=');
+                giscusScript.setAttribute('data-category', 'Announcements');
+                giscusScript.setAttribute('data-category-id', 'DIC_kwDOF-53Bs4CcJes');
+                giscusScript.setAttribute('data-mapping', 'pathname');
+                giscusScript.setAttribute('data-strict', '1');
+                giscusScript.setAttribute('data-reactions-enabled', '1');
+                giscusScript.setAttribute('data-emit-metadata', '0');
+                giscusScript.setAttribute('data-input-position', 'top');
+                giscusScript.setAttribute('data-theme', 'dark');
+                giscusScript.setAttribute('data-lang', 'en');
+                giscusScript.setAttribute('data-loading', 'lazy');
+                giscusScript.setAttribute('crossorigin', 'anonymous');
+                giscusScript.setAttribute('async', '');
+                giscusScript.classList.add('giscus-script');
+
+                giscusContainer.appendChild(giscusScript);
+            }
         }
     </script>
     <persist-component-state/>

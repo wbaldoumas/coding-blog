@@ -1,6 +1,5 @@
 ﻿@page "/reading"
 @implements IDisposable
-@rendermode InteractiveAuto
 
 <PageTitle>Will Baldoumas | Reading Recommendations</PageTitle>
 
@@ -9,11 +8,7 @@
 </HeadContent>
 
 <div class="container mb-3">
-    @if (Books is null)
-    {
-        <LoadingSpinner/>
-    }
-    else
+    @if (Books is not null)
     {
         @if (!Books.Any())
         {
