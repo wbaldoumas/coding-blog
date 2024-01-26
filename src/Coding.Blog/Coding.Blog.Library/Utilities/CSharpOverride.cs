@@ -225,7 +225,7 @@ public sealed class CSharpOverride : ILanguage
                 })
         };
 
-    public bool HasAlias(string language) => language.ToLower(CultureInfo.InvariantCulture) switch
+    public bool HasAlias(string lang) => lang.ToLower(CultureInfo.InvariantCulture) switch
     {
         "cs" => true,
         "c#" => true,

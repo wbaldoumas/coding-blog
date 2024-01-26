@@ -1,4 +1,5 @@
 ﻿using Coding.Blog.Library.Clients;
+using Coding.Blog.Library.Extensions;
 using Microsoft.Extensions.Logging;
 using Quartz;
 
@@ -8,10 +9,10 @@ public sealed class CacheWarmingJob<T>(ICosmicClient<T> client, ILogger<CacheWar
 {
     public async Task Execute(IJobExecutionContext context)
     {
-        logger.LogInformation("Warming {type} cache...", typeof(T).Name);
+        logger.LogCacheWarmingBegin(typeof(T).Name);
 
         await client.GetAsync().ConfigureAwait(false);
 
-        logger.LogInformation("Finished warming {type} cache.", typeof(T).Name);
+        logger.LogCacheWarmingEnd(typeof(T).Name);
     }
 }

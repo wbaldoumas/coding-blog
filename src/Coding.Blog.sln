@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Coding.Blog.Tests", "..\tes
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "k8s", "k8s", "{73B72A50-D91A-402D-8B04-472972A53488}"
 	ProjectSection(SolutionItems) = preProject
-		backend-config.yaml = backend-config.yaml
+		..\k8s\backend-config.yaml = ..\k8s\backend-config.yaml
 		..\k8s\deployment.yaml = ..\k8s\deployment.yaml
 		..\k8s\ingress.yaml = ..\k8s\ingress.yaml
 		..\k8s\service.yaml = ..\k8s\service.yaml

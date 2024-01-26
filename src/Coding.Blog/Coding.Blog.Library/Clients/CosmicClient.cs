@@ -1,4 +1,5 @@
 ﻿using Coding.Blog.Library.DataTransfer;
+using Coding.Blog.Library.Extensions;
 using Coding.Blog.Library.Options;
 using Flurl;
 using Flurl.Http;
@@ -28,7 +29,7 @@ public sealed class CosmicClient<T>(
                         .SetQueryParam("query", $"{{\"type\":\"{type}\"}}")
                         .SetQueryParam("read_key", options.Value.ReadKey)
                         .SetQueryParam("props", props)
-                        .GetJsonAsync<CosmicCollection<T>>()
+                        .GetJsonAsync<CosmicObjects<T>>()
                         .ConfigureAwait(false);
 
                     return cosmicCollection.Objects;
@@ -38,7 +39,7 @@ public sealed class CosmicClient<T>(
         }
         catch (Exception exception)
         {
-            logger.LogError($"Failed to retrieve {typeName}s from Cosmic API: {exception.Message}");
+            logger.LogCosmicApiError(typeName!, exception.Message);
 
             throw;
         }
