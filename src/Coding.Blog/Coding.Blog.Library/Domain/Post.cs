@@ -3,9 +3,11 @@
 namespace Coding.Blog.Library.Domain;
 
 public sealed record Post(
+    string Id,
     string Slug,
     string Title,
     string Content,
+    string Description,
     TimeSpan ReadingTime,
     DateTime DatePublished,
     string Tags,

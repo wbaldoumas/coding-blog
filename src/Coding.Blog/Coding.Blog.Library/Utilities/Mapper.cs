@@ -35,6 +35,7 @@ public partial class Mapper(IReadTimeEstimator readTimeEstimator) : IMapper
     [MapProperty("Metadata.Markdown", "ReadingTime")]
     [MapProperty("Metadata.Tags", "Tags")]
     [MapProperty("Metadata.Image", "Image")]
+    [MapProperty("Metadata.Description", "Description")]
     [MapperIgnoreTarget("DisplayTags")]
     [MapperIgnoreTarget("Next")]
     [MapperIgnoreTarget("Previous")]
@@ -44,6 +45,7 @@ public partial class Mapper(IReadTimeEstimator readTimeEstimator) : IMapper
     [MapProperty("Metadata.Markdown", "ReadingTime")]
     [MapProperty("Metadata.Tags", "Tags")]
     [MapProperty("Metadata.Image", "Image")]
+    [MapProperty("Metadata.Description", "Description")]
     private partial ProtoPost CosmicPostToProtoPost(CosmicPost cosmicPost);
 
     [MapperIgnoreTarget("Next")]

@@ -38,12 +38,15 @@ internal static class ServiceCollectionExtensions
             .AddServices()
             .AddUtilities()
             .AddBlazorise()
+            .AddResponseCaching()
+            .AddResponseCompression()
             .AddEmptyProviders()
             .AddFontAwesomeIcons()
             .AddRazorComponents()
             .AddInteractiveServerComponents()
             .AddInteractiveWebAssemblyComponents();
 
+        services.AddControllers();
         services.AddHealthChecks();
         services.AddGrpc();
 
@@ -85,6 +88,7 @@ internal static class ServiceCollectionExtensions
     }
 
     private static IServiceCollection AddServices(this IServiceCollection services) => services
+        .AddSingleton<ISyndicationFeedService, SyndicationFeedService>()
         .AddSingleton<IBlogService<Post>, BlogService<CosmicPost, Post>>()
         .AddSingleton<IBlogService<Book>, BlogService<CosmicBook, Book>>()
         .AddSingleton<IBlogService<Project>, BlogService<CosmicProject, Project>>()
@@ -101,6 +105,7 @@ internal static class ServiceCollectionExtensions
                 SyntaxHighlighting.Dark,
                 new List<ILanguage> { new CSharpOverride() })
             .Build())
+        .AddSingleton<IPostToSyndicationItemMapper, PostToSyndicationItemMapper>()
         .AddSingleton<IStringSanitizer, StringSanitizer>()
         .AddSingleton<IPostLinker, PostLinker>()
         .AddSingleton<IMapper, Mapper>()
@@ -123,6 +128,11 @@ internal static class ServiceCollectionExtensions
 
     private static IServiceCollection AddOptions(this IServiceCollection services, IConfiguration configuration)
     {
+        services.AddOptions<ApplicationInfoOptions>()
+            .Bind(configuration.GetSection(ApplicationInfoOptions.Key))
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
+
         services.AddOptions<CosmicOptions>()
             .Bind(configuration.GetSection(CosmicOptions.Key))
             .ValidateDataAnnotations()
