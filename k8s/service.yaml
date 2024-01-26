@@ -12,5 +12,4 @@ spec:
       port: 80
       targetPort: 8080
   selector:
-    # attaches this service to the deployment
     component: coding-blog

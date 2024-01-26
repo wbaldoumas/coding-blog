@@ -20,7 +20,7 @@ public sealed class MapperTests
 {
     private IReadTimeEstimator _mockReadTimeEstimator = null!;
 
-    private IMapper _mapper = null!;
+    private Mapper _mapper = null!;
 
     [SetUp]
     public void SetUp()

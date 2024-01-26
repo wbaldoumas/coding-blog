@@ -2,6 +2,6 @@
 
 namespace Coding.Blog.Library.DataTransfer;
 
-public sealed record CosmicCollection<T>(
+public sealed record CosmicObjects<T>(
     [property: JsonPropertyName("objects")] IEnumerable<T> Objects
 );

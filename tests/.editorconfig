@@ -1,0 +1,4 @@
+[*.cs]
+
+# Remove underscores from method name
+dotnet_diagnostic.CA1707.severity = none

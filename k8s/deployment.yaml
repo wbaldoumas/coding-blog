@@ -6,7 +6,6 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      # attaches this deployment to the pods below
       component: coding-blog
   template:
     metadata:
