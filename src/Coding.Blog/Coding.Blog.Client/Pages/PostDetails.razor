@@ -7,7 +7,7 @@
     <meta name="description" content="@_selectedPost?.Title">
 </HeadContent>
 
-<div class="container mb-3">
+<div class="container mb-5">
     @if (Posts is not null && _selectedPost is null)
     {
         <div class="alert alert-secondary" role="alert">
@@ -95,6 +95,7 @@
         }
     }
 </div>
+<BlogFooter />
 
 @code {
 

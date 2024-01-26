@@ -8,7 +8,7 @@
     <meta name="description" content="My blog home page, where I can document my thoughts and learnings over time.">
 </HeadContent>
 
-<div class="container mb-3">
+<div class="container mb-5">
     @if (Posts is not null)
     {
         <div class="text-center mb-3">
@@ -20,11 +20,11 @@
                 <div class="col-12 col-lg-4">
                     <div class="card rounded border-0 h-100 shadow">
                         <a class="card-link" href="@($"post/{post.Slug}")">
-                            <img src=@post.Image.ImgixUrl loading="lazy" class="card-img-top rounded" alt="post hero" />
+                            <img src=@post.Image.ImgixUrl loading="lazy" class="card-img-top rounded" alt="post hero"/>
                         </a>
                         <div class="card-body rounded d-flex flex-column">
                             <a class="card-link" href="@($"post/{post.Slug}")">
-                            <h5 class="card-title">@post.Title</h5>
+                                <h5 class="card-title">@post.Title</h5>
                             </a>
                             <h6 class="card-subtitle text-light">@post.DatePublished.ToPreformattedString() · @post.ReadingTime.Minutes minute read</h6>
                             <p class="card-text mt-2">
@@ -37,8 +37,10 @@
         </div>
     }
 </div>
+<BlogFooter/>
 
 @code {
+
     [Parameter]
     [SupplyParameterFromQuery(Name = "q")]
     public string query { get; set; } = string.Empty;
