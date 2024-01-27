@@ -17,6 +17,41 @@ internal static class WebApplicationExtensions
     {
         webApplication
             .UseHealthChecks("/healthz")
+            .HandleForwardedHeaders();
+
+        if (webApplication.Environment.IsDevelopment())
+        {
+            webApplication.UseWebAssemblyDebugging();
+        }
+        else
+        {
+            webApplication.UseExceptionHandler("/Error", createScopeForErrors: true);
+            webApplication.UseHsts();
+        }
+
+        webApplication.UseHttpsRedirection();
+        webApplication.UseResponseCaching();
+        webApplication.UseResponseCompression();
+        webApplication.ConfigureResponseCache();
+        webApplication.MapControllers();
+        webApplication.UseStaticFiles();
+        webApplication.UseAntiforgery();
+        webApplication.UseGrpcWeb();
+        webApplication.MapGrpcService<PostsService>().EnableGrpcWeb();
+        webApplication.MapGrpcService<BooksService>().EnableGrpcWeb();
+        webApplication.MapGrpcService<ProjectsService>().EnableGrpcWeb();
+
+        webApplication.MapRazorComponents<App>()
+            .AddInteractiveServerRenderMode()
+            .AddInteractiveWebAssemblyRenderMode()
+            .AddAdditionalAssemblies(typeof(Client.Pages.Blog).Assembly);
+
+        return webApplication;
+    }
+
+    private static void HandleForwardedHeaders(this IApplicationBuilder webApplication)
+    {
+        webApplication
             .UseForwardedHeaders()
             .Use((context, next) =>
             {
@@ -35,21 +70,10 @@ internal static class WebApplicationExtensions
 
                 return Task.CompletedTask;
             });
+    }
 
-        if (webApplication.Environment.IsDevelopment())
-        {
-            webApplication.UseWebAssemblyDebugging();
-        }
-        else
-        {
-            webApplication.UseExceptionHandler("/Error", createScopeForErrors: true);
-            webApplication.UseHsts();
-        }
-
-        webApplication.UseHttpsRedirection();
-        webApplication.UseResponseCaching();
-        webApplication.UseResponseCompression();
-
+    private static void ConfigureResponseCache(this IApplicationBuilder webApplication)
+    {
         webApplication.Use(async (context, next) =>
         {
             context.Response.GetTypedHeaders().CacheControl = new CacheControlHeaderValue
@@ -62,20 +86,5 @@ internal static class WebApplicationExtensions
 
             await next().ConfigureAwait(false);
         });
-
-        webApplication.MapControllers();
-        webApplication.UseStaticFiles();
-        webApplication.UseAntiforgery();
-        webApplication.UseGrpcWeb();
-        webApplication.MapGrpcService<PostsService>().EnableGrpcWeb();
-        webApplication.MapGrpcService<BooksService>().EnableGrpcWeb();
-        webApplication.MapGrpcService<ProjectsService>().EnableGrpcWeb();
-
-        webApplication.MapRazorComponents<App>()
-            .AddInteractiveServerRenderMode()
-            .AddInteractiveWebAssemblyRenderMode()
-            .AddAdditionalAssemblies(typeof(Client.Pages.Blog).Assembly);
-
-        return webApplication;
     }
 }
