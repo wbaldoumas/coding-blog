@@ -8,9 +8,6 @@ dotnet_diagnostic.MA0048.severity = none
 
 [*.cs]
 
-# method is too long
-dotnet_diagnostic.MA0051.severity = none
-
 # require XML documentation
 dotnet_diagnostic.CS1591.severity = none
 dotnet_diagnostic.SA1600.severity = none
