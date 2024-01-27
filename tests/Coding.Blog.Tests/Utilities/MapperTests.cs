@@ -130,10 +130,12 @@ public sealed class MapperTests
         _mockReadTimeEstimator.Estimate(Arg.Any<string>()).Returns(readingTime);
 
         var cosmicPost = new CosmicPost(
+            Id: "Id",
             Title: "Title",
             Slug: "Slug",
             DatePublished: DateTime.Now.ToUniversalTime(),
             Metadata: new CosmicPostMetadata(
+                Description: "Description",
                 Markdown: "Markdown",
                 Tags: "Tag1,Tag2",
                 Image: new CosmicImage(
@@ -147,10 +149,12 @@ public sealed class MapperTests
         var post = _mapper.Map<CosmicPost, Post>(cosmicPost);
 
         // assert
+        post.Id.Should().Be(cosmicPost.Id);
         post.Title.Should().Be(cosmicPost.Title);
         post.Slug.Should().Be(cosmicPost.Slug);
         post.DatePublished.Should().Be(cosmicPost.DatePublished);
         post.Content.Should().Be(cosmicPost.Metadata.Markdown);
+        post.Description.Should().Be(cosmicPost.Metadata.Description);
         post.Tags.Should().Be(cosmicPost.Metadata.Tags);
         post.Image.Url.Should().Be(cosmicPost.Metadata.Image.Url);
         post.Image.ImgixUrl.Should().Be(cosmicPost.Metadata.Image.ImgixUrl);
@@ -166,10 +170,12 @@ public sealed class MapperTests
         _mockReadTimeEstimator.Estimate(Arg.Any<string>()).Returns(readingTime);
 
         var cosmicPost = new CosmicPost(
+            Id: "Id",
             Title: "Title",
             Slug: "Slug",
             DatePublished: DateTime.Now.ToUniversalTime(),
             Metadata: new CosmicPostMetadata(
+                Description: "Description",
                 Markdown: "Markdown",
                 Tags: "Tag1,Tag2",
                 Image: new CosmicImage(
@@ -183,10 +189,12 @@ public sealed class MapperTests
         var protoPost = _mapper.Map<CosmicPost, ProtoPost>(cosmicPost);
 
         // assert
+        protoPost.Id.Should().Be(cosmicPost.Id);
         protoPost.Title.Should().Be(cosmicPost.Title);
         protoPost.Slug.Should().Be(cosmicPost.Slug);
         protoPost.DatePublished.Should().Be(cosmicPost.DatePublished.ToTimestamp());
         protoPost.Content.Should().Be(cosmicPost.Metadata.Markdown);
+        protoPost.Description.Should().Be(cosmicPost.Metadata.Description);
         protoPost.Tags.Should().Be(cosmicPost.Metadata.Tags);
         protoPost.Image.Url.Should().Be(cosmicPost.Metadata.Image.Url);
         protoPost.Image.ImgixUrl.Should().Be(cosmicPost.Metadata.Image.ImgixUrl);
@@ -199,11 +207,13 @@ public sealed class MapperTests
         // arrange
         var protoPost = new ProtoPost
         {
+            Id = "Id",
             Title = "Title",
             Slug = "Slug",
             ReadingTime = TimeSpan.FromMinutes(1).ToDuration(),
             DatePublished = DateTime.Now.ToUniversalTime().ToTimestamp(),
             Content = "Content",
+            Description = "Description",
             Tags = "Tag1,Tag2",
             Image = new Image
             {
@@ -216,11 +226,13 @@ public sealed class MapperTests
         var post = _mapper.Map<ProtoPost, Post>(protoPost);
 
         // assert
+        post.Id.Should().Be(protoPost.Id);
         post.Title.Should().Be(protoPost.Title);
         post.Slug.Should().Be(protoPost.Slug);
         post.ReadingTime.Should().Be(protoPost.ReadingTime.ToTimeSpan());
         post.DatePublished.Should().Be(protoPost.DatePublished.ToDateTime());
         post.Content.Should().Be(protoPost.Content);
+        post.Description.Should().Be(protoPost.Description);
         post.Tags.Should().Be(protoPost.Tags);
         post.Image.Url.Should().Be(protoPost.Image.Url);
         post.Image.ImgixUrl.Should().Be(protoPost.Image.ImgixUrl);

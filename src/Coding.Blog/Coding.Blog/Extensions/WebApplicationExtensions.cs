@@ -1,10 +1,13 @@
 ﻿using Coding.Blog.Components;
 using Coding.Blog.Library.Services;
+using Microsoft.Net.Http.Headers;
 
 namespace Coding.Blog.Extensions;
 
 internal static class WebApplicationExtensions
 {
+    private static readonly string[] _middlewareVaryHeaderValue = ["Accept-Encoding"];
+
     /// <summary>
     ///     Configures the given <see cref="WebApplication" /> with the necessary middleware.
     /// </summary>
@@ -44,6 +47,23 @@ internal static class WebApplicationExtensions
         }
 
         webApplication.UseHttpsRedirection();
+        webApplication.UseResponseCaching();
+        webApplication.UseResponseCompression();
+
+        webApplication.Use(async (context, next) =>
+        {
+            context.Response.GetTypedHeaders().CacheControl = new CacheControlHeaderValue
+            {
+                Public = true,
+                MaxAge = TimeSpan.FromSeconds(1200)
+            };
+
+            context.Response.Headers[HeaderNames.Vary] = _middlewareVaryHeaderValue;
+
+            await next().ConfigureAwait(false);
+        });
+
+        webApplication.MapControllers();
         webApplication.UseStaticFiles();
         webApplication.UseAntiforgery();
         webApplication.UseGrpcWeb();
