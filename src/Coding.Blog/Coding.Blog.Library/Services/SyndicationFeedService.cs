@@ -9,7 +9,8 @@ namespace Coding.Blog.Library.Services;
 public sealed class SyndicationFeedService(
     IOptions<ApplicationInfoOptions> applicationInfoOptions,
     IBlogService<Post> blogPostService,
-    IPostToSyndicationItemMapper mapper) : ISyndicationFeedService
+    IPostToSyndicationItemMapper mapper
+) : ISyndicationFeedService
 {
     private readonly ApplicationInfoOptions _applicationInfoOptions = applicationInfoOptions.Value;
 

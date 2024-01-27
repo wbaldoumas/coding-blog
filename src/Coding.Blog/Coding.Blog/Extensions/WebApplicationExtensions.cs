@@ -48,6 +48,7 @@ internal static class WebApplicationExtensions
 
         webApplication.UseHttpsRedirection();
         webApplication.UseResponseCaching();
+        webApplication.UseResponseCompression();
 
         webApplication.Use(async (context, next) =>
         {
