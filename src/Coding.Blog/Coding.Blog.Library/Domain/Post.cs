@@ -16,5 +16,7 @@ public sealed record Post(
     Post? Previous = null
 )
 {
+    public const string Key = "Posts";
+
     public Lazy<IEnumerable<string>> DisplayTags => new(Tags.ToDisplayTags);
 }

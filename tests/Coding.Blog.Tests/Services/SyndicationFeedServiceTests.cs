@@ -1,13 +1,15 @@
 ﻿using Coding.Blog.Library.Domain;
-using Coding.Blog.Library.Options;
 using Coding.Blog.Library.Services;
-using Coding.Blog.Library.Utilities;
+using Coding.Blog.Options;
+using Coding.Blog.Services;
 using FluentAssertions;
 using Markdig;
 using Microsoft.Extensions.Options;
 using NSubstitute;
 using NUnit.Framework;
 using System.Xml.Linq;
+using Coding.Blog.Utilities;
+using OptionsBuilder = Microsoft.Extensions.Options.Options;
 
 namespace Coding.Blog.Tests.Services;
 
@@ -25,7 +27,7 @@ internal sealed class SyndicationFeedServiceTests
     [SetUp]
     public void SetUp()
     {
-        _mockAppInfoOptions = Options.Create(new ApplicationInfoOptions
+        _mockAppInfoOptions = OptionsBuilder.Create(new ApplicationInfoOptions
         {
             Title = "Test Blog",
             Description = "Test Blog Description"
@@ -77,6 +79,8 @@ internal sealed class SyndicationFeedServiceTests
         result.BaseUri.Should().Be(new Uri(syndicationUrl));
         result.LastUpdatedTime.Should().Be(new DateTimeOffset(posts.Max(post => post.DatePublished)));
         result.Links.Should().ContainSingle(link => link.Uri == new Uri(syndicationUrl) && link.RelationshipType == "alternate");
+
+        // assert on items
         result.Items.Should().ContainSingle();
         result.Items.Single().Id.Should().Be(posts.Single().Id);
         result.Items.Single().Title.Text.Should().Be(posts.Single().Title);

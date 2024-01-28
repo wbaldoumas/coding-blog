@@ -58,14 +58,14 @@
     {
         _persistingComponentStateSubscription = ApplicationState.RegisterOnPersisting(PersistData);
 
-        _projects = await ProjectApplicationStateService.GetAsync(ApplicationState, ProjectsState.Key);
+        _projects = await ProjectApplicationStateService.GetAsync(ApplicationState, Project.Key);
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender) => await JSInteropService.ResetScrollPositionAsync();
 
     private Task PersistData()
     {
-        ApplicationState.PersistAsJson(ProjectsState.Key, _projects);
+        ApplicationState.PersistAsJson(Project.Key, _projects);
 
         return Task.CompletedTask;
     }

@@ -7,4 +7,7 @@ public sealed record Book(
     Image Image,
     string PurchaseUrl,
     DateTime DatePublished
-);
+)
+{
+    public const string Key = "Books";
+}

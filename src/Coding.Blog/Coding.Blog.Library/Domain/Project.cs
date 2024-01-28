@@ -11,5 +11,7 @@ public sealed record Project(
     string Tags
 )
 {
+    public const string Key = "Projects";
+
     public Lazy<IEnumerable<string>> DisplayTags => new(Tags.ToDisplayTags);
 }

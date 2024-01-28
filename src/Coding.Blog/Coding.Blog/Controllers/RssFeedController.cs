@@ -1,4 +1,4 @@
-﻿using Coding.Blog.Library.Services;
+﻿using Coding.Blog.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.ServiceModel.Syndication;
 using System.Text;
@@ -6,7 +6,7 @@ using System.Xml;
 
 namespace Coding.Blog.Controllers;
 
-public sealed class RssFeedController(ISyndicationFeedService syndicationFeedService) : ControllerBase
+internal sealed class RssFeedController(ISyndicationFeedService syndicationFeedService) : ControllerBase
 {
     [HttpGet]
     [Route("feed.rss")]

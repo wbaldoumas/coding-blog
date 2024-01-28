@@ -1,22 +1,20 @@
 ﻿using Blazorise;
 using Blazorise.Icons.FontAwesome;
-using Coding.Blog.Client.Services;
-using Coding.Blog.Library.Clients;
-using Coding.Blog.Library.DataTransfer;
-using Coding.Blog.Library.Jobs;
-using Coding.Blog.Library.Options;
+using Coding.Blog.Clients;
+using Coding.Blog.DataTransfer;
+using Coding.Blog.Jobs;
+using Coding.Blog.Library.Domain;
 using Coding.Blog.Library.Services;
 using Coding.Blog.Library.Utilities;
+using Coding.Blog.Options;
+using Coding.Blog.Services;
+using Coding.Blog.Utilities;
 using ColorCode;
 using Markdig;
 using Markdown.ColorCode;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Options;
 using Quartz;
-using Book = Coding.Blog.Library.Domain.Book;
-using Post = Coding.Blog.Library.Domain.Post;
-using Project = Coding.Blog.Library.Domain.Project;
-using QuartzOptions = Coding.Blog.Library.Options.QuartzOptions;
 
 namespace Coding.Blog.Extensions;
 
@@ -148,8 +146,8 @@ internal static class ServiceCollectionExtensions
             .ValidateDataAnnotations()
             .ValidateOnStart();
 
-        services.AddOptions<QuartzOptions>()
-            .Bind(configuration.GetSection(QuartzOptions.Key))
+        services.AddOptions<CacheWarmingJobOptions>()
+            .Bind(configuration.GetSection(CacheWarmingJobOptions.Key))
             .ValidateDataAnnotations()
             .ValidateOnStart();
 
@@ -165,7 +163,7 @@ internal static class ServiceCollectionExtensions
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        var quartzOptions = configuration.GetSection(QuartzOptions.Key).Get<QuartzOptions>();
+        var quartzOptions = configuration.GetSection(CacheWarmingJobOptions.Key).Get<CacheWarmingJobOptions>();
 
         services.AddQuartz(serviceCollectionQuartzConfigurator =>
         {

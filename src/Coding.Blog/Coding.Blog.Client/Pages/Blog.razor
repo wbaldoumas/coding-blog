@@ -62,7 +62,7 @@
     {
         _persistingComponentStateSubscription = ApplicationState.RegisterOnPersisting(PersistData);
 
-        var posts = await PostApplicationStateService.GetAsync(ApplicationState, PostsState.Key);
+        var posts = await PostApplicationStateService.GetAsync(ApplicationState, Post.Key);
 
         Posts = PostLinker.Link(posts).ToList();
 
@@ -96,7 +96,7 @@
 
     private Task PersistData()
     {
-        ApplicationState.PersistAsJson(PostsState.Key, Posts);
+        ApplicationState.PersistAsJson(Post.Key, Posts);
 
         return Task.CompletedTask;
     }

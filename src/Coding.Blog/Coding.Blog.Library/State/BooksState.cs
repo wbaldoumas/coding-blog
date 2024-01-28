@@ -2,9 +2,7 @@
 
 namespace Coding.Blog.Library.State;
 
-public static class BooksState
+internal static class BooksState
 {
-    public const string Key = "Books";
-
     public static IList<Book> Books { get; set; } = new List<Book>();
 }
