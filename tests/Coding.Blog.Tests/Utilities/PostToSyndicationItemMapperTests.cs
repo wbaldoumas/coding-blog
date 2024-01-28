@@ -1,9 +1,9 @@
 ﻿using Coding.Blog.Library.Domain;
-using Coding.Blog.Library.Utilities;
 using FluentAssertions;
 using NSubstitute;
 using NUnit.Framework;
 using System.Xml.Linq;
+using Coding.Blog.Utilities;
 
 namespace Coding.Blog.Tests.Utilities;
 

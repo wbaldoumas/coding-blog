@@ -2,19 +2,19 @@
 
 namespace Coding.Blog.Library.State;
 
-public static class ApplicationState
+internal static class ApplicationState
 {
     public static void SetState<T>(IEnumerable<T>? state, string key)
     {
         switch (key)
         {
-            case ProjectsState.Key:
+            case Project.Key:
                 ProjectsState.Projects = state as IList<Project> ?? new List<Project>();
                 break;
-            case PostsState.Key:
+            case Post.Key:
                 PostsState.Posts = state as IList<Post> ?? new List<Post>();
                 break;
-            case BooksState.Key:
+            case Book.Key:
                 BooksState.Books = state as IList<Book> ?? new List<Book>();
                 break;
             default:
@@ -26,9 +26,9 @@ public static class ApplicationState
     {
         return key switch
         {
-            ProjectsState.Key => ProjectsState.Projects as IList<T> ?? new List<T>(),
-            PostsState.Key => PostsState.Posts as IList<T> ?? new List<T>(),
-            BooksState.Key => BooksState.Books as IList<T> ?? new List<T>(),
+            Project.Key => ProjectsState.Projects as IList<T> ?? new List<T>(),
+            Post.Key => PostsState.Posts as IList<T> ?? new List<T>(),
+            Book.Key => BooksState.Books as IList<T> ?? new List<T>(),
             _ => throw new ArgumentException("Invalid key", nameof(key))
         };
     }

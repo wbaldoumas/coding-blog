@@ -1,5 +1,5 @@
 ﻿using Coding.Blog.Components;
-using Coding.Blog.Library.Services;
+using Coding.Blog.Services;
 using Microsoft.Net.Http.Headers;
 
 namespace Coding.Blog.Extensions;

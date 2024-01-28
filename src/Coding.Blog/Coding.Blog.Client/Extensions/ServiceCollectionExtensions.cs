@@ -1,6 +1,7 @@
-﻿using Coding.Blog.Client.Services;
-using Coding.Blog.Library.Clients;
-using Coding.Blog.Library.Options;
+﻿using Coding.Blog.Client.Clients;
+using Coding.Blog.Client.Options;
+using Coding.Blog.Client.Services;
+using Coding.Blog.Client.Utilities;
 using Coding.Blog.Library.Protos;
 using Coding.Blog.Library.Services;
 using Coding.Blog.Library.Utilities;
@@ -33,14 +34,12 @@ internal static class ServiceCollectionExtensions
             .Build())
         .AddSingleton<IMapper, Mapper>()
         .AddSingleton<IPostLinker, PostLinker>()
-        .AddSingleton<IStringSanitizer, StringSanitizer>()
-        .AddSingleton<IReadTimeEstimator, ReadTimeEstimator>()
         .AddSingleton<IProtoClient<ProtoPost>, PostsClient>()
         .AddSingleton<IProtoClient<ProtoBook>, BooksClient>()
         .AddSingleton<IProtoClient<ProtoProject>, ProjectsClient>()
-        .AddSingleton<IBlogService<Post>, ClientBlogService<ProtoPost, Post>>()
-        .AddSingleton<IBlogService<Book>, ClientBlogService<ProtoBook, Book>>()
-        .AddSingleton<IBlogService<Project>, ClientBlogService<ProtoProject, Project>>()
+        .AddSingleton<IBlogService<Post>, BlogService<ProtoPost, Post>>()
+        .AddSingleton<IBlogService<Book>, BlogService<ProtoBook, Book>>()
+        .AddSingleton<IBlogService<Project>, BlogService<ProtoProject, Project>>()
         .AddSingleton<IApplicationStateService<Post>, ApplicationStateService<Post>>()
         .AddSingleton<IApplicationStateService<Book>, ApplicationStateService<Book>>()
         .AddSingleton<IApplicationStateService<Project>, ApplicationStateService<Project>>()
