@@ -31,6 +31,16 @@ h1:focus {
     padding-left: 1.25rem !important
 }
 
+.container-wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    flex-grow: 1;
+}
+
 .valid.modified:not([type=checkbox]) {
     outline: 1px solid #26b050;
 }
@@ -80,9 +90,9 @@ h1:focus {
     border-color: #929292;
 }
 
-@media (max-width: 640.98px) {
+@media (max-width: 640.99px) {
     .container {
-        padding: 0.75rem;
+        padding: 0.33rem;
     }
 
     .card-body {

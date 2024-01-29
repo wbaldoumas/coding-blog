@@ -4,8 +4,12 @@
     padding: 2rem;
 }
 
-@media (max-width: 640.98px) {
+@media (max-width: 640.99px) {
     .container {
-        padding: 0.75rem;
+        padding: 0.33rem;
+    }
+
+    .card-body {
+        padding: 10px;
     }
 }

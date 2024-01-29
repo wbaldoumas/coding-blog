@@ -31,12 +31,12 @@
     margin-bottom: 20px;
 }
 
-@media (max-width: 640.98px) {
+@media (max-width: 640.99px) {
     .card {
         padding: 10px;
     }
 
     .container {
-        padding: 0.75rem;
+        padding: 0.33rem;
     }
 }

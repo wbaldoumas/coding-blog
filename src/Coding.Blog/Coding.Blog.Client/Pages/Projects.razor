@@ -7,47 +7,49 @@
     <meta name="description" content="A sample of the projects which I maintain, spanning websites, libraries, and command line applications.">
 </HeadContent>
 
-<div class="container mb-5">
-    @if (_projects is not null)
-    {
-        @if (!_projects.Any())
+<div class="container-wrapper">
+    <div class="container mb-5">
+        @if (_projects is not null)
         {
-            <div class="alert alert-secondary" role="alert">
-                No content found. Consider reloading the page.
-            </div>
-        }
-        else
-        {
-            <div class="row">
-                @foreach (var project in _projects.OrderBy(project => project.Rank))
-                {
-                    <div class="col-12">
-                        <div class="card mb-3 border-0 shadow">
-                            <div class="row g-0">
-                                <div class="col-md-4 d-flex align-items-center card-img-container">
-                                    <img src="@project.Image.ImgixUrl" class="card-img-top" alt="@project.Title">
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="card-body rounded">
-                                        <h5 class="card-title">@project.Title</h5>
-                                        <p class="card-text">@project.Description.ToMarkupString(MarkdownPipeline)</p>
-                                        <p class="card-text">
-                                            <TagsDisplay Tags=@project.DisplayTags.Value/>
-                                        </p>
+            @if (!_projects.Any())
+            {
+                <div class="alert alert-secondary" role="alert">
+                    No content found. Consider reloading the page.
+                </div>
+            }
+            else
+            {
+                <div class="row">
+                    @foreach (var project in _projects.OrderBy(project => project.Rank))
+                    {
+                        <div class="col-12">
+                            <div class="card mb-3 border-0 shadow">
+                                <div class="row g-0">
+                                    <div class="col-md-4 d-flex align-items-center card-img-container">
+                                        <img src="@project.Image.ImgixUrl" class="card-img-top" alt="@project.Title">
                                     </div>
-                                    <div class="mt-auto p-3">
-                                        <a href="@project.ProjectUrl" target="_blank" rel="noreferrer noopener" class="btn btn-success w-100"><i class="fab fa-github"></i> View on GitHub</a>
+                                    <div class="col-md-8">
+                                        <div class="card-body rounded">
+                                            <h5 class="card-title">@project.Title</h5>
+                                            <p class="card-text">@project.Description.ToMarkupString(MarkdownPipeline)</p>
+                                            <p class="card-text">
+                                                <TagsDisplay Tags=@project.DisplayTags.Value/>
+                                            </p>
+                                        </div>
+                                        <div class="mt-auto p-3">
+                                            <a href="@project.ProjectUrl" target="_blank" rel="noreferrer noopener" class="btn btn-success w-100"><i class="fab fa-github"></i> View on GitHub</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                }
-            </div>
+                    }
+                </div>
+            }
         }
-    }
+    </div>
+    <BlogFooter/>
 </div>
-<BlogFooter />
 
 @code {
     private IEnumerable<Project>? _projects;

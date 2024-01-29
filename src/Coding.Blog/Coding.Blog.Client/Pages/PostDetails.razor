@@ -7,95 +7,97 @@
     <meta name="description" content="@_selectedPost?.Title">
 </HeadContent>
 
-<div class="container mb-5">
-    @if (Posts is not null && _selectedPost is null)
-    {
-        <div class="alert alert-secondary" role="alert">
-            No post found at address <strong>@Slug</strong>. Navigate to <a href="">blog</a> to view all posts.
-        </div>
-    }
-    else
-    {
-        @if (_selectedPost is not null)
+<div class="container-wrapper">
+    <div class="container mb-5">
+        @if (Posts is not null && _selectedPost is null)
         {
-            <div class="row justify-content-center">
-                <div class="col col-auto">
-                    <h1>@_selectedPost.Title</h1>
-                </div>
+            <div class="alert alert-secondary" role="alert">
+                No post found at address <strong>@Slug</strong>. Navigate to <a href="">blog</a> to view all posts.
             </div>
-            <div class="row justify-content-center">
-                <div class="col col-auto">
-                    <p class="text-light">@_selectedPost.DatePublished.ToPreformattedString() · @_selectedPost.ReadingTime.Minutes minute read</p>
-                </div>
-            </div>
-            <div class="overflow-hidden">
+        }
+        else
+        {
+            @if (_selectedPost is not null)
+            {
                 <div class="row justify-content-center">
                     <div class="col col-auto">
-                        <img class="rounded mx-auto d-block img-fluid post-hero" src="@_selectedPost.Image.ImgixUrl" loading="lazy" alt="post hero">
+                        <h1>@_selectedPost.Title</h1>
                     </div>
                 </div>
                 <div class="row justify-content-center">
-                    <div class="col col-auto mt-2">
-                        <TagsDisplay Tags=@_selectedPost.DisplayTags.Value></TagsDisplay>
+                    <div class="col col-auto">
+                        <p class="text-light">@_selectedPost.DatePublished.ToPreformattedString() · @_selectedPost.ReadingTime.Minutes minute read</p>
                     </div>
                 </div>
-                <hr/>
-                <div class="row">
-                    <div class="card mb-3 shadow-sm rounded">
-                        <div class="card-body rounded">
-                            <div class="card-text">
-                                <div>@_selectedPost.Content.ToMarkupString(MarkdownPipeline)</div>
+                <div class="overflow-hidden">
+                    <div class="row justify-content-center">
+                        <div class="col col-auto">
+                            <img class="rounded mx-auto d-block img-fluid post-hero" src="@_selectedPost.Image.ImgixUrl" loading="lazy" alt="post hero">
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col col-auto mt-2">
+                            <TagsDisplay Tags=@_selectedPost.DisplayTags.Value></TagsDisplay>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="row">
+                        <div class="card mb-3 shadow-sm rounded">
+                            <div class="card-body rounded">
+                                <div class="card-text">
+                                    <div>@_selectedPost.Content.ToMarkupString(MarkdownPipeline)</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-between">
+                        <div class="col col-auto">
+                            @if (_selectedPost.Next is not null)
+                            {
+                                <a class="text-decoration-none multi-line-link" href="@($"post/{_selectedPost.Next.Slug}")">
+                                    <h6 class="text-light"><i class="fa-solid fa-arrow-left"></i> Next</h6>
+                                    <h5> @_selectedPost.Next.Title</h5>
+                                </a>
+                            }
+                        </div>
+                        <div class="col col-auto">
+                            @if (_selectedPost.Previous is not null)
+                            {
+                                <a class="text-decoration-none multi-line-link" href="@($"post/{_selectedPost.Previous.Slug}")">
+                                    <h6 class="text-light text-end">Previous <i class="fa-solid fa-arrow-right"></i></h6>
+                                    <h5>@_selectedPost.Previous.Title</h5>
+                                </a>
+                            }
+                        </div>
+                    </div>
+                    <div class="row justify-content-center mt-3">
+                        <div class="card shadow-sm rounded">
+                            <div class="card-body rounded giscus-container">
+                                <script src="https://giscus.app/client.js"
+                                        data-repo="wbaldoumas/coding-blog"
+                                        data-repo-id="MDEwOlJlcG9zaXRvcnk0MDE1MDQwMDY="
+                                        data-category="Announcements"
+                                        data-category-id="DIC_kwDOF-53Bs4CcJes"
+                                        data-mapping="pathname"
+                                        data-strict="1"
+                                        data-reactions-enabled="1"
+                                        data-emit-metadata="0"
+                                        data-input-position="top"
+                                        data-theme="dark"
+                                        data-lang="en"
+                                        data-loading="lazy"
+                                        crossorigin="anonymous"
+                                        async>
+                                </script>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="row justify-content-between">
-                    <div class="col col-auto">
-                        @if (_selectedPost.Next is not null)
-                        {
-                            <a class="text-decoration-none multi-line-link" href="@($"post/{_selectedPost.Next.Slug}")">
-                                <h6 class="text-light"><i class="fa-solid fa-arrow-left"></i> Next</h6>
-                                <h5> @_selectedPost.Next.Title</h5>
-                            </a>
-                        }
-                    </div>
-                    <div class="col col-auto">
-                        @if (_selectedPost.Previous is not null)
-                        {
-                            <a class="text-decoration-none multi-line-link" href="@($"post/{_selectedPost.Previous.Slug}")">
-                                <h6 class="text-light text-end">Previous <i class="fa-solid fa-arrow-right"></i></h6>
-                                <h5>@_selectedPost.Previous.Title</h5>
-                            </a>
-                        }
-                    </div>
-                </div>
-                <div class="row justify-content-center mt-3">
-                    <div class="card shadow-sm rounded">
-                        <div class="card-body rounded giscus-container">
-                            <script src="https://giscus.app/client.js"
-                                    data-repo="wbaldoumas/coding-blog"
-                                    data-repo-id="MDEwOlJlcG9zaXRvcnk0MDE1MDQwMDY="
-                                    data-category="Announcements"
-                                    data-category-id="DIC_kwDOF-53Bs4CcJes"
-                                    data-mapping="pathname"
-                                    data-strict="1"
-                                    data-reactions-enabled="1"
-                                    data-emit-metadata="0"
-                                    data-input-position="top"
-                                    data-theme="dark"
-                                    data-lang="en"
-                                    data-loading="lazy"
-                                    crossorigin="anonymous"
-                                    async>
-                            </script>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            }
         }
-    }
+    </div>
+    <BlogFooter/>
 </div>
-<BlogFooter />
 
 @code {
 

@@ -8,36 +8,38 @@
     <meta name="description" content="My blog home page, where I can document my thoughts and learnings over time.">
 </HeadContent>
 
-<div class="container mb-5">
-    @if (Posts is not null)
-    {
-        <div class="text-center mb-3">
-            <input type="search" class="form-control rounded" placeholder="Search..." aria-label="search" aria-describedby="search-button" value="@query" @oninput="HandleSearchInput">
-        </div>
-        <div class="row g-3 d-flex align-items-stretch">
-            @foreach (var post in GetSearchedPosts(Posts))
-            {
-                <div class="col-12 col-lg-4">
-                    <div class="card rounded border-0 h-100 shadow">
-                        <a class="card-link" href="@($"post/{post.Slug}")">
-                            <img src=@post.Image.ImgixUrl loading="lazy" class="card-img-top rounded" alt="post hero"/>
-                        </a>
-                        <div class="card-body rounded d-flex flex-column">
+<div class="container-wrapper">
+    <div class="container mb-5">
+        @if (Posts is not null)
+        {
+            <div class="text-center mb-3">
+                <input type="search" class="form-control rounded" placeholder="Search..." aria-label="search" aria-describedby="search-button" value="@query" @oninput="HandleSearchInput">
+            </div>
+            <div class="row g-3 d-flex align-items-stretch">
+                @foreach (var post in GetSearchedPosts(Posts))
+                {
+                    <div class="col-12 col-lg-4">
+                        <div class="card rounded border-0 h-100 shadow">
                             <a class="card-link" href="@($"post/{post.Slug}")">
-                                <h5 class="card-title">@post.Title</h5>
+                                <img src=@post.Image.ImgixUrl loading="lazy" class="card-img-top rounded" alt="post hero"/>
                             </a>
-                            <h6 class="card-subtitle text-light">@post.DatePublished.ToPreformattedString() · @post.ReadingTime.Minutes minute read</h6>
-                            <p class="card-text mt-2">
-                                <TagsDisplay Tags=@post.DisplayTags.Value></TagsDisplay>
-                            </p>
+                            <div class="card-body rounded d-flex flex-column">
+                                <a class="card-link" href="@($"post/{post.Slug}")">
+                                    <h5 class="card-title">@post.Title</h5>
+                                </a>
+                                <h6 class="card-subtitle text-light">@post.DatePublished.ToPreformattedString() · @post.ReadingTime.Minutes minute read</h6>
+                                <p class="card-text mt-2">
+                                    <TagsDisplay Tags=@post.DisplayTags.Value></TagsDisplay>
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </div>
-            }
-        </div>
-    }
+                }
+            </div>
+        }
+    </div>
+    <BlogFooter/>
 </div>
-<BlogFooter/>
 
 @code {
 
