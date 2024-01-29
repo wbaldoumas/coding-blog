@@ -7,47 +7,49 @@
     <meta name="description" content="Some reading recommendations based on books that I've read and enjoyed.">
 </HeadContent>
 
-<div class="container mb-5">
-    @if (Books is not null)
-    {
-        @if (!Books.Any())
+<div class="container-wrapper">
+    <div class="container mb-5">
+        @if (Books is not null)
         {
-            <div class="alert alert-secondary" role="alert">
-                No content found. Consider reloading the page.
-            </div>
-        }
-        else
-        {
-            <h1 class="text-center">Reading Recommendations</h1>
-
-            <div>
-                <p>
-                    Below are some reading recommendations based on books that I've read and enjoyed. Most are programming-language and technology-agnostic and instead focus on building up the fundamentals needed for a successful career as a software engineer.
-                </p>
-                <p class="text-light">
-                    Last updated: @Books.Max(book => book.DatePublished).ToPreformattedString()
-                </p>
-            </div>
-
-            @foreach (var book in Books)
+            @if (!Books.Any())
             {
-                <div class="card border-0 shadow rounded">
-                    <div class="card-body rounded">
-                        <a href="@book.PurchaseUrl" class="card-link" target="_blank">
-                            <h3 class="text-center card-title">@book.Title</h3>
-                        </a>
-                        <h6 class="card-subtitle text-light text-center">by @book.Author</h6>
-                        <hr/>
-                        <div class="card-text">
-                            @book.Content.ToMarkupString(MarkdownPipeline)
-                        </div>
-                    </div>
+                <div class="alert alert-secondary" role="alert">
+                    No content found. Consider reloading the page.
                 </div>
             }
+            else
+            {
+                <h1 class="text-center">Reading Recommendations</h1>
+
+                <div>
+                    <p>
+                        Below are some reading recommendations based on books that I've read and enjoyed. Most are programming-language and technology-agnostic and instead focus on building up the fundamentals needed for a successful career as a software engineer.
+                    </p>
+                    <p class="text-light">
+                        Last updated: @Books.Max(book => book.DatePublished).ToPreformattedString()
+                    </p>
+                </div>
+
+                @foreach (var book in Books)
+                {
+                    <div class="card border-0 shadow rounded">
+                        <div class="card-body rounded">
+                            <a href="@book.PurchaseUrl" class="card-link" target="_blank">
+                                <h3 class="text-center card-title">@book.Title</h3>
+                            </a>
+                            <h6 class="card-subtitle text-light text-center">by @book.Author</h6>
+                            <hr/>
+                            <div class="card-text">
+                                @book.Content.ToMarkupString(MarkdownPipeline)
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
         }
-    }
+    </div>
+    <BlogFooter/>
 </div>
-<BlogFooter />
 
 @code {
 

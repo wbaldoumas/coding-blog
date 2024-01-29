@@ -1,5 +1,15 @@
 ﻿.post-hero {
-    height: 33.333vw;
+    height: 20vw;
     width: auto;
     object-fit: cover
+}
+
+.container {
+    max-width: 960px;
+}
+
+@media (max-width: 640.99px) {
+    .post-hero {
+        height: 40vw;
+    }
 }

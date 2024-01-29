@@ -6,51 +6,59 @@
     <meta name="description" content="Some information about me and this website.">
 </HeadContent>
 
-<div class="container mb-5">
-    <h1 class="text-center display-3 mb-3">About</h1>
-    <div class="row align-items-center">
-        <div class="col-md-3">
-            <div class="profile-image-container rounded mb-4 shadow-lg">
-                <img src="images/avatar.jpg" alt="avatar" loading="lazy" class="img-fluid rounded profile-image">
+<div class="container-wrapper">
+    <div class="container mb-5">
+        <h1 class="text-center display-3 mb-3">About</h1>
+        <div class="row align-items-center">
+            <div class="col-md-3">
+                <div class="profile-image-container rounded mb-4 shadow-lg">
+                    <img src="images/avatar.jpg" alt="avatar" loading="lazy" class="img-fluid rounded profile-image">
+                </div>
             </div>
-        </div>
-        <div class="col-md-9">
-            <div class="card border-0 shadow rounded">
-                <div class="card-body">
-                    <h2 class="card-title display-6 mb-3">Who am I?</h2>
-                    <p class="card-text">
-                        Hey there! My name is Will. I am a software engineer and musician currently located in Las Vegas, Nevada. I enjoy <a href="@("reading")" class="card-link">reading</a> about tech, contributing to <a href="https://github.com/wbaldoumas">open source</a>, and exploring new ways to make music. 🤘
-                    </p>
+            <div class="col-md-9">
+                <div class="card border-0 shadow rounded">
+                    <div class="card-body">
+                        <h2 class="card-title display-6 mb-3">Who am I?</h2>
+                        <p class="card-text">
+                            Hey there! My name is Will. I am a software engineer and musician currently located in Las Vegas, Nevada. I enjoy <a href="@("reading")" class="card-link">reading</a> about tech, contributing to <a href="https://github.com/wbaldoumas">open source</a>, and exploring new ways to make music. 🤘
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <hr class="my-5">
-    <div class="card border-0 shadow rounded">
-        <div class="card-body">
-            <h2 class="card-title display-6 mb-3">What is this?</h2>
-            <p class="card-text">
-                This is a site that I've put together for myself. It's a place for me to document my thoughts over time, improve my writing and software development skills, and share my experiences with others. I'll also be using this space as a playground to experiment and learn, potentially by breaking things in fun and exciting ways. 💥
-            </p>
+        <hr class="my-5">
+        <div class="card border-0 shadow rounded">
+            <div class="card-body">
+                <h2 class="card-title display-6 mb-3">What is this?</h2>
+                <p class="card-text">
+                    This is a site that I've put together for myself. It's a place for me to document my thoughts over time, improve my writing and software development skills, and share my experiences with others. I'll also be using this space as a playground to experiment and learn, potentially by breaking things in fun and exciting ways. 💥
+                </p>
+            </div>
+        </div>
+        <hr class="my-5">
+        <div class="card border-0 shadow rounded">
+            <div class="card-body">
+                <h2 class="card-title display-6 mb-3">Looking to connect?</h2>
+                <p class="card-text">Find me at:</p>
+                <ul class="list-unstyled">
+                    <li class="mb-2">
+                        <a href="https://www.linkedin.com/in/williambaldoumas/" target="_blank" rel="noopener noreferrer" class="card-link text-decoration-none"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="https://hachyderm.io/@@WillBaldoumas" target="_blank" rel="noopener noreferrer" class="card-link text-decoration-none"><i class="fa-brands fa-mastodon"></i> Mastodon</a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="https://github.com/wbaldoumas" target="_blank" rel="noopener noreferrer" class="card-link text-decoration-none"><i class="fa-brands fa-github"></i> GitHub</a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="https://twitter.com/WillBaldoumas" target="_blank" rel="noopener noreferrer" class="card-link text-decoration-none"><i class="fa-brands fa-x-twitter"></i> Twitter</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
-    <hr class="my-5">
-    <div class="card border-0 shadow rounded">
-        <div class="card-body">
-            <h2 class="card-title display-6 mb-3">Looking to connect?</h2>
-            <p class="card-text">Find me at:</p>
-            <ul class="list-unstyled">
-                <li class="mb-2">
-                    <a href="https://github.com/wbaldoumas" target="_blank" rel="noopener noreferrer" class="card-link"><i class="fab fa-github"></i> GitHub</a>
-                </li>
-                <li>
-                    <a href="https://www.linkedin.com/in/williambaldoumas/" target="_blank" rel="noopener noreferrer" class="card-link"><i class="fab fa-linkedin"></i> LinkedIn</a>
-                </li>
-            </ul>
-        </div>
-    </div>
+    <BlogFooter/>
 </div>
-<BlogFooter/>
 
 @code
 {
