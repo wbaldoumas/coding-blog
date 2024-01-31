@@ -96,7 +96,7 @@ jobs:
         id: run-unit-tests
         run: |
           cd ./tests/Coding.Blog.Tests/
-          dotnet test --no-build --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
+          dotnet test --configuration Release --no-build --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
           cp TestResults/*/coverage.opencover.xml .
           
       - name: 💌 publish code coverage
