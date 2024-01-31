@@ -73,6 +73,15 @@ jobs:
         with:
           dotnet-version: 8.0.x
 
+      - name: restore cached dependencies
+        id: restore-cached-dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget
+
       - name: restore dependencies
         run: dotnet restore src
 
@@ -82,7 +91,7 @@ jobs:
       - name: 🧪 run unit tests
         run: |
           cd ./tests/Coding.Blog.Tests/
-          dotnet test --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
+          dotnet test --no-build --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
           cp TestResults/*/coverage.opencover.xml .
           
       - name: 💌 publish code coverage
