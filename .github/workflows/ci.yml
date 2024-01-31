@@ -24,26 +24,41 @@ jobs:
         language: ["csharp"]
     steps:
       - name: checkout code
+        id: checkout-code
         uses: actions/checkout@v4
 
       - name: initialize codeql
+        id: initialize-codeql
         uses: github/codeql-action/init@v3
         with:
           languages: ${{ matrix.language }}
           queries: security-and-quality
 
       - name: setup .net
+        id: setup-dotnet
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 8.0.x
 
+      - name: restore cached dependencies
+        id: restore-cached-dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget
+
       - name: restore dependencies
+        id: restore-dependencies
         run: dotnet restore src
 
       - name: 🔨 build application
+        id: build-application
         run: dotnet build src --configuration Release --no-restore
 
       - name: 🧪 perform codeql analysis
+        id: perform-codeql-analysis
         uses: github/codeql-action/analyze@v3
 
   test:
@@ -51,26 +66,41 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout code
+        id: checkout-code
         uses: actions/checkout@v4
 
       - name: setup .net
+        id: setup-dotnet
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 8.0.x
 
+      - name: restore cached dependencies
+        id: restore-cached-dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget
+
       - name: restore dependencies
+        id: restore-dependencies
         run: dotnet restore src
 
       - name: 🔨 build application
+        id: build-application
         run: dotnet build src --configuration Release --no-restore
 
       - name: 🧪 run unit tests
+        id: run-unit-tests
         run: |
           cd ./tests/Coding.Blog.Tests/
-          dotnet test --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
+          dotnet test --configuration Release --no-build --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
           cp TestResults/*/coverage.opencover.xml .
           
       - name: 💌 publish code coverage
+        id: publish-code-coverage
         uses: codecov/codecov-action@v3
         with:
           files: /home/runner/work/coding-blog/coding-blog/tests/Coding.Blog.Tests/coverage.opencover.xml
@@ -80,16 +110,20 @@ jobs:
     name: lint code
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: checkout code
+        id: checkout-code
+        uses: actions/checkout@v4
+
       - name: 🧼 lint markdown files
+        id: lint-markdown-files
         uses: avto-dev/markdown-lint@v1.5.0
 
-      - uses: actions/checkout@v4
       - name: 🧼 lint json files
+        id: lint-json-files
         uses: ocular-d/json-linter@0.0.2
 
-      - uses: actions/checkout@v4
       - name: 🧼 lint renovate config
+        id: lint-renovate-config
         uses: suzuki-shunsuke/github-action-renovate-config-validator@v1.0.1
         with:
           config_file_path: "renovate.json"
@@ -100,23 +134,28 @@ jobs:
 
     steps:
     - name: checkout code
+      id: checkout-code
       uses: actions/checkout@v4
 
     - name: 🔐 authorize gcloud
+      id: authorize-gcloud
       uses: 'google-github-actions/auth@v2'
       with:
         credentials_json: ${{ secrets.GKE_SA_KEY }}
 
     - name: ☁ setup gcloud cli
+      id: setup-gcloud
       uses: google-github-actions/setup-gcloud@v2.1.0
       with:
         project_id: ${{ secrets.GKE_PROJECT }}
 
     - name: 🔧 configure docker
+      id: configure-docker
       run: |-
         gcloud --quiet auth configure-docker
 
     - name: 🐳 build docker image
+      id: build-docker-image
       run: |-
         docker build -f "src/Coding.Blog/Coding.Blog/Dockerfile" \
           --tag "gcr.io/$PROJECT_ID/$TAG" \
