@@ -24,26 +24,38 @@ jobs:
         language: ["csharp"]
     steps:
       - name: checkout code
+        id: checkout-code
         uses: actions/checkout@v4
 
       - name: initialize codeql
+        id: initialize-codeql
         uses: github/codeql-action/init@v3
         with:
           languages: ${{ matrix.language }}
           queries: security-and-quality
 
       - name: setup .net
+        id: setup-dotnet
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 8.0.x
+      - uses: actions/cache@v3
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget
 
       - name: restore dependencies
+        id: restore-dependencies
         run: dotnet restore src
 
       - name: 🔨 build application
+        id: build-application
         run: dotnet build src --configuration Release --no-restore
 
       - name: 🧪 perform codeql analysis
+        id: perform-codeql-analysis
         uses: github/codeql-action/analyze@v3
 
   test:
