@@ -8,8 +8,35 @@
     max-width: 960px;
 }
 
+.giscus-card {
+    padding-left: 0.1rem;
+    padding-right: 0.1rem;
+    padding-top: 0.1rem;
+    padding-bottom: 0.1rem;
+}
+
+.giscus-container {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    padding-top: 0.1rem;
+    padding-bottom: 0.1rem;
+}
+
 @media (max-width: 640.99px) {
     .post-hero {
         height: 40vw;
     }
+
+    .giscus-card {
+        padding-top: 0rem;
+        padding-bottom: 0rem;
+    }
+
+    .giscus-container {
+        padding-left: 0.25rem;
+        padding-right: 0.25rem;
+        padding-top: 0.1rem;
+        padding-bottom: 0rem;
+    }
+
 }
