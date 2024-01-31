@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [main]
 
+env:
+  PROJECT_ID: ${{ secrets.GKE_PROJECT }}
+  TAG: ${{ github.sha }}
+
 jobs:
   analyze:
     name: analyze code
@@ -116,5 +120,5 @@ jobs:
     - name: 🐳 build docker image
       run: |-
         docker build -f "src/Coding.Blog/Coding.Blog/Dockerfile" \
-          --tag "gcr.io/$PROJECT_ID/$(git rev-parse --short ${{ github.sha }})" \
+          --tag "gcr.io/$PROJECT_ID/$TAG" \
           "src"
