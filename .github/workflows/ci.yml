@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [main]
 
+env:
+  PROJECT_ID: ${{ secrets.GKE_PROJECT }}
+  TAG: ${{ github.sha }}
+
 jobs:
   analyze:
     name: analyze code
@@ -89,3 +93,31 @@ jobs:
         uses: suzuki-shunsuke/github-action-renovate-config-validator@v1.0.1
         with:
           config_file_path: "renovate.json"
+
+  verify-docker-build:
+    name: verify docker build
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: checkout code
+      uses: actions/checkout@v4
+
+    - name: 🔐 authorize gcloud
+      uses: 'google-github-actions/auth@v2'
+      with:
+        credentials_json: ${{ secrets.GKE_SA_KEY }}
+
+    - name: ☁ setup gcloud cli
+      uses: google-github-actions/setup-gcloud@v2.1.0
+      with:
+        project_id: ${{ secrets.GKE_PROJECT }}
+
+    - name: 🔧 configure docker
+      run: |-
+        gcloud --quiet auth configure-docker
+
+    - name: 🐳 build docker image
+      run: |-
+        docker build -f "src/Coding.Blog/Coding.Blog/Dockerfile" \
+          --tag "gcr.io/$PROJECT_ID/$TAG" \
+          "src"
