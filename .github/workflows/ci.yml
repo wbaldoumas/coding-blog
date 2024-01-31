@@ -97,7 +97,6 @@ jobs:
   verify-docker-build:
     name: verify docker build
     runs-on: ubuntu-latest
-    environment: production
 
     steps:
     - name: checkout code
