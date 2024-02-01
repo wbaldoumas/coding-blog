@@ -104,7 +104,8 @@
 
 @code {
 
-    [Parameter] public string Slug { get; set; } = string.Empty;
+    [Parameter] 
+    public string Slug { get; set; } = string.Empty;
 
     private PersistingComponentStateSubscription _persistingComponentStateSubscription;
 
@@ -114,22 +115,13 @@
 
     private string Title => _selectedPost?.Title ?? string.Empty;
 
-    protected override async Task OnInitializedAsync()
-    {
-        _persistingComponentStateSubscription = ApplicationState.RegisterOnPersisting(PersistData);
-
-        await RefreshPostAsync();
-    }
-
     protected override Task OnParametersSetAsync() => RefreshPostAsync();
 
-    private async Task RefreshPostAsync()
+    protected override async Task OnInitializedAsync()
     {
-        var posts = await PostApplicationStateService.GetAsync(ApplicationState, Post.Key);
+        _persistingComponentStateSubscription = PersistentComponentState.RegisterOnPersisting(PersistData);
 
-        Posts = PostLinker.Link(posts).ToList();
-
-        _selectedPost = Posts.FirstOrDefault(post => post.Slug == Slug);
+        await RefreshPostAsync();
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -138,9 +130,18 @@
         await JSInteropService.LoadGiscusAsync();
     }
 
+    private async Task RefreshPostAsync()
+    {
+        var posts = await PostsService.GetAsync(PersistentComponentState, Post.Key);
+
+        Posts = PostLinker.Link(posts);
+
+        _selectedPost = Posts.FirstOrDefault(post => post.Slug == Slug);
+    }
+
     private Task PersistData()
     {
-        ApplicationState.PersistAsJson(Post.Key, Posts);
+        PersistentComponentState.PersistAsJson(Post.Key, Posts);
 
         return Task.CompletedTask;
     }

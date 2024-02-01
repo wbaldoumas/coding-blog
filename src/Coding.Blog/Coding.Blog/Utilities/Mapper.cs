@@ -11,6 +11,10 @@ using ProtoProject = Coding.Blog.Library.Protos.Project;
 
 namespace Coding.Blog.Utilities;
 
+/// <summary>
+///     A mapper for mapping between different types.
+/// </summary>
+/// <param name="readTimeEstimator">A read time estimator, used for generating mapped reading times.</param>
 [Mapper]
 internal sealed partial class Mapper(IReadTimeEstimator readTimeEstimator) : IMapper
 {

@@ -1,5 +1,9 @@
 ﻿namespace Coding.Blog.Utilities;
 
+/// <summary>
+///     A service for estimating the read time of a given string.
+/// </summary>
+/// <param name="sanitizer">A <see cref="IStringSanitizer"/> for sanitizing the string.</param>
 internal sealed class ReadTimeEstimator(IStringSanitizer sanitizer) : IReadTimeEstimator
 {
     private const double AverageWordsPerMinute = 250.00;

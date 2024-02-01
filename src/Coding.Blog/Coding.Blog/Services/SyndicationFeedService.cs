@@ -7,6 +7,12 @@ using System.ServiceModel.Syndication;
 
 namespace Coding.Blog.Services;
 
+/// <summary>
+///     A service for generating a <see cref="SyndicationFeed"/> from a given URL.
+/// </summary>
+/// <param name="applicationInfoOptions">The application info options.</param>
+/// <param name="blogPostService">The blog post service to retrieve post information to inject into the feed.</param>
+/// <param name="mapper">A mapper for mapping a post to a syndication feed item.</param>
 internal sealed class SyndicationFeedService(
     IOptions<ApplicationInfoOptions> applicationInfoOptions,
     IBlogService<Post> blogPostService,

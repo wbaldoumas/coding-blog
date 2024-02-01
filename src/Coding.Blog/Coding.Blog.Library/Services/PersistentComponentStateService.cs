@@ -3,7 +3,12 @@ using Microsoft.AspNetCore.Components;
 
 namespace Coding.Blog.Library.Services;
 
-public sealed class ApplicationStateService<T>(IBlogService<T> blogService) : IApplicationStateService<T>
+/// <summary>
+///    A service for retrieving data from <see cref="PersistentComponentState"/> or static state.
+/// </summary>
+/// <typeparam name="T">The type of object to retrieve</typeparam>
+/// <param name="blogService">A <see cref="IBlogService{T}"/> for retrieving the data from the server when not found in state.</param>
+public sealed class PersistentComponentStateService<T>(IBlogService<T> blogService) : IPersistentComponentStateService<T>
 {
     public async Task<IList<T>> GetAsync(PersistentComponentState persistentComponentState, string key)
     {

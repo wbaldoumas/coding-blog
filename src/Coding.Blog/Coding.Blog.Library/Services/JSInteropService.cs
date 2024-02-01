@@ -2,6 +2,9 @@
 
 namespace Coding.Blog.Library.Services;
 
+/// <summary>
+///    A service encapsulating JS interop calls.
+/// </summary>
 public sealed class JSInteropService(IJSRuntime jsRuntime) : IJSInteropService
 {
     public ValueTask ResetScrollPositionAsync() => jsRuntime.InvokeVoidAsync("resetScrollPosition");
