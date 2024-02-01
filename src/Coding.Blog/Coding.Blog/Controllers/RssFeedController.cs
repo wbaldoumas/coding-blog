@@ -6,7 +6,7 @@ using System.Xml;
 
 namespace Coding.Blog.Controllers;
 
-internal sealed class RssFeedController(ISyndicationFeedService syndicationFeedService) : ControllerBase
+public sealed class RssFeedController(ISyndicationFeedService syndicationFeedService) : ControllerBase
 {
     [HttpGet]
     [Route("feed.rss")]
