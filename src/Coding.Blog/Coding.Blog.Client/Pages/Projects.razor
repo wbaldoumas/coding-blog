@@ -19,6 +19,11 @@
             }
             else
             {
+                <div>
+                    <p>
+                        Here is a small sample of the open source projects that I maintain. They span websites, libraries, and command line applications. Each project is hosted on <a href="https://github.com/wbaldoumas" target="_blank" aria-label="GitHub link" rel="noopener noreferrer">GitHub</a> and is available for anyone to use, modify, and contribute to.
+                    </p>
+                </div>
                 <div class="row">
                     @foreach (var project in _projects.OrderBy(project => project.Rank))
                     {
@@ -26,7 +31,7 @@
                             <div class="card mb-3 border-0 shadow">
                                 <div class="row g-0">
                                     <div class="col-md-4 d-flex align-items-center card-img-container">
-                                        <img src="@project.Image.ImgixUrl" class="card-img-top" alt="@project.Title">
+                                        <img src="@project.Image.ImgixUrl" loading="lazy" class="card-img-top" alt="@project.Title">
                                     </div>
                                     <div class="col-md-8">
                                         <div class="card-body rounded">
@@ -58,16 +63,16 @@
 
     protected override async Task OnInitializedAsync()
     {
-        _persistingComponentStateSubscription = ApplicationState.RegisterOnPersisting(PersistData);
+        _persistingComponentStateSubscription = PersistentComponentState.RegisterOnPersisting(PersistData);
 
-        _projects = await ProjectApplicationStateService.GetAsync(ApplicationState, Project.Key);
+        _projects = await ProjectsService.GetAsync(PersistentComponentState, Project.Key);
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender) => await JSInteropService.ResetScrollPositionAsync();
 
     private Task PersistData()
     {
-        ApplicationState.PersistAsJson(Project.Key, _projects);
+        PersistentComponentState.PersistAsJson(Project.Key, _projects);
 
         return Task.CompletedTask;
     }

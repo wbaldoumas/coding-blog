@@ -62,9 +62,9 @@
 
     protected override async Task OnInitializedAsync()
     {
-        _persistingComponentStateSubscription = ApplicationState.RegisterOnPersisting(PersistData);
+        _persistingComponentStateSubscription = PersistentComponentState.RegisterOnPersisting(PersistData);
 
-        var posts = await PostApplicationStateService.GetAsync(ApplicationState, Post.Key);
+        var posts = await PostsService.GetAsync(PersistentComponentState, Post.Key);
 
         Posts = PostLinker.Link(posts).ToList();
 
@@ -98,7 +98,7 @@
 
     private Task PersistData()
     {
-        ApplicationState.PersistAsJson(Post.Key, Posts);
+        PersistentComponentState.PersistAsJson(Post.Key, Posts);
 
         return Task.CompletedTask;
     }

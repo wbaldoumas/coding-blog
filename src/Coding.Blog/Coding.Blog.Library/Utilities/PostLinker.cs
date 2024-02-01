@@ -2,6 +2,9 @@
 
 namespace Coding.Blog.Library.Utilities;
 
+/// <summary>
+///     Links the given posts to one another sequentially by date, hydrating the <see cref="Post.Next"/> and <see cref="Post.Previous"/> properties.
+/// </summary>
 public sealed class PostLinker : IPostLinker
 {
     public IEnumerable<Post> Link(IEnumerable<Post> posts)

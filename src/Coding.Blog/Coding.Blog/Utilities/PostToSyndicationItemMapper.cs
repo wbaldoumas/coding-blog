@@ -4,6 +4,10 @@ using System.Xml.Linq;
 
 namespace Coding.Blog.Utilities;
 
+/// <summary>
+///    Maps a <see cref="Post"/> to a <see cref="SyndicationItem"/>.
+/// </summary>
+/// <param name="stringSanitizer">A <see cref="IStringSanitizer"/> for sanitizing strings.</param>
 internal sealed class PostToSyndicationItemMapper(IStringSanitizer stringSanitizer) : IPostToSyndicationItemMapper
 {
     public SyndicationItem Map(string syndicationUrl, Post post)

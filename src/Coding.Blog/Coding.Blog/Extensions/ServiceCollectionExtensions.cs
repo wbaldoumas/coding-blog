@@ -91,9 +91,9 @@ internal static class ServiceCollectionExtensions
         .AddSingleton<IBlogService<Book>, BlogService<CosmicBook, Book>>()
         .AddSingleton<IBlogService<Project>, BlogService<CosmicProject, Project>>()
         .AddScoped<IJSInteropService, JSInteropService>()
-        .AddSingleton<IApplicationStateService<Post>, ApplicationStateService<Post>>()
-        .AddSingleton<IApplicationStateService<Book>, ApplicationStateService<Book>>()
-        .AddSingleton<IApplicationStateService<Project>, ApplicationStateService<Project>>();
+        .AddSingleton<IPersistentComponentStateService<Post>, PersistentComponentStateService<Post>>()
+        .AddSingleton<IPersistentComponentStateService<Book>, PersistentComponentStateService<Book>>()
+        .AddSingleton<IPersistentComponentStateService<Project>, PersistentComponentStateService<Project>>();
 
     private static IServiceCollection AddUtilities(this IServiceCollection services) => services
         .AddSingleton(_ => new MarkdownPipelineBuilder()

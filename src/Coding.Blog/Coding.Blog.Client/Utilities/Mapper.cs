@@ -10,6 +10,9 @@ using ProtoProject = Coding.Blog.Library.Protos.Project;
 
 namespace Coding.Blog.Client.Utilities;
 
+/// <summary>
+///     A mapper for mapping between different types.
+/// </summary>
 [Mapper]
 internal sealed partial class Mapper : IMapper
 {

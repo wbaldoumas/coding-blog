@@ -6,6 +6,10 @@ using System.Xml;
 
 namespace Coding.Blog.Controllers;
 
+/// <summary>
+///     Generate an RSS feed for the blog.
+/// </summary>
+/// <param name="syndicationFeedService"> The service to retrieve the syndication feed from. </param>
 public sealed class RssFeedController(ISyndicationFeedService syndicationFeedService) : ControllerBase
 {
     [HttpGet]
@@ -14,7 +18,6 @@ public sealed class RssFeedController(ISyndicationFeedService syndicationFeedSer
     public async Task<IActionResult> GetRssFeedAsync()
     {
         var syndicationUrl = $"{Request.Scheme}://{Request.Host}{Request.PathBase}";
-
         var syndicationFeed = await syndicationFeedService.GetSyndicationFeed(syndicationUrl).ConfigureAwait(false);
 
         using var memoryStream = new MemoryStream();

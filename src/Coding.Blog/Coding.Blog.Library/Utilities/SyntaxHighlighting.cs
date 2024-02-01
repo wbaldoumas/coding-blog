@@ -3,6 +3,9 @@ using ColorCode.Styling;
 
 namespace Coding.Blog.Library.Utilities;
 
+/// <summary>
+///     Custom syntax highlighting colors.
+/// </summary>
 public static class SyntaxHighlighting
 {
     public const string Blue = "#FF0000FF";

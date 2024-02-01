@@ -59,16 +59,16 @@
 
     protected override async Task OnInitializedAsync()
     {
-        _persistingComponentStateSubscription = ApplicationState.RegisterOnPersisting(PersistData);
+        _persistingComponentStateSubscription = PersistentComponentState.RegisterOnPersisting(PersistData);
 
-        Books = await BookApplicationStateService.GetAsync(ApplicationState, Book.Key);
+        Books = await BooksService.GetAsync(PersistentComponentState, Book.Key);
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender) => await JSInteropService.ResetScrollPositionAsync();
 
     private Task PersistData()
     {
-        ApplicationState.PersistAsJson(Book.Key, Books);
+        PersistentComponentState.PersistAsJson(Book.Key, Books);
 
         return Task.CompletedTask;
     }

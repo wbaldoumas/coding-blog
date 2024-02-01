@@ -4,6 +4,11 @@ using Microsoft.Extensions.Options;
 
 namespace Coding.Blog.Services;
 
+/// <summary>
+///     Ensures that the application stops gracefully.
+/// </summary>
+/// <param name="hostApplicationLifetime"> The host application lifetime, leveraged to register the application stopping event. </param>
+/// <param name="options"> The application lifetime options. </param>
 [ExcludeFromCodeCoverage]
 internal sealed class ApplicationLifetimeService(
     IHostApplicationLifetime hostApplicationLifetime,

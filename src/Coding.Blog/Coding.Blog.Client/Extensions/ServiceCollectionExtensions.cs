@@ -24,6 +24,12 @@ namespace Coding.Blog.Client.Extensions;
 
 internal static class ServiceCollectionExtensions
 {
+    /// <summary>
+    ///     Configure the necessary services for the application.
+    /// </summary>
+    /// <param name="services">The service collection.</param>
+    /// <param name="configuration">The configuration.</param>
+    /// <returns>The configured service collection.</returns>
     public static IServiceCollection ConfigureServices(this IServiceCollection services, IConfiguration configuration) => services
         .AddSingleton(_ => new MarkdownPipelineBuilder()
             .UseAdvancedExtensions()
@@ -40,9 +46,9 @@ internal static class ServiceCollectionExtensions
         .AddSingleton<IBlogService<Post>, BlogService<ProtoPost, Post>>()
         .AddSingleton<IBlogService<Book>, BlogService<ProtoBook, Book>>()
         .AddSingleton<IBlogService<Project>, BlogService<ProtoProject, Project>>()
-        .AddSingleton<IApplicationStateService<Post>, ApplicationStateService<Post>>()
-        .AddSingleton<IApplicationStateService<Book>, ApplicationStateService<Book>>()
-        .AddSingleton<IApplicationStateService<Project>, ApplicationStateService<Project>>()
+        .AddSingleton<IPersistentComponentStateService<Post>, PersistentComponentStateService<Post>>()
+        .AddSingleton<IPersistentComponentStateService<Book>, PersistentComponentStateService<Book>>()
+        .AddSingleton<IPersistentComponentStateService<Project>, PersistentComponentStateService<Project>>()
         .AddSingleton<IJSInteropService, JSInteropService>()
         .AddGrpc(configuration);
 

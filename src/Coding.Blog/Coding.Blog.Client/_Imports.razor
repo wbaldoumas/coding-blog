@@ -18,10 +18,10 @@
 @using Coding.Blog.Client.Services
 @using Coding.Blog.Library.Utilities
 
-@inject IApplicationStateService<Post> PostApplicationStateService
-@inject IApplicationStateService<Book> BookApplicationStateService
-@inject IApplicationStateService<Project> ProjectApplicationStateService
-@inject PersistentComponentState ApplicationState
+@inject IPersistentComponentStateService<Post> PostsService
+@inject IPersistentComponentStateService<Book> BooksService
+@inject IPersistentComponentStateService<Project> ProjectsService
+@inject PersistentComponentState PersistentComponentState
 @inject MarkdownPipeline MarkdownPipeline
 @inject NavigationManager NavigationManager
 @inject IPostLinker PostLinker

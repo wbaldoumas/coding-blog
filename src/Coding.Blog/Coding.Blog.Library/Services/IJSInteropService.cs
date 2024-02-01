@@ -1,5 +1,8 @@
 ﻿namespace Coding.Blog.Library.Services;
 
+/// <summary>
+///    A service encapsulating JS interop calls.
+/// </summary>
 public interface IJSInteropService
 {
     ValueTask ResetScrollPositionAsync();
