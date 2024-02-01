@@ -2,7 +2,7 @@
 
 namespace Coding.Blog.Services;
 
-internal interface ISyndicationFeedService
+public interface ISyndicationFeedService
 {
     Task<SyndicationFeed> GetSyndicationFeed(string syndicationUrl);
 }
