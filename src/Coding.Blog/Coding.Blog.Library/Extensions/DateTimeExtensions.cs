@@ -6,7 +6,5 @@ public static class DateTimeExtensions
 {
     private const string _format = "D";
 
-    private static readonly IFormatProvider _formatProvider = new CultureInfo("en-US");
-
-    public static string ToPreformattedString(this DateTime source) => source.ToString(_format, _formatProvider);
+    public static string ToPreformattedString(this DateTime source) => source.ToString(_format, CultureInfo.InvariantCulture);
 }
