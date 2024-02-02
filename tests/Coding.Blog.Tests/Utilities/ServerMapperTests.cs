@@ -15,7 +15,7 @@ using ProtoProject = Coding.Blog.Library.Protos.Project;
 namespace Coding.Blog.Tests.Utilities;
 
 [TestFixture]
-public sealed class ServerMapperTests
+internal sealed class ServerMapperTests
 {
     private IReadTimeEstimator _mockReadTimeEstimator = null!;
 
@@ -51,13 +51,62 @@ public sealed class ServerMapperTests
         var book = _mapper.Map<CosmicBook, Book>(cosmicBook);
 
         // assert
-        book.Title.Should().Be(cosmicBook.Title);
-        book.Content.Should().Be(cosmicBook.Metadata.Content);
-        book.Author.Should().Be(cosmicBook.Metadata.Author);
-        book.DatePublished.Should().Be(cosmicBook.DatePublished);
-        book.PurchaseUrl.Should().Be(cosmicBook.Metadata.PurchaseUrl);
-        book.Image.Url.Should().Be(cosmicBook.Metadata.Image.Url);
-        book.Image.ImgixUrl.Should().Be(cosmicBook.Metadata.Image.ImgixUrl);
+        AssertExpectedBookData(cosmicBook, book);
+    }
+
+    [Test]
+    public void Map_CosmicBooksToBooks_ReturnsBooks()
+    {
+        // arrange
+        var cosmicBooks = new List<CosmicBook>
+        {
+            new(
+                Title: "Title 1",
+                DatePublished: DateTime.Now.ToUniversalTime(),
+                Metadata: new CosmicBookMetadata(
+                    PurchaseUrl: "PurchaseUrl 1",
+                    Image: new CosmicImage(
+                        Url: "Url 1",
+                        ImgixUrl: "ImgixUrl 1"
+                    ),
+                    Content: "Content 1",
+                    Author: "Author 1"
+                )
+            ),
+            new(
+                Title: "Title 2",
+                DatePublished: DateTime.Now.ToUniversalTime(),
+                Metadata: new CosmicBookMetadata(
+                    PurchaseUrl: "PurchaseUrl 2",
+                    Image: new CosmicImage(
+                        Url: "Url 2",
+                        ImgixUrl: "ImgixUrl 2"
+                    ),
+                    Content: "Content 2",
+                    Author: "Author 2"
+                )
+            )
+        };
+
+        // act
+        var books = _mapper.Map<CosmicBook, Book>(cosmicBooks).ToList();
+
+        // assert
+        books.Should().HaveCount(2);
+
+        AssertExpectedBookData(cosmicBooks[0], books[0]);
+        AssertExpectedBookData(cosmicBooks[1], books[1]);
+    }
+
+    private static void AssertExpectedBookData(CosmicBook expected, Book actual)
+    {
+        actual.Title.Should().Be(expected.Title);
+        actual.Content.Should().Be(expected.Metadata.Content);
+        actual.Author.Should().Be(expected.Metadata.Author);
+        actual.DatePublished.Should().Be(expected.DatePublished);
+        actual.PurchaseUrl.Should().Be(expected.Metadata.PurchaseUrl);
+        actual.Image.Url.Should().Be(expected.Metadata.Image.Url);
+        actual.Image.ImgixUrl.Should().Be(expected.Metadata.Image.ImgixUrl);
     }
 
     [Test]
@@ -82,12 +131,61 @@ public sealed class ServerMapperTests
         var protoBook = _mapper.Map<CosmicBook, ProtoBook>(cosmicBook);
 
         // assert
-        protoBook.Title.Should().Be(cosmicBook.Title);
-        protoBook.Content.Should().Be(cosmicBook.Metadata.Content);
-        protoBook.DatePublished.Should().Be(cosmicBook.DatePublished.ToTimestamp());
-        protoBook.PurchaseUrl.Should().Be(cosmicBook.Metadata.PurchaseUrl);
-        protoBook.Image.Url.Should().Be(cosmicBook.Metadata.Image.Url);
-        protoBook.Image.ImgixUrl.Should().Be(cosmicBook.Metadata.Image.ImgixUrl);
+        AssertExpectedBookData(cosmicBook, protoBook);
+    }
+
+    [Test]
+    public void Map_CosmicBooksToProtoBooks_ReturnsProtoBooks()
+    {
+        // arrange
+        var cosmicBooks = new List<CosmicBook>
+        {
+            new(
+                Title: "Title 1",
+                DatePublished: DateTime.Now.ToUniversalTime(),
+                Metadata: new CosmicBookMetadata(
+                    PurchaseUrl: "PurchaseUrl 1",
+                    Image: new CosmicImage(
+                        Url: "Url 1",
+                        ImgixUrl: "ImgixUrl 1"
+                    ),
+                    Content: "Content 1",
+                    Author: "Author 1"
+                )
+            ),
+            new(
+                Title: "Title 2",
+                DatePublished: DateTime.Now.ToUniversalTime(),
+                Metadata: new CosmicBookMetadata(
+                    PurchaseUrl: "PurchaseUrl 2",
+                    Image: new CosmicImage(
+                        Url: "Url 2",
+                        ImgixUrl: "ImgixUrl 2"
+                    ),
+                    Content: "Content 2",
+                    Author: "Author 2"
+                )
+            )
+        };
+
+        // act
+        var protoBooks = _mapper.Map<CosmicBook, ProtoBook>(cosmicBooks).ToList();
+
+        // assert
+        protoBooks.Should().HaveCount(2);
+
+        AssertExpectedBookData(cosmicBooks[0], protoBooks[0]);
+        AssertExpectedBookData(cosmicBooks[1], protoBooks[1]);
+    }
+
+    private static void AssertExpectedBookData(CosmicBook expected, ProtoBook actual)
+    {
+        actual.Title.Should().Be(expected.Title);
+        actual.Content.Should().Be(expected.Metadata.Content);
+        actual.DatePublished.Should().Be(expected.DatePublished.ToTimestamp());
+        actual.PurchaseUrl.Should().Be(expected.Metadata.PurchaseUrl);
+        actual.Image.Url.Should().Be(expected.Metadata.Image.Url);
+        actual.Image.ImgixUrl.Should().Be(expected.Metadata.Image.ImgixUrl);
     }
 
     [Test]
@@ -118,16 +216,72 @@ public sealed class ServerMapperTests
         var post = _mapper.Map<CosmicPost, Post>(cosmicPost);
 
         // assert
-        post.Id.Should().Be(cosmicPost.Id);
-        post.Title.Should().Be(cosmicPost.Title);
-        post.Slug.Should().Be(cosmicPost.Slug);
-        post.DatePublished.Should().Be(cosmicPost.DatePublished);
-        post.Content.Should().Be(cosmicPost.Metadata.Markdown);
-        post.Description.Should().Be(cosmicPost.Metadata.Description);
-        post.Tags.Should().Be(cosmicPost.Metadata.Tags);
-        post.Image.Url.Should().Be(cosmicPost.Metadata.Image.Url);
-        post.Image.ImgixUrl.Should().Be(cosmicPost.Metadata.Image.ImgixUrl);
-        post.ReadingTime.Should().Be(readingTime);
+        AssertExpectedPostData(cosmicPost, post);
+    }
+
+    [Test]
+    public void Map_CosmicPostsToPosts_ReturnsPosts()
+    {
+        // arrange
+        var readingTime = TimeSpan.FromMinutes(1);
+
+        _mockReadTimeEstimator.Estimate(Arg.Any<string>()).Returns(readingTime);
+
+        var cosmicPosts = new List<CosmicPost>
+        {
+            new(
+                Id: "Id 1",
+                Title: "Title 1",
+                Slug: "Slug 1",
+                DatePublished: DateTime.Now.ToUniversalTime(),
+                Metadata: new CosmicPostMetadata(
+                    Description: "Description 1",
+                    Markdown: "Markdown 1",
+                    Tags: "Tag1,Tag2",
+                    Image: new CosmicImage(
+                        Url: "Url 1",
+                        ImgixUrl: "ImgixUrl 1"
+                    )
+                )
+            ),
+            new(
+                Id: "Id 2",
+                Title: "Title 2",
+                Slug: "Slug 2",
+                DatePublished: DateTime.Now.ToUniversalTime(),
+                Metadata: new CosmicPostMetadata(
+                    Description: "Description 2",
+                    Markdown: "Markdown 2",
+                    Tags: "Tag1,Tag2",
+                    Image: new CosmicImage(
+                        Url: "Url 2",
+                        ImgixUrl: "ImgixUrl 2"
+                    )
+                )
+            )
+        };
+
+        // act
+        var posts = _mapper.Map<CosmicPost, Post>(cosmicPosts).ToList();
+
+        // assert
+        posts.Should().HaveCount(2);
+
+        AssertExpectedPostData(cosmicPosts[0], posts[0]);
+        AssertExpectedPostData(cosmicPosts[1], posts[1]);
+    }
+
+    private static void AssertExpectedPostData(CosmicPost expected, Post actual)
+    {
+        actual.Id.Should().Be(expected.Id);
+        actual.Title.Should().Be(expected.Title);
+        actual.Slug.Should().Be(expected.Slug);
+        actual.DatePublished.Should().Be(expected.DatePublished);
+        actual.Content.Should().Be(expected.Metadata.Markdown);
+        actual.Description.Should().Be(expected.Metadata.Description);
+        actual.Tags.Should().Be(expected.Metadata.Tags);
+        actual.Image.Url.Should().Be(expected.Metadata.Image.Url);
+        actual.Image.ImgixUrl.Should().Be(expected.Metadata.Image.ImgixUrl);
     }
 
     [Test]
@@ -158,16 +312,72 @@ public sealed class ServerMapperTests
         var protoPost = _mapper.Map<CosmicPost, ProtoPost>(cosmicPost);
 
         // assert
-        protoPost.Id.Should().Be(cosmicPost.Id);
-        protoPost.Title.Should().Be(cosmicPost.Title);
-        protoPost.Slug.Should().Be(cosmicPost.Slug);
-        protoPost.DatePublished.Should().Be(cosmicPost.DatePublished.ToTimestamp());
-        protoPost.Content.Should().Be(cosmicPost.Metadata.Markdown);
-        protoPost.Description.Should().Be(cosmicPost.Metadata.Description);
-        protoPost.Tags.Should().Be(cosmicPost.Metadata.Tags);
-        protoPost.Image.Url.Should().Be(cosmicPost.Metadata.Image.Url);
-        protoPost.Image.ImgixUrl.Should().Be(cosmicPost.Metadata.Image.ImgixUrl);
-        protoPost.ReadingTime.Should().Be(readingTime.ToDuration());
+        AssertExpectedPostData(cosmicPost, protoPost);
+    }
+
+    [Test]
+    public void Map_CosmicPostsToProtoPosts_ReturnsProtoPosts()
+    {
+        // arrange
+        var readingTime = TimeSpan.FromMinutes(1);
+
+        _mockReadTimeEstimator.Estimate(Arg.Any<string>()).Returns(readingTime);
+
+        var cosmicPosts = new List<CosmicPost>
+        {
+            new(
+                Id: "Id 1",
+                Title: "Title 1",
+                Slug: "Slug 1",
+                DatePublished: DateTime.Now.ToUniversalTime(),
+                Metadata: new CosmicPostMetadata(
+                    Description: "Description 1",
+                    Markdown: "Markdown 1",
+                    Tags: "Tag1,Tag2",
+                    Image: new CosmicImage(
+                        Url: "Url 1",
+                        ImgixUrl: "ImgixUrl 1"
+                    )
+                )
+            ),
+            new(
+                Id: "Id 2",
+                Title: "Title 2",
+                Slug: "Slug 2",
+                DatePublished: DateTime.Now.ToUniversalTime(),
+                Metadata: new CosmicPostMetadata(
+                    Description: "Description 2",
+                    Markdown: "Markdown 2",
+                    Tags: "Tag1,Tag2",
+                    Image: new CosmicImage(
+                        Url: "Url 2",
+                        ImgixUrl: "ImgixUrl 2"
+                    )
+                )
+            )
+        };
+
+        // act
+        var protoPosts = _mapper.Map<CosmicPost, ProtoPost>(cosmicPosts).ToList();
+
+        // assert
+        protoPosts.Should().HaveCount(2);
+
+        AssertExpectedPostData(cosmicPosts[0], protoPosts[0]);
+        AssertExpectedPostData(cosmicPosts[1], protoPosts[1]);
+    }
+
+    private static void AssertExpectedPostData(CosmicPost expected, ProtoPost actual)
+    {
+        actual.Id.Should().Be(expected.Id);
+        actual.Title.Should().Be(expected.Title);
+        actual.Slug.Should().Be(expected.Slug);
+        actual.DatePublished.Should().Be(expected.DatePublished.ToTimestamp());
+        actual.Content.Should().Be(expected.Metadata.Markdown);
+        actual.Description.Should().Be(expected.Metadata.Description);
+        actual.Tags.Should().Be(expected.Metadata.Tags);
+        actual.Image.Url.Should().Be(expected.Metadata.Image.Url);
+        actual.Image.ImgixUrl.Should().Be(expected.Metadata.Image.ImgixUrl);
     }
 
     [Test]
@@ -192,13 +402,62 @@ public sealed class ServerMapperTests
         var project = _mapper.Map<CosmicProject, Project>(cosmicProject);
 
         // assert
-        project.Title.Should().Be(cosmicProject.Title);
-        project.Description.Should().Be(cosmicProject.Metadata.Description);
-        project.ProjectUrl.Should().Be(cosmicProject.Metadata.GitHubUrl);
-        project.Rank.Should().Be(cosmicProject.Metadata.Rank);
-        project.Tags.Should().Be(cosmicProject.Metadata.Tags);
-        project.Image.Url.Should().Be(cosmicProject.Metadata.Image.Url);
-        project.Image.ImgixUrl.Should().Be(cosmicProject.Metadata.Image.ImgixUrl);
+        AssertExpectedProjectData(cosmicProject, project);
+    }
+
+    [Test]
+    public void Map_CosmicProjectsToProjects_ReturnsProjects()
+    {
+        // arrange
+        var cosmicProjects = new List<CosmicProject>
+        {
+            new(
+                Title: "Title 1",
+                Metadata: new CosmicProjectMetadata(
+                    Description: "Description 1",
+                    Rank: 1,
+                    GitHubUrl: "GitHubUrl 1",
+                    Tags: "Tag1,Tag2",
+                    Image: new CosmicImage(
+                        Url: "Url 1",
+                        ImgixUrl: "ImgixUrl 1"
+                    )
+                )
+            ),
+            new(
+                Title: "Title 2",
+                Metadata: new CosmicProjectMetadata(
+                    Description: "Description 2",
+                    Rank: 2,
+                    GitHubUrl: "GitHubUrl 2",
+                    Tags: "Tag1,Tag2",
+                    Image: new CosmicImage(
+                        Url: "Url 2",
+                        ImgixUrl: "ImgixUrl 2"
+                    )
+                )
+            )
+        };
+
+        // act
+        var projects = _mapper.Map<CosmicProject, Project>(cosmicProjects).ToList();
+
+        // assert
+        projects.Should().HaveCount(2);
+
+        AssertExpectedProjectData(cosmicProjects[0], projects[0]);
+        AssertExpectedProjectData(cosmicProjects[1], projects[1]);
+    }
+
+    private static void AssertExpectedProjectData(CosmicProject expected, Project actual)
+    {
+        actual.Title.Should().Be(expected.Title);
+        actual.Description.Should().Be(expected.Metadata.Description);
+        actual.ProjectUrl.Should().Be(expected.Metadata.GitHubUrl);
+        actual.Rank.Should().Be(expected.Metadata.Rank);
+        actual.Tags.Should().Be(expected.Metadata.Tags);
+        actual.Image.Url.Should().Be(expected.Metadata.Image.Url);
+        actual.Image.ImgixUrl.Should().Be(expected.Metadata.Image.ImgixUrl);
     }
 
     [Test]
@@ -223,12 +482,61 @@ public sealed class ServerMapperTests
         var protoProject = _mapper.Map<CosmicProject, ProtoProject>(cosmicProject);
 
         // assert
-        protoProject.Title.Should().Be(cosmicProject.Title);
-        protoProject.Description.Should().Be(cosmicProject.Metadata.Description);
-        protoProject.ProjectUrl.Should().Be(cosmicProject.Metadata.GitHubUrl);
-        protoProject.Rank.Should().Be(cosmicProject.Metadata.Rank);
-        protoProject.Tags.Should().Be(cosmicProject.Metadata.Tags);
-        protoProject.Image.Url.Should().Be(cosmicProject.Metadata.Image.Url);
-        protoProject.Image.ImgixUrl.Should().Be(cosmicProject.Metadata.Image.ImgixUrl);
+        AssertExpectedProjectData(cosmicProject, protoProject);
+    }
+
+    [Test]
+    public void Map_CosmicProjectsToProtoProjects_ReturnsProtoProjects()
+    {
+        // arrange
+        var cosmicProjects = new List<CosmicProject>
+        {
+            new(
+                Title: "Title 1",
+                Metadata: new CosmicProjectMetadata(
+                    Description: "Description 1",
+                    Rank: 1,
+                    GitHubUrl: "GitHubUrl 1",
+                    Tags: "Tag1,Tag2",
+                    Image: new CosmicImage(
+                        Url: "Url 1",
+                        ImgixUrl: "ImgixUrl 1"
+                    )
+                )
+            ),
+            new(
+                Title: "Title 2",
+                Metadata: new CosmicProjectMetadata(
+                    Description: "Description 2",
+                    Rank: 2,
+                    GitHubUrl: "GitHubUrl 2",
+                    Tags: "Tag1,Tag2",
+                    Image: new CosmicImage(
+                        Url: "Url 2",
+                        ImgixUrl: "ImgixUrl 2"
+                    )
+                )
+            )
+        };
+
+        // act
+        var protoProjects = _mapper.Map<CosmicProject, ProtoProject>(cosmicProjects).ToList();
+
+        // assert
+        protoProjects.Should().HaveCount(2);
+
+        AssertExpectedProjectData(cosmicProjects[0], protoProjects[0]);
+        AssertExpectedProjectData(cosmicProjects[1], protoProjects[1]);
+    }
+
+    private static void AssertExpectedProjectData(CosmicProject expected, ProtoProject actual)
+    {
+        actual.Title.Should().Be(expected.Title);
+        actual.Description.Should().Be(expected.Metadata.Description);
+        actual.ProjectUrl.Should().Be(expected.Metadata.GitHubUrl);
+        actual.Rank.Should().Be(expected.Metadata.Rank);
+        actual.Tags.Should().Be(expected.Metadata.Tags);
+        actual.Image.Url.Should().Be(expected.Metadata.Image.Url);
+        actual.Image.ImgixUrl.Should().Be(expected.Metadata.Image.ImgixUrl);
     }
 }
