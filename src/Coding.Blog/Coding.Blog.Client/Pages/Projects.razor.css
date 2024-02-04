@@ -4,43 +4,39 @@
     margin-bottom: 1rem;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     border-radius: 0.5rem;
+    overflow: hidden;
 }
-
-.card-img-container {
-    padding: 0;
-}
-
-.card-img-top {
-    height: 100%;
-    object-fit: cover;
-}
-
-    .card .col-md-4 {
-        flex: 0 0 33.3%;
-        max-width: 33.3%;
-        background-size: cover;
-        background-position: center;
-        border-top-left-radius: .25rem;
-        border-bottom-left-radius: .25rem;
-    }
-
-    .card .col-md-8 {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-    }
 
     .card:hover {
         transform: translateY(-5px);
         box-shadow: 0 4px 15px rgba(0,0,0,0.2);
     }
 
+.card-img-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 33.3%;
+    max-width: 33.3%;
+}
+
+.card-img-top {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card .col-md-8 {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 2;
+}
+
 .card-body {
+    flex: 1; 
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    border-top-right-radius: calc(.5rem - 1px);
-    border-bottom-right-radius: calc(.5rem - 1px);
 }
 
 .card .btn {
@@ -49,32 +45,31 @@
     text-overflow: ellipsis;
 }
 
-@media (max-width: 640.99px) {
+@media (max-width: 1200px) {
     .card {
         flex-direction: column;
     }
 
-        .card .col-md-4 {
-            flex: 0 0 auto;
-            max-width: 100%;
-            height: 200px;
-        }
-
-    .container {
-        padding: 0.33rem;
-    }
-
-    .card-body {
-        padding: 10px;
-    }
-
-    .content {
-        padding-right: 0 !important;
-        padding-left: 0 !important
+    .card-img-container {
+        width: 100%; 
+        max-width: 100%;
+        flex-basis: auto;
     }
 
     .card .col-md-8 {
-        flex: 0 0 auto;
         max-width: 100%;
     }
+}
+
+.container {
+    padding: 0.33rem;
+}
+
+.card-body {
+    padding: 10px;
+}
+
+.content {
+    padding-right: 0 !important;
+    padding-left: 0 !important;
 }
