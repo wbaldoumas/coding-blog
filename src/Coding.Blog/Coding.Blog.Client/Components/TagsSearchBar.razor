@@ -1,0 +1,65 @@
+﻿@namespace Coding.Blog.Client.Components
+
+@if (Tags.Any())
+{
+    <div class="container">
+        <div class="row tag-click-selector mb-3">
+            <div class="col-auto pe-0">
+                <p class="mb-0 d-flex align-items-center">Topics<span class="text-success mx-1 ms-2 fw-bolder">|</span></p>
+            </div>
+            <div class="col px-0">
+                <div class="d-flex flex-wrap">
+                    @foreach (var tag in Tags)
+                    {
+                        <a @onclick="() => HandleTagClick(tag)" aria-label="Navigate to tag @tag">
+                            <span class="@GetCss(tag)">
+                                @tag
+                            </span>
+                        </a>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="row tag-dropdown-selector mb-2 mx-2">
+            <Select TValue="string" SelectedValue="@_selectedTag" SelectedValueChanged="@HandleTagClick">
+                <SelectItem Value="@AllTopicsTag">@AllTopicsTag</SelectItem>
+                @foreach (var tag in Tags)
+                {
+                    <SelectItem Value="@tag">@tag</SelectItem>
+                }
+            </Select>
+        </div>
+    </div>
+}
+
+
+@code {
+    [Parameter] public string SelectedTag { get; set; } = string.Empty;
+
+    [Parameter] public IEnumerable<string> Tags { get; set; } = Enumerable.Empty<string>();
+
+    private const string AllTopicsTag = "All Topics";
+
+    private string _selectedTag = string.Empty;
+
+    protected override Task OnParametersSetAsync()
+    {
+        _selectedTag = string.IsNullOrEmpty(SelectedTag) ? AllTopicsTag : SelectedTag;
+
+        return Task.CompletedTask;
+    }
+
+    private void HandleTagClick(string tag)
+    {
+        if (tag.Equals(AllTopicsTag))
+        {
+            NavigationManager.NavigateTo("");
+        }
+        else
+        {
+            NavigationManager.NavigateTo(tag.Equals(_selectedTag) ? "" : $"/search?t={HttpUtility.UrlEncode(tag)}");
+        }
+    }
+
+    private string GetCss(string tag) => tag.Equals(_selectedTag) ? "badge bg-success hover-badge mx-1" : "badge bg-secondary hover-badge mx-1";
+}

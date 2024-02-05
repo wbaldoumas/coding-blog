@@ -12,9 +12,7 @@
     <div class="container mb-5">
         @if (Posts is not null)
         {
-            <div class="text-center mb-3">
-                <input type="search" class="form-control rounded" placeholder="Search..." aria-label="search" aria-describedby="search-button" value="@query" @oninput="HandleSearchInput">
-            </div>
+            <TagsSearchBar Tags="GetAllTags()" SelectedTag="@SelectedTag"></TagsSearchBar>
             <div class="row g-3 d-flex align-items-stretch">
                 @foreach (var post in GetSearchedPosts(Posts))
                 {
@@ -44,21 +42,12 @@
 @code {
 
     [Parameter]
-    [SupplyParameterFromQuery(Name = "q")]
-    public string query { get; set; } = string.Empty;
+    [SupplyParameterFromQuery(Name = "t")]
+    public string SelectedTag { get; set; } = string.Empty;
 
     private IEnumerable<Post>? Posts { get; set; }
 
     private PersistingComponentStateSubscription _persistingComponentStateSubscription;
-
-    private void HandleSearchInput(ChangeEventArgs args)
-    {
-        query = args.Value?.ToString() ?? string.Empty;
-
-        var path = string.IsNullOrEmpty(query) ? "/" : $"/search?q={HttpUtility.UrlEncode(query)}";
-
-        NavigationManager.NavigateTo(path);
-    }
 
     protected override async Task OnInitializedAsync()
     {
@@ -68,17 +57,16 @@
 
         Posts = PostLinker.Link(posts).ToList();
 
-        if (!string.IsNullOrWhiteSpace(query))
+        if (!string.IsNullOrWhiteSpace(SelectedTag))
         {
-            // If the user added a query string manually to the URL, redirect them to the search page.
             if (!NavigationManager.ToBaseRelativePath(NavigationManager.Uri).StartsWith("search"))
             {
-                var path = $"/search?q={query}";
+                var path = $"/search?t={SelectedTag}";
 
                 NavigationManager.NavigateTo(path);
             }
 
-            query = HttpUtility.UrlDecode(query);
+            SelectedTag = HttpUtility.UrlDecode(SelectedTag);
         }
     }
 
@@ -86,15 +74,18 @@
 
     private IEnumerable<Post> GetSearchedPosts(IEnumerable<Post> posts)
     {
-        return string.IsNullOrEmpty(query)
+        return string.IsNullOrEmpty(SelectedTag)
             ? posts
             : posts.Where(post =>
             {
-                return post.Title.Contains(query, StringComparison.OrdinalIgnoreCase) ||
-                       post.DisplayTags.Value.Any(tag => tag.Contains(query, StringComparison.OrdinalIgnoreCase)) ||
-                       post.Content.Contains(query, StringComparison.OrdinalIgnoreCase);
+                return post.Title.Contains(SelectedTag, StringComparison.OrdinalIgnoreCase) ||
+                       post.DisplayTags.Value.Any(tag => tag.Contains(SelectedTag, StringComparison.OrdinalIgnoreCase)) ||
+                       post.Content.Contains(SelectedTag, StringComparison.OrdinalIgnoreCase);
             });
     }
+
+    private IEnumerable<string> GetAllTags() =>
+        Posts!.SelectMany(post => post.DisplayTags.Value).Distinct().OrderBy(tag => tag);
 
     private Task PersistData()
     {

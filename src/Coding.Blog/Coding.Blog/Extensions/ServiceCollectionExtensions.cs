@@ -1,4 +1,5 @@
 ﻿using Blazorise;
+using Blazorise.Bootstrap5;
 using Blazorise.Icons.FontAwesome;
 using Coding.Blog.Clients;
 using Coding.Blog.DataTransfer;
@@ -36,10 +37,10 @@ internal static class ServiceCollectionExtensions
             .AddServices()
             .AddUtilities()
             .AddBlazorise()
+            .AddBootstrap5Providers()
+            .AddFontAwesomeIcons()
             .AddResponseCaching()
             .AddResponseCompression()
-            .AddEmptyProviders()
-            .AddFontAwesomeIcons()
             .AddRazorComponents()
             .AddInteractiveServerComponents()
             .AddInteractiveWebAssemblyComponents();
