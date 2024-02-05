@@ -1,4 +1,7 @@
-﻿using Coding.Blog.Client.Clients;
+﻿using Blazorise;
+using Blazorise.Bootstrap5;
+using Blazorise.Icons.FontAwesome;
+using Coding.Blog.Client.Clients;
 using Coding.Blog.Client.Options;
 using Coding.Blog.Client.Services;
 using Coding.Blog.Client.Utilities;
@@ -38,6 +41,9 @@ internal static class ServiceCollectionExtensions
                 SyntaxHighlighting.Dark,
                 new List<ILanguage> { new CSharpOverride() })
             .Build())
+        .AddBlazorise()
+        .AddBootstrap5Providers()
+        .AddFontAwesomeIcons()
         .AddSingleton<IMapper, Mapper>()
         .AddSingleton<IPostLinker, PostLinker>()
         .AddSingleton<IProtoClient<ProtoPost>, PostsClient>()
