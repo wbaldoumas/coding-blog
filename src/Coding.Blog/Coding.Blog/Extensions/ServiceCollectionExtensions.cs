@@ -1,4 +1,5 @@
-﻿using Blazorise;
+﻿using System.Diagnostics.CodeAnalysis;
+using Blazorise;
 using Blazorise.Bootstrap5;
 using Blazorise.Icons.FontAwesome;
 using Coding.Blog.Clients;
@@ -19,6 +20,7 @@ using Quartz;
 
 namespace Coding.Blog.Extensions;
 
+[ExcludeFromCodeCoverage]
 internal static class ServiceCollectionExtensions
 {
     /// <summary>

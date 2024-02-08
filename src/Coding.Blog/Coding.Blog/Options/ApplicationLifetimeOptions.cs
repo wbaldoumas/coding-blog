@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Coding.Blog.Options;
 
@@ -7,6 +8,7 @@ namespace Coding.Blog.Options;
 ///     signal. This prevents in-flight traffic from being dropped during deployments or
 ///     application restarts.
 /// </summary>
+[ExcludeFromCodeCoverage]
 internal sealed class ApplicationLifetimeOptions
 {
     public const string Key = "ApplicationLifetime";

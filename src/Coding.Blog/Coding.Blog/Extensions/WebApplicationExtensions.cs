@@ -1,9 +1,11 @@
-﻿using Coding.Blog.Components;
+﻿using System.Diagnostics.CodeAnalysis;
+using Coding.Blog.Components;
 using Coding.Blog.Services;
 using Microsoft.Net.Http.Headers;
 
 namespace Coding.Blog.Extensions;
 
+[ExcludeFromCodeCoverage]
 internal static class WebApplicationExtensions
 {
     private static readonly string[] _middlewareVaryHeaderValue = ["Accept-Encoding"];

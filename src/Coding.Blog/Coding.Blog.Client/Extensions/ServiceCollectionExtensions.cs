@@ -1,4 +1,5 @@
-﻿using Blazorise;
+﻿using System.Diagnostics.CodeAnalysis;
+using Blazorise;
 using Blazorise.Bootstrap5;
 using Blazorise.Icons.FontAwesome;
 using Coding.Blog.Client.Clients;
@@ -25,6 +26,7 @@ using ProtoProject = Coding.Blog.Library.Protos.Project;
 
 namespace Coding.Blog.Client.Extensions;
 
+[ExcludeFromCodeCoverage]
 internal static class ServiceCollectionExtensions
 {
     /// <summary>

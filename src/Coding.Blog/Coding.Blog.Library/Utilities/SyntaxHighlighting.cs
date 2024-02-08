@@ -1,4 +1,5 @@
-﻿using ColorCode.Common;
+﻿using System.Diagnostics.CodeAnalysis;
+using ColorCode.Common;
 using ColorCode.Styling;
 
 namespace Coding.Blog.Library.Utilities;
@@ -6,6 +7,7 @@ namespace Coding.Blog.Library.Utilities;
 /// <summary>
 ///     Custom syntax highlighting colors.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public static class SyntaxHighlighting
 {
     public const string Blue = "#FF0000FF";
