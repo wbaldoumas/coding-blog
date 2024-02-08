@@ -1,9 +1,7 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 
 namespace Coding.Blog.Library.Extensions;
 
-[ExcludeFromCodeCoverage]
 public static partial class LoggerExtensions
 {
     [LoggerMessage(EventId = 2, Level = LogLevel.Information, Message = "Warming {DomainObject} cache...")]

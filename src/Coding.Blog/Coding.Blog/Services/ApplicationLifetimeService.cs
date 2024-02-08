@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using Coding.Blog.Options;
+﻿using Coding.Blog.Options;
 using Microsoft.Extensions.Options;
 
 namespace Coding.Blog.Services;
@@ -9,7 +8,6 @@ namespace Coding.Blog.Services;
 /// </summary>
 /// <param name="hostApplicationLifetime"> The host application lifetime, leveraged to register the application stopping event. </param>
 /// <param name="options"> The application lifetime options. </param>
-[ExcludeFromCodeCoverage]
 internal sealed class ApplicationLifetimeService(
     IHostApplicationLifetime hostApplicationLifetime,
     IOptions<ApplicationLifetimeOptions> options

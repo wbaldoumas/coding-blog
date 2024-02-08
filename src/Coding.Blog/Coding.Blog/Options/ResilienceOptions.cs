@@ -1,9 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Coding.Blog.Options;
 
-[ExcludeFromCodeCoverage]
 internal sealed record ResilienceOptions
 {
     public const string Key = "Resilience";
