@@ -1,4 +1,5 @@
 ﻿using Coding.Blog.Library.Domain;
+using Coding.Blog.Library.Exceptions;
 
 namespace Coding.Blog.Library.State;
 
@@ -18,7 +19,7 @@ internal static class ApplicationState
                 BooksState.Books = state as IList<Book> ?? new List<Book>();
                 break;
             default:
-                throw new ArgumentException("Invalid key", nameof(key));
+                throw new InvalidApplicationStateKeyException(key);
         }
     }
 
@@ -29,7 +30,7 @@ internal static class ApplicationState
             Project.Key => ProjectsState.Projects as IList<T> ?? new List<T>(),
             Post.Key => PostsState.Posts as IList<T> ?? new List<T>(),
             Book.Key => BooksState.Books as IList<T> ?? new List<T>(),
-            _ => throw new ArgumentException("Invalid key", nameof(key))
+            _ => throw new InvalidApplicationStateKeyException(key)
         };
     }
 }

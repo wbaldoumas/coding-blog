@@ -1,4 +1,5 @@
 ﻿using Coding.Blog.Library.Domain;
+using Coding.Blog.Library.Exceptions;
 using Coding.Blog.Library.State;
 using FluentAssertions;
 using NUnit.Framework;
@@ -91,4 +92,24 @@ internal sealed class ApplicationStateTests
     );
 
     private static readonly List<Post> ExpectedPosts = [ExpectedPost];
+
+    [Test]
+    public void WhenInvalidKeyIsUsedForSetState_ThenInvalidApplicationStateKeyExceptionIsThrown()
+    {
+        // act
+        var act = () => ApplicationState.SetState(ExpectedPosts, "invalid key");
+
+        // assert
+        act.Should().Throw<InvalidApplicationStateKeyException>();
+    }
+
+    [Test]
+    public void WhenInvalidKeyIsUsedForGetState_ThenInvalidApplicationStateKeyExceptionIsThrown()
+    {
+        // act
+        var act = () => ApplicationState.GetState<Post>("invalid key");
+
+        // assert
+        act.Should().Throw<InvalidApplicationStateKeyException>();
+    }
 }
