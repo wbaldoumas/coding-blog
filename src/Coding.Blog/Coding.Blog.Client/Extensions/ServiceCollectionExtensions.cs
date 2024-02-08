@@ -1,7 +1,4 @@
-﻿using Blazorise;
-using Blazorise.Bootstrap5;
-using Blazorise.Icons.FontAwesome;
-using Coding.Blog.Client.Clients;
+﻿using Coding.Blog.Client.Clients;
 using Coding.Blog.Client.Options;
 using Coding.Blog.Client.Services;
 using Coding.Blog.Client.Utilities;
@@ -33,30 +30,37 @@ internal static class ServiceCollectionExtensions
     /// <param name="services">The service collection.</param>
     /// <param name="configuration">The configuration.</param>
     /// <returns>The configured service collection.</returns>
-    public static IServiceCollection ConfigureServices(this IServiceCollection services, IConfiguration configuration) => services
-        .AddSingleton(_ => new MarkdownPipelineBuilder()
-            .UseAdvancedExtensions()
-            .UseColorCode(
-                HtmlFormatterType.Style,
-                SyntaxHighlighting.Dark,
-                new List<ILanguage> { new CSharpOverride() })
-            .Build())
-        .AddBlazorise()
-        .AddBootstrap5Providers()
-        .AddFontAwesomeIcons()
-        .AddSingleton<IMapper, Mapper>()
-        .AddSingleton<IPostLinker, PostLinker>()
-        .AddSingleton<IProtoClient<ProtoPost>, PostsClient>()
-        .AddSingleton<IProtoClient<ProtoBook>, BooksClient>()
-        .AddSingleton<IProtoClient<ProtoProject>, ProjectsClient>()
-        .AddSingleton<IBlogService<Post>, BlogService<ProtoPost, Post>>()
-        .AddSingleton<IBlogService<Book>, BlogService<ProtoBook, Book>>()
-        .AddSingleton<IBlogService<Project>, BlogService<ProtoProject, Project>>()
-        .AddSingleton<IPersistentComponentStateService<Post>, PersistentComponentStateService<Post>>()
-        .AddSingleton<IPersistentComponentStateService<Book>, PersistentComponentStateService<Book>>()
-        .AddSingleton<IPersistentComponentStateService<Project>, PersistentComponentStateService<Project>>()
-        .AddSingleton<IJSInteropService, JSInteropService>()
+    public static IServiceCollection
+        ConfigureServices(this IServiceCollection services, IConfiguration configuration) => services
+        .AddUtilities()
+        .AddClients()
+        .AddServices()
         .AddGrpc(configuration);
+
+    private static IServiceCollection AddUtilities(this IServiceCollection services) =>
+        services.AddSingleton(_ => new MarkdownPipelineBuilder()
+                .UseAdvancedExtensions()
+                .UseColorCode(
+                    HtmlFormatterType.Style,
+                    SyntaxHighlighting.Dark,
+                    new List<ILanguage> { new CSharpOverride() })
+                .Build())
+            .AddSingleton<IMapper, Mapper>()
+            .AddSingleton<IPostLinker, PostLinker>();
+
+    private static IServiceCollection AddClients(this IServiceCollection services) =>
+        services.AddSingleton<IProtoClient<ProtoPost>, PostsClient>()
+            .AddSingleton<IProtoClient<ProtoBook>, BooksClient>()
+            .AddSingleton<IProtoClient<ProtoProject>, ProjectsClient>();
+
+    private static IServiceCollection AddServices(this IServiceCollection services) =>
+        services.AddSingleton<IBlogService<Post>, BlogService<ProtoPost, Post>>()
+            .AddSingleton<IBlogService<Book>, BlogService<ProtoBook, Book>>()
+            .AddSingleton<IBlogService<Project>, BlogService<ProtoProject, Project>>()
+            .AddSingleton<IPersistentComponentStateService<Post>, PersistentComponentStateService<Post>>()
+            .AddSingleton<IPersistentComponentStateService<Book>, PersistentComponentStateService<Book>>()
+            .AddSingleton<IPersistentComponentStateService<Project>, PersistentComponentStateService<Project>>()
+            .AddSingleton<IJSInteropService, JSInteropService>();
 
     private static IServiceCollection AddGrpc(this IServiceCollection services, IConfiguration configuration)
     {
@@ -66,31 +70,31 @@ internal static class ServiceCollectionExtensions
             .ValidateOnStart();
 
         services.AddSingleton(serviceProvider =>
-        {
-            var grpcOptions = serviceProvider.GetRequiredService<IOptions<GrpcOptions>>();
-
-            return new ServiceConfig
             {
-                MethodConfigs =
+                var grpcOptions = serviceProvider.GetRequiredService<IOptions<GrpcOptions>>();
+
+                return new ServiceConfig
                 {
-                    new MethodConfig
+                    MethodConfigs =
                     {
-                        Names = { MethodName.Default },
-                        RetryPolicy = new RetryPolicy
+                        new MethodConfig
                         {
-                            MaxAttempts = grpcOptions.Value.MaxAttempts,
-                            InitialBackoff = grpcOptions.Value.InitialBackoff,
-                            MaxBackoff = grpcOptions.Value.MaxBackoff,
-                            BackoffMultiplier = grpcOptions.Value.BackoffMultiplier,
-                            RetryableStatusCodes = { StatusCode.Unavailable }
+                            Names = { MethodName.Default },
+                            RetryPolicy = new RetryPolicy
+                            {
+                                MaxAttempts = grpcOptions.Value.MaxAttempts,
+                                InitialBackoff = grpcOptions.Value.InitialBackoff,
+                                MaxBackoff = grpcOptions.Value.MaxBackoff,
+                                BackoffMultiplier = grpcOptions.Value.BackoffMultiplier,
+                                RetryableStatusCodes = { StatusCode.Unavailable }
+                            }
                         }
                     }
-                }
-            };
-        })
-        .AddConfiguredGrpcClient<Posts.PostsClient>()
-        .AddConfiguredGrpcClient<Books.BooksClient>()
-        .AddConfiguredGrpcClient<Projects.ProjectsClient>();
+                };
+            })
+            .AddConfiguredGrpcClient<Posts.PostsClient>()
+            .AddConfiguredGrpcClient<Books.BooksClient>()
+            .AddConfiguredGrpcClient<Projects.ProjectsClient>();
 
         return services;
     }
@@ -98,14 +102,15 @@ internal static class ServiceCollectionExtensions
     private static IServiceCollection AddConfiguredGrpcClient<T>(this IServiceCollection services) where T : ClientBase
     {
         services.AddGrpcClient<T>((serviceProvider, grpcClientFactoryOptions) =>
-        {
-            grpcClientFactoryOptions.Address = new Uri(serviceProvider.GetRequiredService<NavigationManager>().BaseUri);
-        })
-        .ConfigurePrimaryHttpMessageHandler(() => new GrpcWebHandler(GrpcWebMode.GrpcWeb, new HttpClientHandler()))
-        .ConfigureChannel((serviceProvider, grpcChannelOptions) =>
-        {
-            grpcChannelOptions.ServiceConfig = serviceProvider.GetRequiredService<ServiceConfig>();
-        });
+            {
+                grpcClientFactoryOptions.Address =
+                    new Uri(serviceProvider.GetRequiredService<NavigationManager>().BaseUri);
+            })
+            .ConfigurePrimaryHttpMessageHandler(() => new GrpcWebHandler(GrpcWebMode.GrpcWeb, new HttpClientHandler()))
+            .ConfigureChannel((serviceProvider, grpcChannelOptions) =>
+            {
+                grpcChannelOptions.ServiceConfig = serviceProvider.GetRequiredService<ServiceConfig>();
+            });
 
         return services;
     }

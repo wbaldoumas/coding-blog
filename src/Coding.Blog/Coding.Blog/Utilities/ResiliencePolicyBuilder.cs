@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using Microsoft.Extensions.Caching.Memory;
+﻿using Microsoft.Extensions.Caching.Memory;
 using Polly;
 using Polly.Caching.Memory;
 using Polly.Contrib.WaitAndRetry;
@@ -12,7 +11,6 @@ namespace Coding.Blog.Utilities;
 ///
 ///     Returns a wait-and-retry policy wrapped in a memory-cache policy.
 /// </summary>
-[ExcludeFromCodeCoverage]
 internal static class ResiliencePolicyBuilder
 {
     public static IAsyncPolicy<T> Build<T>(
