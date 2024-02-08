@@ -1,7 +1,9 @@
-﻿using Microsoft.Extensions.Options;
+﻿using System.Diagnostics.CodeAnalysis;
+using Microsoft.Extensions.Options;
 
 namespace Coding.Blog.Options;
 
+[ExcludeFromCodeCoverage]
 internal sealed record CacheWarmingJobOptions
 {
     public const string Key = "Quartz";

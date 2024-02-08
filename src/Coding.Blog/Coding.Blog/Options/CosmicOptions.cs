@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Coding.Blog.Options;
 
+[ExcludeFromCodeCoverage]
 internal sealed record CosmicOptions
 {
     public const string Key = "Cosmic";

@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Coding.Blog.Client.Options;
 
+[ExcludeFromCodeCoverage]
 internal sealed record GrpcOptions
 {
     public const string Key = "Grpc";

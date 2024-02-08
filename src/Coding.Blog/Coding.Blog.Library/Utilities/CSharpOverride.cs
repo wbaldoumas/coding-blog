@@ -1,4 +1,5 @@
-﻿using ColorCode;
+﻿using System.Diagnostics.CodeAnalysis;
+using ColorCode;
 using ColorCode.Common;
 using System.Globalization;
 
@@ -8,6 +9,7 @@ namespace Coding.Blog.Library.Utilities;
 ///     Overrides the built-in C# language definition that ships with ColorCode-Universal. This augmented
 ///     version adds support for differentiated syntax highlighting for classes and control keywords.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public sealed class CSharpOverride : ILanguage
 {
     public string Id => LanguageId.CSharp;
