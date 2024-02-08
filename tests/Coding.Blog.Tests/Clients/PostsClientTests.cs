@@ -26,20 +26,19 @@ internal sealed class PostsClientTests
     public async Task WhenClientIsInvoked_ThenPostsAreReturned()
     {
         // arrange
-        _mockProtoPostsClient.GetPostsAsync(Arg.Any<PostsRequest>())
-            .Returns(
-                new AsyncUnaryCall<PostsReply>(
-                    Task.FromResult(new PostsReply
-                        {
-                            Posts = { ExpectedPosts }
-                        }
-                    ),
-                    Task.FromResult(Metadata.Empty),
-                    () => Status.DefaultSuccess,
-                    () => Metadata.Empty,
-                    () => { }
-                )
-            );
+        using var postsResponse = new AsyncUnaryCall<PostsReply>(
+            Task.FromResult(new PostsReply
+                {
+                    Posts = { ExpectedPosts }
+                }
+            ),
+            Task.FromResult(Metadata.Empty),
+            () => Status.DefaultSuccess,
+            () => Metadata.Empty,
+            () => { }
+        );
+
+        _mockProtoPostsClient.GetPostsAsync(Arg.Any<PostsRequest>()).Returns(postsResponse);
 
         // act
         var actualPosts = await _postsClient.GetAsync().ConfigureAwait(false);

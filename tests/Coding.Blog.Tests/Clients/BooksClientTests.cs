@@ -26,20 +26,19 @@ internal sealed class BooksClientTests
     public async Task WhenClientIsInvoked_ThenBooksAreReturned()
     {
         // arrange
-        _mockProtoBooksClient.GetBooksAsync(Arg.Any<BooksRequest>())
-            .Returns(
-                new AsyncUnaryCall<BooksReply>(
-                    Task.FromResult(new BooksReply
-                        {
-                            Books = { ExpectedBooks}
-                        }
-                    ),
-                    Task.FromResult(Metadata.Empty),
-                    () => Status.DefaultSuccess,
-                    () => Metadata.Empty,
-                    () => { }
-                )
-            );
+        using var booksResponse = new AsyncUnaryCall<BooksReply>(
+            Task.FromResult(new BooksReply
+                {
+                    Books = { ExpectedBooks }
+                }
+            ),
+            Task.FromResult(Metadata.Empty),
+            () => Status.DefaultSuccess,
+            () => Metadata.Empty,
+            () => { }
+        );
+
+        _mockProtoBooksClient.GetBooksAsync(Arg.Any<BooksRequest>()).Returns(booksResponse);
 
         // act
         var actualBooks = await _booksClient.GetAsync().ConfigureAwait(false);

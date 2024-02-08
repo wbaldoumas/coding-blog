@@ -25,19 +25,18 @@ internal sealed class ProjectsClientTests
     public async Task WhenClientIsInvoked_ThenProjectsAreReturned()
     {
         // arrange
-        _mockProtoProjectsClient.GetProjectsAsync(Arg.Any<ProjectsRequest>())
-            .Returns(
-                new AsyncUnaryCall<ProjectsReply>(
-                    Task.FromResult(new ProjectsReply
-                    {
-                        Projects = { ExpectedProjects }
-                    }),
-                    Task.FromResult(Metadata.Empty),
-                    () => Status.DefaultSuccess,
-                    () => Metadata.Empty,
-                    () => { }
-                )
-            );
+        using var projectsResponse = new AsyncUnaryCall<ProjectsReply>(
+            Task.FromResult(new ProjectsReply
+            {
+                Projects = { ExpectedProjects }
+            }),
+            Task.FromResult(Metadata.Empty),
+            () => Status.DefaultSuccess,
+            () => Metadata.Empty,
+            () => { }
+        );
+
+        _mockProtoProjectsClient.GetProjectsAsync(Arg.Any<ProjectsRequest>()).Returns(projectsResponse);
 
         // act
         var actualProjects = await _projectsClient.GetAsync().ConfigureAwait(false);
