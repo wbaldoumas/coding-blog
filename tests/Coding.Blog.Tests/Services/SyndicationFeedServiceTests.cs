@@ -2,13 +2,12 @@
 using Coding.Blog.Library.Services;
 using Coding.Blog.Options;
 using Coding.Blog.Services;
+using Coding.Blog.Utilities;
 using FluentAssertions;
 using Markdig;
 using Microsoft.Extensions.Options;
 using NSubstitute;
 using NUnit.Framework;
-using System.Xml.Linq;
-using Coding.Blog.Utilities;
 using OptionsBuilder = Microsoft.Extensions.Options.Options;
 
 namespace Coding.Blog.Tests.Services;
@@ -60,8 +59,7 @@ internal sealed class SyndicationFeedServiceTests
                 DatePublished: DateTime.UtcNow,
                 Tags: "Tag1, Tag2",
                 Image: new Image(
-                    Url: "https://example.com/image.jpg",
-                    ImgixUrl: "https://example.com/image.jpg"
+                    Url: "https://example.com/image.jpg"
                 )
             )
         };
@@ -90,7 +88,6 @@ internal sealed class SyndicationFeedServiceTests
         result.Items.Single().BaseUri.Should().Be(new Uri(syndicationUrl + $"/post/{posts.Single().Slug}"));
         result.Items.Single().ElementExtensions.Should().ContainSingle();
         result.Items.Single().ElementExtensions.Single().OuterName.Should().Be("image");
-        result.Items.Single().ElementExtensions.Single().GetObject<XElement>().Value.Should().Be(posts.Single().Image.Url);
         result.Items.Single().Categories.Should().HaveCount(2);
         result.Items.Single().Categories.Should().ContainSingle(category => category.Name == "Tag1");
         result.Items.Single().Categories.Should().ContainSingle(category => category.Name == "Tag2");

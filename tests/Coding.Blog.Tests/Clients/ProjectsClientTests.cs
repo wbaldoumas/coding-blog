@@ -48,12 +48,11 @@ internal sealed class ProjectsClientTests
     private static readonly Project ExpectedProject = new()
     {
         Title = "some project",
-        Description = "some description",
-        ProjectUrl = "some url",
+        Content = "some description",
+        Url = "some url",
         Image = new Image
         {
-            Url = "some url",
-            ImgixUrl = "some other url"
+            Url = "some other url"
         },
         Rank = 1,
         Tags = "some tags"

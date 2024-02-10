@@ -57,10 +57,9 @@ internal sealed class PostsServiceTests
         Title: "some title",
         Metadata: new CosmicPostMetadata(
             Description: "some description",
-            Markdown: "some markdown",
+            Content: "some markdown",
             Image: new CosmicImage(
-                Url: "some url",
-                ImgixUrl: "some other url"
+                Url: "some other url"
             ),
             Tags: "some,tags"
         )
@@ -74,8 +73,7 @@ internal sealed class PostsServiceTests
         Description = "some description",
         Image = new Image
         {
-            Url = "some url",
-            ImgixUrl = "some other url"
+            Url = "some other url"
         },
         Content = "some content",
         DatePublished = DateTime.UtcNow.ToTimestamp(),

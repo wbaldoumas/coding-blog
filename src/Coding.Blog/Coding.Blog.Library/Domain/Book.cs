@@ -5,7 +5,7 @@ public sealed record Book(
     string Content,
     string Author,
     Image Image,
-    string PurchaseUrl,
+    string Url,
     DateTime DatePublished
 )
 {

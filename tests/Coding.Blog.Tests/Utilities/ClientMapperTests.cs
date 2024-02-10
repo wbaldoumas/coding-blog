@@ -30,11 +30,10 @@ internal sealed class ClientMapperTests
             Title = "Title",
             Content = "Content",
             DatePublished = DateTime.Now.ToUniversalTime().ToTimestamp(),
-            PurchaseUrl = "PurchaseUrl",
+            Url = "PurchaseUrl",
             Image = new Image
             {
-                Url = "Url",
-                ImgixUrl = "ImgixUrl"
+                Url = "ImgixUrl"
             }
         };
 
@@ -57,11 +56,10 @@ internal sealed class ClientMapperTests
                 Content = "Content 1",
                 Author = "Author 1",
                 DatePublished = DateTime.Now.ToUniversalTime().ToTimestamp(),
-                PurchaseUrl = "PurchaseUrl 1",
+                Url = "PurchaseUrl 1",
                 Image = new Image
                 {
-                    Url = "Url 1",
-                    ImgixUrl = "ImgixUrl 1"
+                    Url = "ImgixUrl 1"
                 }
             },
             new()
@@ -70,11 +68,10 @@ internal sealed class ClientMapperTests
                 Author = "Author 2",
                 Content = "Content 2",
                 DatePublished = DateTime.Now.ToUniversalTime().ToTimestamp(),
-                PurchaseUrl = "PurchaseUrl 2",
+                Url = "PurchaseUrl 2",
                 Image = new Image
                 {
-                    Url = "Url 2",
-                    ImgixUrl = "ImgixUrl 2"
+                    Url = "ImgixUrl 2"
                 }
             }
         };
@@ -95,9 +92,8 @@ internal sealed class ClientMapperTests
         actual.Content.Should().Be(expected.Content);
         actual.Author.Should().Be(expected.Author);
         actual.DatePublished.Should().Be(expected.DatePublished.ToDateTime());
-        actual.PurchaseUrl.Should().Be(expected.PurchaseUrl);
+        actual.Url.Should().Be(expected.Url);
         actual.Image.Url.Should().Be(expected.Image.Url);
-        actual.Image.ImgixUrl.Should().Be(expected.Image.ImgixUrl);
     }
 
     [Test]
@@ -116,8 +112,7 @@ internal sealed class ClientMapperTests
             Tags = "Tag1,Tag2",
             Image = new Image
             {
-                Url = "Url",
-                ImgixUrl = "ImgixUrl"
+                Url = "ImgixUrl"
             }
         };
 
@@ -146,8 +141,7 @@ internal sealed class ClientMapperTests
                 Tags = "Tag1,Tag2",
                 Image = new Image
                 {
-                    Url = "Url 1",
-                    ImgixUrl = "ImgixUrl 1"
+                    Url = "ImgixUrl 1"
                 }
             },
             new()
@@ -162,8 +156,7 @@ internal sealed class ClientMapperTests
                 Tags = "Tag1,Tag2",
                 Image = new Image
                 {
-                    Url = "Url 2",
-                    ImgixUrl = "ImgixUrl 2"
+                    Url = "ImgixUrl 2"
                 }
             }
         };
@@ -189,7 +182,6 @@ internal sealed class ClientMapperTests
         actual.Description.Should().Be(expected.Description);
         actual.Tags.Should().Be(expected.Tags);
         actual.Image.Url.Should().Be(expected.Image.Url);
-        actual.Image.ImgixUrl.Should().Be(expected.Image.ImgixUrl);
     }
 
     [Test]
@@ -199,14 +191,13 @@ internal sealed class ClientMapperTests
         var protoProject = new ProtoProject
         {
             Title = "Title",
-            Description = "Description",
-            ProjectUrl = "ProjectUrl",
+            Content = "Description",
+            Url = "ProjectUrl",
             Rank = 1,
             Tags = "Tag1,Tag2",
             Image = new Image
             {
-                Url = "Url",
-                ImgixUrl = "ImgixUrl"
+                Url = "ImgixUrl"
             }
         };
 
@@ -226,27 +217,25 @@ internal sealed class ClientMapperTests
             new()
             {
                 Title = "Title 1",
-                Description = "Description 1",
-                ProjectUrl = "ProjectUrl 1",
+                Content = "Description 1",
+                Url = "ProjectUrl 1",
                 Rank = 1,
                 Tags = "Tag1,Tag2",
                 Image = new Image
                 {
-                    Url = "Url 1",
-                    ImgixUrl = "ImgixUrl 1"
+                    Url = "ImgixUrl 1"
                 }
             },
             new()
             {
                 Title = "Title 2",
-                Description = "Description 2",
-                ProjectUrl = "ProjectUrl 2",
+                Content = "Description 2",
+                Url = "ProjectUrl 2",
                 Rank = 2,
                 Tags = "Tag1,Tag2",
                 Image = new Image
                 {
-                    Url = "Url 2",
-                    ImgixUrl = "ImgixUrl 2"
+                    Url = "ImgixUrl 2"
                 }
             }
         };
@@ -264,11 +253,10 @@ internal sealed class ClientMapperTests
     private static void AssertExpectedProjectData(ProtoProject expected, Project actual)
     {
         actual.Title.Should().Be(expected.Title);
-        actual.Description.Should().Be(expected.Description);
-        actual.ProjectUrl.Should().Be(expected.ProjectUrl);
+        actual.Content.Should().Be(expected.Content);
+        actual.Url.Should().Be(expected.Url);
         actual.Rank.Should().Be(expected.Rank);
         actual.Tags.Should().Be(expected.Tags);
         actual.Image.Url.Should().Be(expected.Image.Url);
-        actual.Image.ImgixUrl.Should().Be(expected.Image.ImgixUrl);
     }
 }

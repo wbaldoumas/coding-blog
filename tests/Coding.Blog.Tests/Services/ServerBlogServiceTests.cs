@@ -44,10 +44,9 @@ internal sealed class ServerBlogServiceTests
         Title: "some book",
         DatePublished: DateTime.UtcNow,
         Metadata: new CosmicBookMetadata(
-            PurchaseUrl: "some url",
+            Url: "some url",
             Image: new CosmicImage(
-                Url: "some image url",
-                ImgixUrl: "some imgix url"
+                Url: "some imgix url"
             ),
             Content: "some content",
             Author: "some author"
@@ -60,10 +59,9 @@ internal sealed class ServerBlogServiceTests
         Title: "some book",
         Author: "some author",
         DatePublished: DateTime.UtcNow,
-        PurchaseUrl: "some url",
+        Url: "some url",
         Image: new Image(
-            Url: "some image url",
-            ImgixUrl: "some imgix url"
+            Url: "some imgix url"
         ),
         Content: "some content"
     );

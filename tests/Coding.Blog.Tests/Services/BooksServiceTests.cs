@@ -56,10 +56,9 @@ internal sealed class BooksServiceTests
         Metadata: new CosmicBookMetadata(
             Author: "some author",
             Image: new CosmicImage(
-                Url: "some url",
-                ImgixUrl: "some other url"
+                Url: "some other url"
             ),
-            PurchaseUrl: "some url",
+            Url: "some url",
             Content: "some content"
         )
     );
@@ -72,12 +71,11 @@ internal sealed class BooksServiceTests
         Content = "some content",
         Image = new Image
         {
-            Url = "some url",
-            ImgixUrl = "some other url"
+            Url = "some other url"
         },
         Author = "some author",
         DatePublished = DateTime.UtcNow.ToTimestamp(),
-        PurchaseUrl = "some url"
+        Url = "some url"
     };
 
     private static readonly List<Book> ExpectedBooks = [ExpectedBook];
