@@ -94,8 +94,8 @@ internal sealed class PersistentComponentStateServiceTests
         Title: "some title",
         Content: "some content",
         Author: "some author",
-        Image: new Image("some url", "some other url"),
-        PurchaseUrl: "some purchase url",
+        Image: new Image("some url"),
+        Url: "some purchase url",
         DatePublished: DateTime.Now
     );
 

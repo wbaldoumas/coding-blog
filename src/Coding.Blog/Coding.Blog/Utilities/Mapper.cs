@@ -22,20 +22,20 @@ internal sealed partial class Mapper(IReadTimeEstimator readTimeEstimator) : IMa
 
     public IEnumerable<TTarget> Map<TSource, TTarget>(IEnumerable<TSource> source) => source.Select(Map<TSource, TTarget>);
 
-    [MapProperty("Metadata.PurchaseUrl", "PurchaseUrl")]
+    [MapProperty("Metadata.Url", "Url")]
     [MapProperty("Metadata.Image", "Image")]
     [MapProperty("Metadata.Content", "Content")]
     [MapProperty("Metadata.Author", "Author")]
     private partial Book CosmicBookToBook(CosmicBook cosmicBook);
 
-    [MapProperty("Metadata.PurchaseUrl", "PurchaseUrl")]
+    [MapProperty("Metadata.Url", "Url")]
     [MapProperty("Metadata.Image", "Image")]
     [MapProperty("Metadata.Content", "Content")]
     [MapProperty("Metadata.Author", "Author")]
     private partial ProtoBook CosmicBookToProtoBook(CosmicBook cosmicBook);
 
-    [MapProperty("Metadata.Markdown", "Content")]
-    [MapProperty("Metadata.Markdown", "ReadingTime")]
+    [MapProperty("Metadata.Content", "Content")]
+    [MapProperty("Metadata.Content", "ReadingTime")]
     [MapProperty("Metadata.Tags", "Tags")]
     [MapProperty("Metadata.Image", "Image")]
     [MapProperty("Metadata.Description", "Description")]
@@ -44,24 +44,24 @@ internal sealed partial class Mapper(IReadTimeEstimator readTimeEstimator) : IMa
     [MapperIgnoreTarget("Previous")]
     private partial Post CosmicPostToPost(CosmicPost cosmicPost);
 
-    [MapProperty("Metadata.Markdown", "Content")]
-    [MapProperty("Metadata.Markdown", "ReadingTime")]
+    [MapProperty("Metadata.Content", "Content")]
+    [MapProperty("Metadata.Content", "ReadingTime")]
     [MapProperty("Metadata.Tags", "Tags")]
     [MapProperty("Metadata.Image", "Image")]
     [MapProperty("Metadata.Description", "Description")]
     private partial ProtoPost CosmicPostToProtoPost(CosmicPost cosmicPost);
 
-    [MapProperty("Metadata.Description", "Description")]
+    [MapProperty("Metadata.Content", "Content")]
     [MapProperty("Metadata.Image", "Image")]
-    [MapProperty("Metadata.GitHubUrl", "ProjectUrl")]
+    [MapProperty("Metadata.Url", "Url")]
     [MapProperty("Metadata.Rank", "Rank")]
     [MapProperty("Metadata.Tags", "Tags")]
     [MapperIgnoreTarget("DisplayTags")]
     private partial Project CosmicProjectToProject(CosmicProject project);
 
-    [MapProperty("Metadata.Description", "Description")]
+    [MapProperty("Metadata.Content", "Content")]
     [MapProperty("Metadata.Image", "Image")]
-    [MapProperty("Metadata.GitHubUrl", "ProjectUrl")]
+    [MapProperty("Metadata.Url", "Url")]
     [MapProperty("Metadata.Rank", "Rank")]
     [MapProperty("Metadata.Tags", "Tags")]
     private partial ProtoProject CosmicProjectToProtoProject(CosmicProject project);

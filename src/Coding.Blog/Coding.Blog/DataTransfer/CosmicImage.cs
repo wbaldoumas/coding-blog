@@ -3,6 +3,5 @@
 namespace Coding.Blog.DataTransfer;
 
 internal sealed record CosmicImage(
-    [property: JsonPropertyName("url")] string Url,
-    [property: JsonPropertyName("imgix_url")] string ImgixUrl
+    [property: JsonPropertyName("imgix_url")] string Url
 );

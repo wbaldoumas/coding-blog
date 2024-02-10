@@ -4,9 +4,9 @@ namespace Coding.Blog.Library.Domain;
 
 public sealed record Project(
     string Title,
-    string Description,
+    string Content,
     Image Image,
-    string ProjectUrl,
+    string Url,
     int Rank,
     string Tags
 )

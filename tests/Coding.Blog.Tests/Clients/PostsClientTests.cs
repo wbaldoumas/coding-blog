@@ -56,8 +56,7 @@ internal sealed class PostsClientTests
         Description = "some description",
         Image = new Image
         {
-            Url = "some url",
-            ImgixUrl = "some other url"
+            Url = "some other url"
         },
         Slug = "some-slug",
         ReadingTime = Duration.FromTimeSpan(TimeSpan.Zero),

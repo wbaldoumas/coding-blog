@@ -55,10 +55,9 @@ internal sealed class BooksClientTests
         DatePublished = DateTime.UtcNow.ToTimestamp(),
         Image = new Image
         {
-            Url = "some url",
-            ImgixUrl = "some other url"
+            Url = "some other url"
         },
-        PurchaseUrl = "some other other url"
+        Url = "some other other url"
     };
 
     private static readonly List<Book> ExpectedBooks = [ExpectedBook];

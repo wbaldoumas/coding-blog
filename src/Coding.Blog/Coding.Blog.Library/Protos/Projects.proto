@@ -16,9 +16,9 @@ message ProjectsReply {
 
 message Project {
 	string title = 1;
-	string description = 2;
+	string content = 2;
 	Image image = 3;
-	string projectUrl = 4;
+	string url = 4;
 	int32 rank = 5;
 	string tags = 6;
 }

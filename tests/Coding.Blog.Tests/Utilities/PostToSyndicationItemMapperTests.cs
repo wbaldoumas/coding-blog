@@ -1,9 +1,9 @@
 ﻿using Coding.Blog.Library.Domain;
+using Coding.Blog.Utilities;
 using FluentAssertions;
 using NSubstitute;
 using NUnit.Framework;
 using System.Xml.Linq;
-using Coding.Blog.Utilities;
 
 namespace Coding.Blog.Tests.Utilities;
 
@@ -37,8 +37,7 @@ internal sealed class PostToSyndicationItemMapperTests
             DatePublished: DateTime.UtcNow,
             Tags: "Tag1, Tag2",
             Image: new Image(
-                Url: "https://example.com/image.jpg",
-                ImgixUrl: "https://example.com/image.jpg"
+                Url: "https://example.com/image.jpg"
             )
         );
 
@@ -60,8 +59,8 @@ internal sealed class PostToSyndicationItemMapperTests
         result.PublishDate.Should().Be(expectedPostDate);
         result.LastUpdatedTime.Should().Be(expectedPostDate);
         result.BaseUri.Should().Be(expectedPostUrl);
-        result.ElementExtensions.Single().GetObject<XElement>().Value.Should().Be(post.Image.Url);
         result.Categories.Should().HaveCount(2);
+        result.ElementExtensions.Single().GetObject<XElement>().Value.Should().Be(post.Image.Url);
         result.Categories.Should().Contain(category => category.Name == "Tag1");
         result.Categories.Should().Contain(category => category.Name == "Tag2");
 

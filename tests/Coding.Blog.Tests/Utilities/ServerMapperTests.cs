@@ -37,10 +37,9 @@ internal sealed class ServerMapperTests
             Title: "Title",
             DatePublished: DateTime.Now.ToUniversalTime(),
             Metadata: new CosmicBookMetadata(
-                PurchaseUrl: "PurchaseUrl",
+                Url: "PurchaseUrl",
                 Image: new CosmicImage(
-                    Url: "Url",
-                    ImgixUrl: "ImgixUrl"
+                    Url: "ImgixUrl"
                 ),
                 Content: "Content",
                 Author: "Author"
@@ -64,10 +63,9 @@ internal sealed class ServerMapperTests
                 Title: "Title 1",
                 DatePublished: DateTime.Now.ToUniversalTime(),
                 Metadata: new CosmicBookMetadata(
-                    PurchaseUrl: "PurchaseUrl 1",
+                    Url: "PurchaseUrl 1",
                     Image: new CosmicImage(
-                        Url: "Url 1",
-                        ImgixUrl: "ImgixUrl 1"
+                        Url: "ImgixUrl 1"
                     ),
                     Content: "Content 1",
                     Author: "Author 1"
@@ -77,10 +75,9 @@ internal sealed class ServerMapperTests
                 Title: "Title 2",
                 DatePublished: DateTime.Now.ToUniversalTime(),
                 Metadata: new CosmicBookMetadata(
-                    PurchaseUrl: "PurchaseUrl 2",
+                    Url: "PurchaseUrl 2",
                     Image: new CosmicImage(
-                        Url: "Url 2",
-                        ImgixUrl: "ImgixUrl 2"
+                        Url: "ImgixUrl 2"
                     ),
                     Content: "Content 2",
                     Author: "Author 2"
@@ -104,9 +101,8 @@ internal sealed class ServerMapperTests
         actual.Content.Should().Be(expected.Metadata.Content);
         actual.Author.Should().Be(expected.Metadata.Author);
         actual.DatePublished.Should().Be(expected.DatePublished);
-        actual.PurchaseUrl.Should().Be(expected.Metadata.PurchaseUrl);
+        actual.Url.Should().Be(expected.Metadata.Url);
         actual.Image.Url.Should().Be(expected.Metadata.Image.Url);
-        actual.Image.ImgixUrl.Should().Be(expected.Metadata.Image.ImgixUrl);
     }
 
     [Test]
@@ -117,10 +113,9 @@ internal sealed class ServerMapperTests
             Title: "Title",
             DatePublished: DateTime.Now.ToUniversalTime(),
             Metadata: new CosmicBookMetadata(
-                PurchaseUrl: "PurchaseUrl",
+                Url: "PurchaseUrl",
                 Image: new CosmicImage(
-                    Url: "Url",
-                    ImgixUrl: "ImgixUrl"
+                    Url: "ImgixUrl"
                 ),
                 Content: "Content",
                 Author: "Author"
@@ -144,10 +139,9 @@ internal sealed class ServerMapperTests
                 Title: "Title 1",
                 DatePublished: DateTime.Now.ToUniversalTime(),
                 Metadata: new CosmicBookMetadata(
-                    PurchaseUrl: "PurchaseUrl 1",
+                    Url: "PurchaseUrl 1",
                     Image: new CosmicImage(
-                        Url: "Url 1",
-                        ImgixUrl: "ImgixUrl 1"
+                        Url: "ImgixUrl 1"
                     ),
                     Content: "Content 1",
                     Author: "Author 1"
@@ -157,10 +151,9 @@ internal sealed class ServerMapperTests
                 Title: "Title 2",
                 DatePublished: DateTime.Now.ToUniversalTime(),
                 Metadata: new CosmicBookMetadata(
-                    PurchaseUrl: "PurchaseUrl 2",
+                    Url: "PurchaseUrl 2",
                     Image: new CosmicImage(
-                        Url: "Url 2",
-                        ImgixUrl: "ImgixUrl 2"
+                        Url: "ImgixUrl 2"
                     ),
                     Content: "Content 2",
                     Author: "Author 2"
@@ -183,9 +176,8 @@ internal sealed class ServerMapperTests
         actual.Title.Should().Be(expected.Title);
         actual.Content.Should().Be(expected.Metadata.Content);
         actual.DatePublished.Should().Be(expected.DatePublished.ToTimestamp());
-        actual.PurchaseUrl.Should().Be(expected.Metadata.PurchaseUrl);
+        actual.Url.Should().Be(expected.Metadata.Url);
         actual.Image.Url.Should().Be(expected.Metadata.Image.Url);
-        actual.Image.ImgixUrl.Should().Be(expected.Metadata.Image.ImgixUrl);
     }
 
     [Test]
@@ -203,11 +195,10 @@ internal sealed class ServerMapperTests
             DatePublished: DateTime.Now.ToUniversalTime(),
             Metadata: new CosmicPostMetadata(
                 Description: "Description",
-                Markdown: "Markdown",
+                Content: "Markdown",
                 Tags: "Tag1,Tag2",
                 Image: new CosmicImage(
-                    Url: "Url",
-                    ImgixUrl: "ImgixUrl"
+                    Url: "ImgixUrl"
                 )
             )
         );
@@ -236,11 +227,10 @@ internal sealed class ServerMapperTests
                 DatePublished: DateTime.Now.ToUniversalTime(),
                 Metadata: new CosmicPostMetadata(
                     Description: "Description 1",
-                    Markdown: "Markdown 1",
+                    Content: "Markdown 1",
                     Tags: "Tag1,Tag2",
                     Image: new CosmicImage(
-                        Url: "Url 1",
-                        ImgixUrl: "ImgixUrl 1"
+                        Url: "ImgixUrl 1"
                     )
                 )
             ),
@@ -251,11 +241,10 @@ internal sealed class ServerMapperTests
                 DatePublished: DateTime.Now.ToUniversalTime(),
                 Metadata: new CosmicPostMetadata(
                     Description: "Description 2",
-                    Markdown: "Markdown 2",
+                    Content: "Markdown 2",
                     Tags: "Tag1,Tag2",
                     Image: new CosmicImage(
-                        Url: "Url 2",
-                        ImgixUrl: "ImgixUrl 2"
+                        Url: "ImgixUrl 2"
                     )
                 )
             )
@@ -277,11 +266,10 @@ internal sealed class ServerMapperTests
         actual.Title.Should().Be(expected.Title);
         actual.Slug.Should().Be(expected.Slug);
         actual.DatePublished.Should().Be(expected.DatePublished);
-        actual.Content.Should().Be(expected.Metadata.Markdown);
+        actual.Content.Should().Be(expected.Metadata.Content);
         actual.Description.Should().Be(expected.Metadata.Description);
         actual.Tags.Should().Be(expected.Metadata.Tags);
         actual.Image.Url.Should().Be(expected.Metadata.Image.Url);
-        actual.Image.ImgixUrl.Should().Be(expected.Metadata.Image.ImgixUrl);
     }
 
     [Test]
@@ -299,11 +287,10 @@ internal sealed class ServerMapperTests
             DatePublished: DateTime.Now.ToUniversalTime(),
             Metadata: new CosmicPostMetadata(
                 Description: "Description",
-                Markdown: "Markdown",
+                Content: "Markdown",
                 Tags: "Tag1,Tag2",
                 Image: new CosmicImage(
-                    Url: "Url",
-                    ImgixUrl: "ImgixUrl"
+                    Url: "ImgixUrl"
                 )
             )
         );
@@ -332,11 +319,10 @@ internal sealed class ServerMapperTests
                 DatePublished: DateTime.Now.ToUniversalTime(),
                 Metadata: new CosmicPostMetadata(
                     Description: "Description 1",
-                    Markdown: "Markdown 1",
+                    Content: "Markdown 1",
                     Tags: "Tag1,Tag2",
                     Image: new CosmicImage(
-                        Url: "Url 1",
-                        ImgixUrl: "ImgixUrl 1"
+                        Url: "ImgixUrl 1"
                     )
                 )
             ),
@@ -347,11 +333,10 @@ internal sealed class ServerMapperTests
                 DatePublished: DateTime.Now.ToUniversalTime(),
                 Metadata: new CosmicPostMetadata(
                     Description: "Description 2",
-                    Markdown: "Markdown 2",
+                    Content: "Markdown 2",
                     Tags: "Tag1,Tag2",
                     Image: new CosmicImage(
-                        Url: "Url 2",
-                        ImgixUrl: "ImgixUrl 2"
+                        Url: "ImgixUrl 2"
                     )
                 )
             )
@@ -373,11 +358,10 @@ internal sealed class ServerMapperTests
         actual.Title.Should().Be(expected.Title);
         actual.Slug.Should().Be(expected.Slug);
         actual.DatePublished.Should().Be(expected.DatePublished.ToTimestamp());
-        actual.Content.Should().Be(expected.Metadata.Markdown);
+        actual.Content.Should().Be(expected.Metadata.Content);
         actual.Description.Should().Be(expected.Metadata.Description);
         actual.Tags.Should().Be(expected.Metadata.Tags);
         actual.Image.Url.Should().Be(expected.Metadata.Image.Url);
-        actual.Image.ImgixUrl.Should().Be(expected.Metadata.Image.ImgixUrl);
     }
 
     [Test]
@@ -387,13 +371,12 @@ internal sealed class ServerMapperTests
         var cosmicProject = new CosmicProject(
             Title: "Title",
             Metadata: new CosmicProjectMetadata(
-                Description: "Description",
+                Content: "Description",
                 Rank: 1,
-                GitHubUrl: "GitHubUrl",
+                Url: "GitHubUrl",
                 Tags: "Tag1,Tag2",
                 Image: new CosmicImage(
-                    Url: "Url",
-                    ImgixUrl: "ImgixUrl"
+                    Url: "ImgixUrl"
                 )
             )
         );
@@ -414,26 +397,24 @@ internal sealed class ServerMapperTests
             new(
                 Title: "Title 1",
                 Metadata: new CosmicProjectMetadata(
-                    Description: "Description 1",
+                    Content: "Description 1",
                     Rank: 1,
-                    GitHubUrl: "GitHubUrl 1",
+                    Url: "GitHubUrl 1",
                     Tags: "Tag1,Tag2",
                     Image: new CosmicImage(
-                        Url: "Url 1",
-                        ImgixUrl: "ImgixUrl 1"
+                        Url: "ImgixUrl 1"
                     )
                 )
             ),
             new(
                 Title: "Title 2",
                 Metadata: new CosmicProjectMetadata(
-                    Description: "Description 2",
+                    Content: "Description 2",
                     Rank: 2,
-                    GitHubUrl: "GitHubUrl 2",
+                    Url: "GitHubUrl 2",
                     Tags: "Tag1,Tag2",
                     Image: new CosmicImage(
-                        Url: "Url 2",
-                        ImgixUrl: "ImgixUrl 2"
+                        Url: "ImgixUrl 2"
                     )
                 )
             )
@@ -452,12 +433,11 @@ internal sealed class ServerMapperTests
     private static void AssertExpectedProjectData(CosmicProject expected, Project actual)
     {
         actual.Title.Should().Be(expected.Title);
-        actual.Description.Should().Be(expected.Metadata.Description);
-        actual.ProjectUrl.Should().Be(expected.Metadata.GitHubUrl);
+        actual.Content.Should().Be(expected.Metadata.Content);
+        actual.Url.Should().Be(expected.Metadata.Url);
         actual.Rank.Should().Be(expected.Metadata.Rank);
         actual.Tags.Should().Be(expected.Metadata.Tags);
         actual.Image.Url.Should().Be(expected.Metadata.Image.Url);
-        actual.Image.ImgixUrl.Should().Be(expected.Metadata.Image.ImgixUrl);
     }
 
     [Test]
@@ -467,13 +447,12 @@ internal sealed class ServerMapperTests
         var cosmicProject = new CosmicProject(
             Title: "Title",
             Metadata: new CosmicProjectMetadata(
-                Description: "Description",
+                Content: "Description",
                 Rank: 1,
-                GitHubUrl: "GitHubUrl",
+                Url: "GitHubUrl",
                 Tags: "Tag1,Tag2",
                 Image: new CosmicImage(
-                    Url: "Url",
-                    ImgixUrl: "ImgixUrl"
+                    Url: "ImgixUrl"
                 )
             )
         );
@@ -494,26 +473,24 @@ internal sealed class ServerMapperTests
             new(
                 Title: "Title 1",
                 Metadata: new CosmicProjectMetadata(
-                    Description: "Description 1",
+                    Content: "Description 1",
                     Rank: 1,
-                    GitHubUrl: "GitHubUrl 1",
+                    Url: "GitHubUrl 1",
                     Tags: "Tag1,Tag2",
                     Image: new CosmicImage(
-                        Url: "Url 1",
-                        ImgixUrl: "ImgixUrl 1"
+                        Url: "ImgixUrl 1"
                     )
                 )
             ),
             new(
                 Title: "Title 2",
                 Metadata: new CosmicProjectMetadata(
-                    Description: "Description 2",
+                    Content: "Description 2",
                     Rank: 2,
-                    GitHubUrl: "GitHubUrl 2",
+                    Url: "GitHubUrl 2",
                     Tags: "Tag1,Tag2",
                     Image: new CosmicImage(
-                        Url: "Url 2",
-                        ImgixUrl: "ImgixUrl 2"
+                        Url: "ImgixUrl 2"
                     )
                 )
             )
@@ -532,11 +509,10 @@ internal sealed class ServerMapperTests
     private static void AssertExpectedProjectData(CosmicProject expected, ProtoProject actual)
     {
         actual.Title.Should().Be(expected.Title);
-        actual.Description.Should().Be(expected.Metadata.Description);
-        actual.ProjectUrl.Should().Be(expected.Metadata.GitHubUrl);
+        actual.Content.Should().Be(expected.Metadata.Content);
+        actual.Url.Should().Be(expected.Metadata.Url);
         actual.Rank.Should().Be(expected.Metadata.Rank);
         actual.Tags.Should().Be(expected.Metadata.Tags);
         actual.Image.Url.Should().Be(expected.Metadata.Image.Url);
-        actual.Image.ImgixUrl.Should().Be(expected.Metadata.Image.ImgixUrl);
     }
 }

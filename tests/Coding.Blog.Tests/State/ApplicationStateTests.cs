@@ -26,10 +26,9 @@ internal sealed class ApplicationStateTests
         Title: "some book",
         Author: "some author",
         DatePublished: DateTime.UtcNow,
-        PurchaseUrl: "some url",
+        Url: "some url",
         Image: new Image(
-            Url: "some image url",
-            ImgixUrl: "some imgix url"
+            Url: "some imgix url"
         ),
         Content: "some content"
     );
@@ -51,11 +50,10 @@ internal sealed class ApplicationStateTests
 
     private static readonly Project ExpectedProject = new(
         Title: "some project",
-        Description: "some description",
-        ProjectUrl: "some url",
+        Content: "some description",
+        Url: "some url",
         Image: new Image(
-            Url: "some image url",
-            ImgixUrl: "some imgix url"
+            Url: "some imgix url"
         ),
         Rank: 1,
         Tags: "some,tags"
@@ -83,8 +81,7 @@ internal sealed class ApplicationStateTests
         Description: "some description",
         DatePublished: DateTime.UtcNow,
         Image: new Image(
-            Url: "some image url",
-            ImgixUrl: "some imgix url"
+            Url: "some imgix url"
         ),
         Content: "some content",
         Tags: "some,tags",

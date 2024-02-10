@@ -114,10 +114,9 @@ internal sealed class CosmicClientTests : IDisposable
         Title: "some book",
         DatePublished: DateTime.UtcNow,
         Metadata: new CosmicBookMetadata(
-            PurchaseUrl: "some url",
+            Url: "some url",
             Image: new CosmicImage(
-                Url: "some image url",
-                ImgixUrl: "some imgix url"
+                Url: "some imgix url"
             ),
             Content: "some content",
             Author: "some author"

@@ -52,12 +52,11 @@ internal sealed class ProjectsServiceTests
     private static readonly CosmicProject ExpectedCosmicProject = new(
         Title: "some title",
         Metadata: new CosmicProjectMetadata(
-            Description: "some description",
+            Content: "some description",
             Rank: 1,
-            GitHubUrl: "some GitHub url",
+            Url: "some GitHub url",
             Image: new CosmicImage(
-                Url: "some url",
-                ImgixUrl: "some other url"
+                Url: "some other url"
             ),
             Tags: "some,tags"
         )
@@ -68,13 +67,12 @@ internal sealed class ProjectsServiceTests
     private static readonly Project ExpectedProject = new()
     {
         Title = "some title",
-        Description = "some description",
+        Content = "some description",
         Image = new Image
         {
-            Url = "some url",
-            ImgixUrl = "some other url"
+            Url = "some other url"
         },
-        ProjectUrl = "some project url",
+        Url = "some project url",
         Rank = 1
     };
 

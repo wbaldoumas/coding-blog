@@ -30,7 +30,7 @@ internal sealed class ClientBlogServiceTests
     public async Task WhenGetAsyncIsInvoked_ThenPostsAreReturned()
     {
         // arrange
-        var protoPost = new ProtoPost()
+        var protoPost = new ProtoPost
         {
             Slug = "example-slug",
             Content = "some content",
@@ -40,8 +40,7 @@ internal sealed class ClientBlogServiceTests
             DatePublished = Timestamp.FromDateTime(DateTime.UtcNow),
             Image = new Image
             {
-                ImgixUrl = "some url",
-                Url = "some other url"
+                Url = "some url"
             },
             Tags = "some,tags",
             ReadingTime = Duration.FromTimeSpan(TimeSpan.Zero)
@@ -61,7 +60,6 @@ internal sealed class ClientBlogServiceTests
             protoPost.Description.Equals(post.Description, StringComparison.OrdinalIgnoreCase) &&
             protoPost.ReadingTime.ToTimeSpan().Equals(post.ReadingTime) &&
             protoPost.DatePublished.ToDateTime().Equals(post.DatePublished) &&
-            protoPost.Image.ImgixUrl.Equals(post.Image.ImgixUrl, StringComparison.OrdinalIgnoreCase) &&
             protoPost.Image.Url.Equals(post.Image.Url, StringComparison.OrdinalIgnoreCase) &&
             protoPost.Title.Equals(post.Title, StringComparison.OrdinalIgnoreCase) &&
             protoPost.Tags.Equals(post.Tags, StringComparison.OrdinalIgnoreCase)

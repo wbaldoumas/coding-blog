@@ -19,7 +19,7 @@ message Book {
 	string title = 1;
 	string content = 2;
 	string author = 3;
-	string purchaseUrl = 4;
+	string url = 4;
 	Image image = 5;
 	google.protobuf.Timestamp datePublished = 6; 
 }

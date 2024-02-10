@@ -52,8 +52,7 @@ internal sealed class PostLinkerTests
         DatePublished: datePublished,
         Tags: "Tag1, Tag2",
         Image: new Image(
-            Url: $"https://example.com/image{id}.jpg",
-            ImgixUrl: $"https://example.com/image{id}.jpg"
+            Url: $"https://example.com/image{id}.jpg"
         )
     );
 }

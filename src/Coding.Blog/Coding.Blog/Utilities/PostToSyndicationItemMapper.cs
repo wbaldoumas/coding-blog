@@ -22,7 +22,7 @@ internal sealed class PostToSyndicationItemMapper(IStringSanitizer stringSanitiz
             BaseUri = postUrl,
             PublishDate = postDate,
             LastUpdatedTime = postDate,
-            ElementExtensions = { new XElement("image", post.Image.ImgixUrl) }
+            ElementExtensions = { new XElement("image", post.Image.Url) }
         };
 
         foreach (var tag in post.DisplayTags.Value)
