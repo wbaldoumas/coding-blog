@@ -56,6 +56,30 @@ public sealed class CSharpOverride : ILanguage
                     { 0, ScopeName.StringCSharpVerbatim }
                 }),
             new(
+                @"(\$""[^""]*\{)([^{}]*)(\}[^""]*\{)([^{}]*)(\}[^""]*\{)([^{}]*)(\}.*?"")",
+                new Dictionary<int, string>
+                {
+                    { 1, ScopeName.String },
+                    { 3, ScopeName.String },
+                    { 5, ScopeName.String },
+                    { 7, ScopeName.String }
+                }),
+            new(
+                @"(\$""[^""]*\{)([^{}]*)(\}[^""]*\{)([^{}]*)(\}.*?"")",
+                new Dictionary<int, string>
+                {
+                    { 1, ScopeName.String },
+                    { 3, ScopeName.String },
+                    { 5, ScopeName.String }
+                }),
+            new(
+                @"(\$""[^""]*\{)([^{}]*)(\}.*?"")",
+                new Dictionary<int, string>
+                {
+                    { 1, ScopeName.String },
+                    { 3, ScopeName.String }
+                }),
+            new(
                 @"(?s)(""[^\n]*?(?<!\\)"")",
                 new Dictionary<int, string>
                 {
