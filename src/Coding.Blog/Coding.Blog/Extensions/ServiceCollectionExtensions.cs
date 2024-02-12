@@ -69,9 +69,9 @@ internal static class ServiceCollectionExtensions
     }
 
     private static IServiceCollection AddCosmicClients(this IServiceCollection services) => services
-        .AddSingleton<ICosmicObjectPostProcessor<CosmicBook>, CosmicBookPostProcessor>()
-        .AddSingleton<ICosmicObjectPostProcessor<CosmicPost>, CosmicPostPostProcessor>()
-        .AddSingleton<ICosmicObjectPostProcessor<CosmicProject>, CosmicProjectPostProcessor>()
+        .AddSingleton<ICosmicObjectPostProcessor<CosmicBook>, CosmicBooksPostProcessor>()
+        .AddSingleton<ICosmicObjectPostProcessor<CosmicPost>, CosmicPostsPostProcessor>()
+        .AddSingleton<ICosmicObjectPostProcessor<CosmicProject>, CosmicProjectsPostProcessor>()
         .AddCosmicClient<CosmicPost>()
         .AddCosmicClient<CosmicBook>()
         .AddCosmicClient<CosmicProject>();

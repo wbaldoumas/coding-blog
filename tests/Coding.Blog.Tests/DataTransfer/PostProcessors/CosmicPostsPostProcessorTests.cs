@@ -11,13 +11,13 @@ internal sealed class CosmicPostsPostProcessorTests
 {
     private MarkdownPipeline _mockMarkdownPipeline = null!;
 
-    private CosmicPostPostProcessor _cosmicPostPostProcessor = null!;
+    private CosmicPostsPostProcessor _cosmicPostsPostProcessor = null!;
 
     [SetUp]
     public void SetUp()
     {
         _mockMarkdownPipeline = new MarkdownPipelineBuilder().Build();
-        _cosmicPostPostProcessor = new CosmicPostPostProcessor(_mockMarkdownPipeline);
+        _cosmicPostsPostProcessor = new CosmicPostsPostProcessor(_mockMarkdownPipeline);
     }
 
     [Test]
@@ -43,7 +43,7 @@ internal sealed class CosmicPostsPostProcessorTests
         };
 
         // act
-        var result = _cosmicPostPostProcessor.Process(cosmicPosts);
+        var result = _cosmicPostsPostProcessor.Process(cosmicPosts);
 
         // assert
         result.Should().BeEquivalentTo(
