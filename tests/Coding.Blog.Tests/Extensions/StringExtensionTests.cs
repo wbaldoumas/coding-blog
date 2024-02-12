@@ -1,6 +1,5 @@
 ﻿using Coding.Blog.Library.Extensions;
 using FluentAssertions;
-using Markdig;
 using NUnit.Framework;
 
 namespace Coding.Blog.Tests.Extensions;
@@ -41,10 +40,10 @@ internal sealed class StringExtensionTests
         const string content = "Sample content";
 
         // act
-        var result = content.ToMarkupString(new MarkdownPipelineBuilder().Build());
+        var result = content.ToMarkupString();
 
         // assert
-        result.Value.Should().Be("<p>Sample content</p>\n");
+        result.Value.Should().Be(content);
     }
 
     [Test]
@@ -54,7 +53,7 @@ internal sealed class StringExtensionTests
         const string content = "";
 
         // act
-        var result = content.ToMarkupString(new MarkdownPipelineBuilder().Build());
+        var result = content.ToMarkupString();
 
         // assert
         result.Value.Should().BeEmpty();

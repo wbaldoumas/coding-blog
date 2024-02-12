@@ -1,5 +1,6 @@
 ﻿using Coding.Blog.Clients;
 using Coding.Blog.DataTransfer;
+using Coding.Blog.DataTransfer.PostProcessors;
 using Coding.Blog.Options;
 using Coding.Blog.Utilities;
 using FluentAssertions;
@@ -23,6 +24,8 @@ internal sealed class CosmicClientTests : IDisposable
     private ILogger<CosmicBook> _mockLogger = null!;
 
     private IAsyncPolicy<IEnumerable<CosmicBook>> _resiliencePolicy = null!;
+
+    private ICosmicObjectPostProcessor<CosmicBook> _mockCosmicBookPostProcessor = null!;
 
     private CosmicClient<CosmicBook> _cosmicClient = null!;
 
@@ -55,7 +58,18 @@ internal sealed class CosmicClientTests : IDisposable
             TestTimeToLive
         );
 
-        _cosmicClient = new CosmicClient<CosmicBook>(_mockOptions, _mockLogger, _resiliencePolicy);
+        _mockCosmicBookPostProcessor = Substitute.For<ICosmicObjectPostProcessor<CosmicBook>>();
+
+        _mockCosmicBookPostProcessor
+            .Process(Arg.Any<IEnumerable<CosmicBook>>())
+            .Returns(ExpectedCosmicBooks);
+
+        _cosmicClient = new CosmicClient<CosmicBook>(
+            _mockOptions, 
+            _mockLogger, 
+            _resiliencePolicy,
+            _mockCosmicBookPostProcessor
+        );
     }
 
     [TearDown]

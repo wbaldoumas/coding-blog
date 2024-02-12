@@ -4,6 +4,7 @@ using Blazorise.Bootstrap5;
 using Blazorise.Icons.FontAwesome;
 using Coding.Blog.Clients;
 using Coding.Blog.DataTransfer;
+using Coding.Blog.DataTransfer.PostProcessors;
 using Coding.Blog.Jobs;
 using Coding.Blog.Library.Domain;
 using Coding.Blog.Library.Services;
@@ -68,6 +69,9 @@ internal static class ServiceCollectionExtensions
     }
 
     private static IServiceCollection AddCosmicClients(this IServiceCollection services) => services
+        .AddSingleton<ICosmicObjectPostProcessor<CosmicBook>, CosmicBookPostProcessor>()
+        .AddSingleton<ICosmicObjectPostProcessor<CosmicPost>, CosmicPostPostProcessor>()
+        .AddSingleton<ICosmicObjectPostProcessor<CosmicProject>, CosmicProjectPostProcessor>()
         .AddCosmicClient<CosmicPost>()
         .AddCosmicClient<CosmicBook>()
         .AddCosmicClient<CosmicProject>();
