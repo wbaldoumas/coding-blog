@@ -36,7 +36,7 @@
                                     <div class="col-md-8">
                                         <div class="card-body rounded">
                                             <h5 class="card-title">@project.Title</h5>
-                                            <p class="card-text">@project.Content.ToMarkupString(MarkdownPipeline)</p>
+                                            <p class="card-text">@project.Content.ToMarkupString()</p>
                                             <p class="card-text">
                                                 <TagsDisplay Tags=@project.DisplayTags.Value/>
                                             </p>

@@ -1,4 +1,5 @@
 ﻿using Coding.Blog.DataTransfer;
+using Coding.Blog.DataTransfer.PostProcessors;
 using Coding.Blog.Library.Extensions;
 using Coding.Blog.Options;
 using Flurl;
@@ -11,7 +12,8 @@ namespace Coding.Blog.Clients;
 internal sealed class CosmicClient<T>(
     IOptions<CosmicOptions> options,
     ILogger<T> logger,
-    IAsyncPolicy<IEnumerable<T>> resiliencePolicy
+    IAsyncPolicy<IEnumerable<T>> resiliencePolicy,
+    ICosmicObjectPostProcessor<T> postProcessor
 ) : ICosmicClient<T>
 {
     public async Task<IEnumerable<T>> GetAsync()
@@ -31,7 +33,7 @@ internal sealed class CosmicClient<T>(
                         .GetJsonAsync<CosmicObjects<T>>()
                         .ConfigureAwait(false);
 
-                    return cosmicCollection.Objects;
+                    return postProcessor.Process(cosmicCollection.Objects);
                 },
                 new Context(typeName)
             ).ConfigureAwait(false);
