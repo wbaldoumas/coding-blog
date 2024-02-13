@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using Blazorise;
+﻿using Blazorise;
 using Blazorise.Bootstrap5;
 using Blazorise.Icons.FontAwesome;
 using Coding.Blog.Clients;
@@ -12,12 +11,16 @@ using Coding.Blog.Library.Utilities;
 using Coding.Blog.Options;
 using Coding.Blog.Services;
 using Coding.Blog.Utilities;
-using ColorCode;
 using Markdig;
 using Markdown.ColorCode;
+using Markdown.ColorCode.CSharpToColoredHtml;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Options;
 using Quartz;
+using System.Diagnostics.CodeAnalysis;
+using ColorCode;
+using ColorCode.Styling;
+using CsharpToColouredHTML.Core;
 
 namespace Coding.Blog.Extensions;
 
@@ -105,10 +108,16 @@ internal static class ServiceCollectionExtensions
     private static IServiceCollection AddUtilities(this IServiceCollection services) => services
         .AddSingleton(_ => new MarkdownPipelineBuilder()
             .UseAdvancedExtensions()
-            .UseColorCode(
-                HtmlFormatterType.Style,
-                SyntaxHighlighting.Dark,
-                new List<ILanguage> { new CSharpOverride() })
+            .UseColorCodeWithCSharpToColoredHtml(
+                HtmlFormatterType.StyleWithCSharpToColoredHtml,
+                new HTMLEmitterSettings().DisableIframe().DisableLineNumbers().UseCustomCSS(SyntaxHighlighting.CustomCss),
+                StyleDictionary.DefaultDark,
+                new List<ILanguage>
+                {
+                    new PlainText()
+                },
+                PlainText.LanguageId
+            )
             .Build())
         .AddSingleton<IPostToSyndicationItemMapper, PostToSyndicationItemMapper>()
         .AddSingleton<IStringSanitizer, StringSanitizer>()

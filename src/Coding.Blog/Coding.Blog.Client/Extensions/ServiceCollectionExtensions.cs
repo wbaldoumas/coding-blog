@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using Blazorise;
+﻿using Blazorise;
 using Blazorise.Bootstrap5;
 using Blazorise.Icons.FontAwesome;
 using Coding.Blog.Client.Clients;
@@ -9,14 +8,12 @@ using Coding.Blog.Client.Utilities;
 using Coding.Blog.Library.Protos;
 using Coding.Blog.Library.Services;
 using Coding.Blog.Library.Utilities;
-using ColorCode;
 using Grpc.Core;
 using Grpc.Net.Client.Configuration;
 using Grpc.Net.Client.Web;
-using Markdig;
-using Markdown.ColorCode;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Options;
+using System.Diagnostics.CodeAnalysis;
 using Book = Coding.Blog.Library.Domain.Book;
 using Post = Coding.Blog.Library.Domain.Post;
 using Project = Coding.Blog.Library.Domain.Project;
@@ -36,13 +33,6 @@ internal static class ServiceCollectionExtensions
     /// <param name="configuration">The configuration.</param>
     /// <returns>The configured service collection.</returns>
     public static IServiceCollection ConfigureServices(this IServiceCollection services, IConfiguration configuration) => services
-        .AddSingleton(_ => new MarkdownPipelineBuilder()
-            .UseAdvancedExtensions()
-            .UseColorCode(
-                HtmlFormatterType.Style,
-                SyntaxHighlighting.Dark,
-                new List<ILanguage> { new CSharpOverride() })
-            .Build())
         .AddBlazorise()
         .AddBootstrap5Providers()
         .AddFontAwesomeIcons()
