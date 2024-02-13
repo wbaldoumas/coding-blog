@@ -17,7 +17,7 @@ internal sealed class PlainText : ILanguage
 
     public IList<LanguageRule> Rules => new List<LanguageRule>
     {
-        new(".*", new Dictionary<int, string> { { 0, ScopeName.PlainText }, })
+        new(".*", new Dictionary<int, string> { { 0, ScopeName.PlainText } })
     };
 
     public bool HasAlias(string lang)

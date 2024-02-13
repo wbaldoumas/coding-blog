@@ -5,6 +5,9 @@ namespace Coding.Blog.Utilities;
 [ExcludeFromCodeCoverage]
 internal static class SyntaxHighlighting
 {
+    /// <summary>
+    ///    The custom CSS for the syntax highlighting with CSharpToColouredHTML.
+    /// </summary>
     public const string CustomCss = """
                                     <style>
                                         .background {
