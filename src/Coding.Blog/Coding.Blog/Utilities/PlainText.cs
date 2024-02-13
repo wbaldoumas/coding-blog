@@ -1,8 +1,10 @@
-﻿using ColorCode;
+﻿using System.Diagnostics.CodeAnalysis;
+using ColorCode;
 using ColorCode.Common;
 
 namespace Coding.Blog.Utilities;
 
+[ExcludeFromCodeCoverage]
 internal sealed class PlainText : ILanguage
 {
     public static readonly string LanguageId = "plaintext";
