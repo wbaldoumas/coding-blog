@@ -22,7 +22,7 @@
     <PackageReference Include="Blazorise.Icons.FontAwesome" Version="1.4.2" />
     <PackageReference Include="Grpc.Net.Client.Web" Version="2.61.0" />
     <PackageReference Include="Grpc.Net.ClientFactory" Version="2.61.0" />
-    <PackageReference Include="Meziantou.Analyzer" Version="2.0.143">
+    <PackageReference Include="Meziantou.Analyzer" Version="2.0.145">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
