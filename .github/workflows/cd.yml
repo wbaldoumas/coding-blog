@@ -42,7 +42,7 @@ jobs:
 
     - name: 🚢 configure kubectl
       id: configure-kubectl
-      uses: google-github-actions/get-gke-credentials@v2.1.0
+      uses: google-github-actions/get-gke-credentials@v2.2.0
       with:
         cluster_name: ${{ env.GKE_CLUSTER }}
         location: ${{ env.GKE_ZONE }}
