@@ -19,12 +19,12 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Meziantou.Analyzer" Version="2.0.153">
+    <PackageReference Include="Meziantou.Analyzer" Version="2.0.154">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.AspNetCore.Components" Version="8.0.5" />
-    <PackageReference Include="Microsoft.JSInterop" Version="8.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Components" Version="8.0.6" />
+    <PackageReference Include="Microsoft.JSInterop" Version="8.0.6" />
   </ItemGroup>
 
   <ItemGroup>
