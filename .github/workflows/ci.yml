@@ -125,7 +125,7 @@ jobs:
 
       - name: 🧼 lint renovate config
         id: lint-renovate-config
-        uses: suzuki-shunsuke/github-action-renovate-config-validator@v1.0.1
+        uses: suzuki-shunsuke/github-action-renovate-config-validator@v1.1.0
         with:
           config_file_path: "renovate.json"
 
