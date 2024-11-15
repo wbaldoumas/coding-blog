@@ -101,7 +101,7 @@ jobs:
           
       - name: 💌 publish code coverage
         id: publish-code-coverage
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: /home/runner/work/coding-blog/coding-blog/tests/Coding.Blog.Tests/coverage.opencover.xml
