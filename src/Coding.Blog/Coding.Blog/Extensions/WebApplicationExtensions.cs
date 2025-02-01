@@ -36,7 +36,7 @@ internal static class WebApplicationExtensions
         webApplication.UseResponseCompression();
         webApplication.ConfigureResponseCache();
         webApplication.MapControllers();
-        webApplication.UseStaticFiles();
+        webApplication.MapStaticAssets();
         webApplication.UseAntiforgery();
         webApplication.UseGrpcWeb();
         webApplication.MapGrpcService<PostsService>().EnableGrpcWeb();

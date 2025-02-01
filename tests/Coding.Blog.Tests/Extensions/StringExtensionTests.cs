@@ -17,7 +17,7 @@ internal sealed class StringExtensionTests
         var result = tags.ToDisplayTags();
 
         // assert
-        result.Should().BeEquivalentTo(["Tag1", "Tag2", "Tag3"]);
+        result.Should().BeEquivalentTo("Tag1", "Tag2", "Tag3");
     }
 
     [Test]
