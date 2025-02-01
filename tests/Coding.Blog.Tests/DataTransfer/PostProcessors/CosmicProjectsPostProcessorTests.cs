@@ -45,8 +45,7 @@ internal sealed class CosmicProjectsPostProcessorTests
 
         // assert
         result.Should().BeEquivalentTo(
-            new[]
-            {
+            [
                 new CosmicProject(
                     Title: "Sample title",
                     Metadata: new CosmicProjectMetadata(
@@ -59,7 +58,7 @@ internal sealed class CosmicProjectsPostProcessorTests
                         Tags: "Tag1, Tag2, Tag3"
                     )
                 )
-            }
+            ]
         );
     }
 }

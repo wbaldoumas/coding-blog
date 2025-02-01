@@ -47,8 +47,7 @@ internal sealed class CosmicPostsPostProcessorTests
 
         // assert
         result.Should().BeEquivalentTo(
-            new[]
-            {
+            [
                 new CosmicPost(
                     Title: "Sample title",
                     DatePublished: DateTime.MaxValue,
@@ -63,7 +62,7 @@ internal sealed class CosmicPostsPostProcessorTests
                     Id: "sample-id",
                     Slug: "sample-slug"
                 )
-            }
+            ]
         );
     }
 }

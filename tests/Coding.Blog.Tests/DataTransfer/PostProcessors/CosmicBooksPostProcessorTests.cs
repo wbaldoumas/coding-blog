@@ -45,8 +45,7 @@ internal sealed class CosmicBooksPostProcessorTests
 
         // assert
         result.Should().BeEquivalentTo(
-            new[]
-            {
+            [
                 new CosmicBook(
                     Title: "Sample title",
                     DatePublished: DateTime.MaxValue,
@@ -59,7 +58,7 @@ internal sealed class CosmicBooksPostProcessorTests
                         Author: "Sample author"
                     )
                 )
-            }
+            ]
         );
     }
 }

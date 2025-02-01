@@ -36,7 +36,7 @@
 @code {
     [Parameter] public string SelectedTag { get; set; } = string.Empty;
 
-    [Parameter] public IEnumerable<string> Tags { get; set; } = Enumerable.Empty<string>();
+    [Parameter] public IEnumerable<string> Tags { get; set; } = [];
 
     private const string AllTopicsTag = "All Topics";
 
