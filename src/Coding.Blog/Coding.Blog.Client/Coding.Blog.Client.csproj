@@ -15,11 +15,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Blazorise.Bootstrap5" Version="1.7.3" />
-    <PackageReference Include="Blazorise.Components" Version="1.7.3">
+    <PackageReference Include="Blazorise.Bootstrap5" Version="1.7.4" />
+    <PackageReference Include="Blazorise.Components" Version="1.7.4">
       <TreatAsUsed>true</TreatAsUsed>
     </PackageReference>
-    <PackageReference Include="Blazorise.Icons.FontAwesome" Version="1.7.3" />
+    <PackageReference Include="Blazorise.Icons.FontAwesome" Version="1.7.4" />
     <PackageReference Include="Grpc.Net.Client.Web" Version="2.67.0" />
     <PackageReference Include="Grpc.Net.ClientFactory" Version="2.67.0" />
     <PackageReference Include="Meziantou.Analyzer" Version="2.0.186">
