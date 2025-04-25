@@ -15,14 +15,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Blazorise.Bootstrap5" Version="1.7.5" />
-    <PackageReference Include="Blazorise.Components" Version="1.7.5">
+    <PackageReference Include="Blazorise.Bootstrap5" Version="1.7.6" />
+    <PackageReference Include="Blazorise.Components" Version="1.7.6">
       <TreatAsUsed>true</TreatAsUsed>
     </PackageReference>
-    <PackageReference Include="Blazorise.Icons.FontAwesome" Version="1.7.5" />
+    <PackageReference Include="Blazorise.Icons.FontAwesome" Version="1.7.6" />
     <PackageReference Include="Grpc.Net.Client.Web" Version="2.70.0" />
     <PackageReference Include="Grpc.Net.ClientFactory" Version="2.70.0" />
-    <PackageReference Include="Meziantou.Analyzer" Version="2.0.197">
+    <PackageReference Include="Meziantou.Analyzer" Version="2.0.198">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -30,7 +30,7 @@
     <PackageReference Include="Microsoft.Extensions.Options.DataAnnotations" Version="9.0.4" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.4" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.4" />
-    <PackageReference Include="Riok.Mapperly" Version="4.2.0" />
+    <PackageReference Include="Riok.Mapperly" Version="4.2.1" />
   </ItemGroup>
 
   <ItemGroup>
