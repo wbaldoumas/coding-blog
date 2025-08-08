@@ -23,7 +23,7 @@
     <PackageReference Include="Grpc.AspNetCore" Version="2.71.0" />
     <PackageReference Include="Grpc.AspNetCore.Web" Version="2.71.0" />
     <PackageReference Include="Markdown.ColorCode.CSharpToColoredHtml" Version="2.3.0" />
-    <PackageReference Include="Meziantou.Analyzer" Version="2.0.211">
+    <PackageReference Include="Meziantou.Analyzer" Version="2.0.212">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
