@@ -25,7 +25,7 @@ jobs:
     steps:
       - name: checkout code
         id: checkout-code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: initialize codeql
         id: initialize-codeql
@@ -67,7 +67,7 @@ jobs:
     steps:
       - name: checkout code
         id: checkout-code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: setup .net
         id: setup-dotnet
@@ -113,7 +113,7 @@ jobs:
     steps:
       - name: checkout code
         id: checkout-code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: 🧼 lint markdown files
         id: lint-markdown-files
@@ -136,7 +136,7 @@ jobs:
     steps:
     - name: checkout code
       id: checkout-code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
 
     - name: 🔐 authorize gcloud
       id: authorize-gcloud
