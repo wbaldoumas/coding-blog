@@ -13,18 +13,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Google.Protobuf" Version="3.32.0" />
+    <PackageReference Include="Google.Protobuf" Version="3.32.1" />
     <PackageReference Include="Grpc.Net.Client" Version="2.71.0" />
     <PackageReference Include="Grpc.Tools" Version="2.72.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Meziantou.Analyzer" Version="2.0.215">
+    <PackageReference Include="Meziantou.Analyzer" Version="2.0.219">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.AspNetCore.Components" Version="9.0.8" />
-    <PackageReference Include="Microsoft.JSInterop" Version="9.0.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Components" Version="9.0.9" />
+    <PackageReference Include="Microsoft.JSInterop" Version="9.0.9" />
   </ItemGroup>
 
   <ItemGroup>
