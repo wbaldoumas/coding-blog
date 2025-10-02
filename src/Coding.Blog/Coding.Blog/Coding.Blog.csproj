@@ -22,7 +22,7 @@
     <PackageReference Include="Flurl.Http" Version="4.0.2" />
     <PackageReference Include="Grpc.AspNetCore" Version="2.71.0" />
     <PackageReference Include="Grpc.AspNetCore.Web" Version="2.71.0" />
-    <PackageReference Include="Markdown.ColorCode.CSharpToColoredHtml" Version="2.3.0" />
+    <PackageReference Include="Markdown.ColorCode.CSharpToColoredHtml" Version="3.0.1" />
     <PackageReference Include="Meziantou.Analyzer" Version="2.0.221">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
