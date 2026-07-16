@@ -25,24 +25,24 @@ jobs:
     steps:
       - name: checkout code
         id: checkout-code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
 
       - name: initialize codeql
         id: initialize-codeql
-        uses: github/codeql-action/init@v3
+        uses: github/codeql-action/init@v4
         with:
           languages: ${{ matrix.language }}
           queries: security-and-quality
 
       - name: setup .net
         id: setup-dotnet
-        uses: actions/setup-dotnet@v5
+        uses: actions/setup-dotnet@v6
         with:
           dotnet-version: 9.0.x
 
       - name: restore cached dependencies
         id: restore-cached-dependencies
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ~/.nuget/packages
           key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
@@ -59,7 +59,7 @@ jobs:
 
       - name: 🧪 perform codeql analysis
         id: perform-codeql-analysis
-        uses: github/codeql-action/analyze@v3
+        uses: github/codeql-action/analyze@v4
 
   test:
     name: unit test
@@ -67,17 +67,17 @@ jobs:
     steps:
       - name: checkout code
         id: checkout-code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
 
       - name: setup .net
         id: setup-dotnet
-        uses: actions/setup-dotnet@v5
+        uses: actions/setup-dotnet@v6
         with:
           dotnet-version: 9.0.x
 
       - name: restore cached dependencies
         id: restore-cached-dependencies
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ~/.nuget/packages
           key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
@@ -101,7 +101,7 @@ jobs:
           
       - name: 💌 publish code coverage
         id: publish-code-coverage
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v7
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: /home/runner/work/coding-blog/coding-blog/tests/Coding.Blog.Tests/coverage.opencover.xml
@@ -113,7 +113,7 @@ jobs:
     steps:
       - name: checkout code
         id: checkout-code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
 
       - name: 🧼 lint markdown files
         id: lint-markdown-files
@@ -125,7 +125,7 @@ jobs:
 
       - name: 🧼 lint renovate config
         id: lint-renovate-config
-        uses: suzuki-shunsuke/github-action-renovate-config-validator@v1.1.1
+        uses: suzuki-shunsuke/github-action-renovate-config-validator@v2.1.0
         with:
           config_file_path: "renovate.json"
 
@@ -136,7 +136,7 @@ jobs:
     steps:
     - name: checkout code
       id: checkout-code
-      uses: actions/checkout@v5
+      uses: actions/checkout@v7
 
     - name: 🔐 authorize gcloud
       id: authorize-gcloud
